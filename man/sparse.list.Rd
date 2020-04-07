@@ -19,7 +19,7 @@
   \item{time}{Time points where the observations where taken.}
 }
 \value{
-  a list with length dim(data)[2]. Each element of the list is a matrix with ncol > 1. The first column of each element corresponds to the point index per observation.
+  a list with \code{length dim(data)[2]}. Each element of the list is a matrix with \code{ncol > 1}. The first column of each element corresponds to the point index per observation.
 }
 \seealso{
   \code{\link{cca.fd}},

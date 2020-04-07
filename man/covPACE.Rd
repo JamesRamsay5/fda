@@ -52,15 +52,3 @@
       a functional data object giving the mean function
     }
 }
-% \examples{
-  % data(CanadianWeather)
-  % data = CanadianWeather$dailyAv[,,1]
-  % meanfd = smooth.sparse.mean(data.sparse,c(0,365),nbasis = 11, lambda = 1e3, type = "fourier")
-  
-  % curv.Lfd = int2Lfd(2)
-  % basis =  create.fourier.basis(dayrng,11)
-  % cov.estimate = covPACE(data,c(0,365) ,1:365, meanfd, basis, lambda = 1e5, curv.Lfd)
-  % day5 = seq(dayrng[1],dayrng[2],5)
-  % cov.eval = eval.bifd(day5,day5,cov.estimate)
-  % filled.contour(day5,day5,cov.eval)
-% }

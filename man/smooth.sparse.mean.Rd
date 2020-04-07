@@ -50,7 +50,7 @@ smooth.sparse.mean(data, time ,rng = c(0, 1), type = "", nbasis = NULL,
   \item{lambda}{
   a nonnegative real number specifying the amount of smoothing to be applied to 
   the estimated functional parameter
-}
+  }
 }
 \value{
 a functional data object containing a smooth of the mean.
