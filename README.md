@@ -1,4 +1,4 @@
-# 2nd tst edit 2020-04-03
+# 2nd tst edit 2020-04-07
 
 # An R package of Functions for Functional data analysis
 ## Version 5.1.1, March 13, 2020, Jim Ramsay and Spencer Graves
