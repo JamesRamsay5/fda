@@ -163,7 +163,7 @@ growfdPar2.3 <- fdPar(Wfd0.growth, Lfdobj.growth, lambda.gr2.3)
 hgtmfd.all   <- with(growth, smooth.basis(age, hgtm, growfdPar2.3)$fd)
 # Register the growth velocity rather than the
 # growth curves directly
-smBv <- deriv(hgtmfd.all, 1)
+smBv <- deriv.fd(hgtmfd.all, 1)
 
 ##
 ## 2.  Register the first 2 Berkeley boys using the default basis
@@ -247,7 +247,7 @@ gaitfdPar    <- fdPar(gaitbasis, harmaccelLfd, 1e-2)
 #  smooth the data
 gaitfd <- smooth.basis(gaittime, gait, gaitfdPar)$fd
 #  compute the angular acceleration functional data object
-D2gaitfd      <- deriv.fd(gaitfd,2)
+D2gaitfd    <- deriv.fd(gaitfd,2)
 names(D2gaitfd$fdnames)[[3]] <- "Angular acceleration"
 D2gaitfd$fdnames[[3]] <- c("Hip", "Knee")
 #  compute the mean angular acceleration functional data object
