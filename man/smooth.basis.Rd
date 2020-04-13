@@ -27,7 +27,7 @@
 }
 \usage{
 smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
-             covariates=NULL, method="chol", dfscale=1)
+             covariates=NULL, method="chol", dfscale=1, returnMatrix=FALSE)
 }
 \arguments{
   \item{argvals}{
@@ -68,7 +68,9 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
     roughness penalty is used.  No roughness penalty is also the
     consequence of supplying a functional data object with class "fd",
     in which case the basis system used for smoothing is that defining
-    this object.  
+    this object.  In these two simple cases, \code{smooth.basis} is
+    essentially the same as function \code{Data2fd}, and this type of
+    elementary smoothing is often called "regression smoothing."
     However, if the object is a functional parameter object with class
     "fdPar", then the linear differential operator object and the
     smoothing parameter in this object define the roughness penalty. For
@@ -136,6 +138,10 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
     decisions about the level of smoothing to be used.  The default value
     is, however, 1.0.
   }
+  \item{returnMatrix}{
+    logical:  If TRUE,  a two-dimensional is returned using a
+    special class from the Matrix package.
+  }
 }
 \details{
   A roughness penalty is a quantitative measure of the roughness of a
@@ -145,7 +151,7 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
   typical choice of derivative order is 2, whose square is often called
   the local curvature of the function.  Since a rough function has high
   curvature over most of the function's range, the integrated square of
-  of the second derivative quantifies the total curvature of the function,
+  of the second derivature quantifies the total curvature of the function,
   and hence its roughness.  The second factor is a positive constant called
   the bandwidth of smoothing parameter, and given the variable name
   \code{lambda} here.
@@ -157,7 +163,7 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
   differential operator", and a clever choice of operator can result
   in much improved smoothing.
 
-  The roughness penalty is added to the weighted error sum of squares
+  The rougnhness penalty is added to the weighted error sum of squares
   and the composite is minimized, usually in conjunction with a
   high dimensional basis expansion such as a spline function defined by
   placing a knot at every observation point.  Consequently, the
@@ -183,6 +189,11 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
   forth, it is better from a computational perspective to choose an
   argument scaling that gives knot spacings not too different from one.
 
+  An alternative to using \code{smooth.basis} is to first represent
+  the data in a basis system with reasonably high resolution using
+  \code{Data2fd}, and then smooth the resulting functional data object
+  using function \code{smooth.fd}.
+
   In warning and error messages, you may see reference to functions
   \code{smooth.basis1, smooth.basis2}, and \code{smooth.basis3}. These
   functions are defined within \code{smooth.basis}, and are not
@@ -195,6 +206,7 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
 \value{
   an object of class \code{fdSmooth}, which is a named list of length 8
   with the following components:
+
   \item{fd}{
     a functional data object containing a smooth of the data.
   }
@@ -206,11 +218,12 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
     there are multiple curves, this is a vector of values, one per
     curve.  If the smooth is multivariate, the result is a matrix of gcv
     values, with columns corresponding to variables.
+
     \deqn{gcv = n*SSE/((n-df)^2)}
   }
   \item{beta}{
     the regression coefficients associated with covariate variables.
-    These are vector, matrix or array objects depending on whether
+    These are vector, matrix or array objects dependeing on whether
     there is a single curve, multiple curves or multiple curves and
     variables, respectively.
   }
@@ -235,7 +248,8 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
   \code{\link{smooth.fd}},
   \code{\link{smooth.monotone}},
   \code{\link{smooth.pos}},
-  \code{\link{smooth.fdPar}}
+  \code{\link{smooth.basisPar}}
+  \code{\link{Data2fd}},
 }
 \examples{
 ##
@@ -271,7 +285,8 @@ plot(basisobj)
 #  fitted curve.  Note that in this simple case we can supply the basis
 #  object as the "fdParobj" parameter
 ys = smooth.basis(argvals=argvals, y=y, fdParobj=basisobj)
-Ys = smooth.basis(argvals=argvals, y=y, fdParobj=basisobj)
+Ys = smooth.basis(argvals=argvals, y=y, fdParobj=basisobj,
+                  returnMatrix=TRUE)
 # Ys[[7]] = Ys$y2cMap is sparse;  everything else is the same
 
 \dontshow{stopifnot(}
@@ -484,6 +499,7 @@ loglamout = plotGCVRMSE.fd(-6, -3, 0.25, x, argvals, y, fdParobj)
 #  are small relative to the range of the observations.  Compare
 #  regression and roughness penalty smoothing in these situations.
 
+if(!CRAN()){
 ##
 ####### Simulated data example 4: a roughness-penalized smooth  ########
 ##                           with correlated error
@@ -838,25 +854,19 @@ gaitSmooth <- smooth.basis(gaittime, gait, gaitfdPar)
 gaitfd <- gaitSmooth$fd
 \dontrun{
   # by default creates multiple plots, asking for a click between plots
-  plotfit.fd(gait, gaittime, gaitfd)
+ plotfit.fd(gait, gaittime, gaitfd)
 }
-##
-## example 10.  class(argvals) = 'Date'
-##
-#  These classes of time can generate very large numbers when converted to 
-#  numeric vectors.  For basis systems such as polynomials or splines,
-#  severe rounding error issues can arise if the time interval for the 
-#  data is very large.  To offset this, it is best to normalize the
-#  numeric version of the data before analyzing them.
-#  Date class time unit is one day, divide by 365.25.
-invasion1 <- as.Date('1775-09-04')
-invasion2 <- as.Date('1812-07-12')
-earlyUS.Canada <- as.numeric(c(invasion1, invasion2))/365.25
-BspInvasion <- create.bspline.basis(earlyUS.Canada)
-earlyYears <- seq(invasion1, invasion2, length.out=7)
-(earlyQuad <- (as.numeric(earlyYears-invasion1)/365.25)^2)
-earlyYears <- as.numeric(earlyYears)/365.25
-fitQuad <- smooth.basis(earlyYears, earlyQuad, BspInvasion)
-plotfit.fd(earlyQuad, earlyYears, fitQuad$fd)
+
+\dontshow{
+  # Check to make sure that it works with N=1e5
+  N <- 1e5
+  Bsp <- create.bspline.basis(N, 9)
+  set.seed(1) # to ensure the same results across platforms
+  system.time(fit <- smooth.basis(1:N, runif(N), Bsp))
+}
+
+}
+#  end of if (!CRAN)
+
 }
 \keyword{smooth}

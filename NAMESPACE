@@ -19,6 +19,7 @@ export(AmpPhaseDecomp,
        checkLogicalInteger,
        cor.fd,
        covPACE,
+       CRAN,
        create.bspline.basis, 
        create.constant.basis,
        create.exponential.basis,
@@ -58,9 +59,7 @@ export(AmpPhaseDecomp,
        fourierpen,
        Fperm.fd,
        fRegress,
-       fRegressCV, 
        fRegress.CV,
-       fRegressStderr,
        fRegress.stderr,
        Fstat.fd,
        geigen,
@@ -150,6 +149,7 @@ export(AmpPhaseDecomp,
 import("graphics")
 import("stats")
 import("splines")
+import("Matrix")
 
 importFrom("grDevices", "dev.new", "heat.colors")
 importFrom("utils", "data")
@@ -200,6 +200,8 @@ S3method(fitted,       monfd)
 S3method(residuals,    monfd)
 S3method(predict,      monfd)
 S3method(fRegress,     numeric)
+S3method(fRegress,     stderr)
+S3method(fRegress,     CV)
 S3method(matplot,      numeric)
 S3method(fitted,       posfd)
 S3method(predict,      posfd)

@@ -1,4 +1,4 @@
-bsplineS <- function (x, breaks, norder=4, nderiv=0)
+bsplineS <- function (x, breaks, norder=4, nderiv=0, returnMatrix=FALSE)
 {
 #  This is a wrapper function for the S-PLUS spline.des function.
 #  The number of spline functions is equal to the number of
@@ -18,7 +18,8 @@ bsplineS <- function (x, breaks, norder=4, nderiv=0)
 #  Return is a matrix with length(X) rows and number of columns equal to
 #                   number of b-splines
 
-#  previously modified 6 January 2020 2012 by Jim Ramsay
+#  last modified 6 May 2012 by Spencer Graves
+#  previously modified 2 April 2012 by Jim Ramsay
 
   x <- as.vector(x)
   n <- length(x)
@@ -46,11 +47,11 @@ bsplineS <- function (x, breaks, norder=4, nderiv=0)
   nbasis <- nbreaks + norder - 2
   if (nbasis >= norder) {
       if (nbasis > 1) {
-  	    basismat <- spline.des(knots, x, norder, derivs)$design
+  	    basismat <- Matrix(spline.des(knots, x, norder, derivs)$design)
       } else {
   	    basismat <- as.matrix(spline.des(knots, x, norder, derivs)$design)
       }
-      if(length(dim(basismat)) == 2){
+      if((!returnMatrix) && (length(dim(basismat)) == 2)){
           return(as.matrix(basismat))
       }
       return(basismat)

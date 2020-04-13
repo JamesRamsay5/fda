@@ -3,7 +3,8 @@ phaseplanePlot <- function(evalarg, fdobj, Lfdobj1=1, Lfdobj2=2,
       labels=list(evalarg=seq(evalarg[1], max(evalarg), length=13),
              labels=fda::monthLetters),
       abline=list(h=0, v=0, lty=2),
-      xlab="Velocity", ylab="Acceleration", ... ){
+      xlab="Velocity", ylab="Acceleration",
+                       returnMatrix=FALSE, ... ){
 ##
 ## 1.  Check 'evalarg'
 ##
@@ -17,8 +18,8 @@ phaseplanePlot <- function(evalarg, fdobj, Lfdobj1=1, Lfdobj2=2,
 ## 2.  Compute points to plot
 ##
   Eval <- sort(unique(c(evalarg, labels$evalarg)))
-  D1 <- eval.fd(Eval, fdobj, Lfdobj1)
-  D2 <- eval.fd(Eval, fdobj, Lfdobj2)
+  D1 <- eval.fd(Eval, fdobj, Lfdobj1, returnMatrix)
+  D2 <- eval.fd(Eval, fdobj, Lfdobj2, returnMatrix)
 #
   nT <- length(Eval)
   n2 <- ceiling(nT/2)
@@ -36,8 +37,8 @@ phaseplanePlot <- function(evalarg, fdobj, Lfdobj1=1, Lfdobj2=2,
 ##
 ## 5. Label midmonths
 ##
-  D1. <- eval.fd(labels$evalarg, fdobj, Lfdobj1)
-  D2. <- eval.fd(labels$evalarg, fdobj, Lfdobj2)
+  D1. <- eval.fd(labels$evalarg, fdobj, Lfdobj1, returnMatrix)
+  D2. <- eval.fd(labels$evalarg, fdobj, Lfdobj2, returnMatrix)
   text(D1., D2., labels$labels)
 ##
 ## 6.  Done

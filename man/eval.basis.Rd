@@ -10,12 +10,13 @@
   result of applying the the operator to each basis function.
 }
 \usage{
-eval.basis(evalarg, basisobj, Lfdobj=0)
-\method{predict}{basisfd}(object, newdata=NULL, Lfdobj=0, ...)
+eval.basis(evalarg, basisobj, Lfdobj=0, returnMatrix=FALSE)
+\method{predict}{basisfd}(object, newdata=NULL, Lfdobj=0,
+                          returnMatrix=FALSE, ...)
 }
 \arguments{
   \item{evalarg, newdata}{
-    a vector of argument values at which the basis function is to be
+    a vector of argument values at which the basis functiona is to be
     evaluated.
   }
   \item{basisobj}{
@@ -31,6 +32,10 @@ eval.basis(evalarg, basisobj, Lfdobj=0)
   }
   \item{\dots}{
     optional arguments for \code{predict}, not currently used
+  }
+  \item{returnMatrix}{
+    logical:  If TRUE,  a two-dimensional is returned using a
+    special class from the Matrix package.
   }
 }
 \details{

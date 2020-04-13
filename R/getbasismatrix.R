@@ -1,4 +1,4 @@
-getbasismatrix <- function(evalarg, basisobj, nderiv=0) {
+getbasismatrix <- function(evalarg, basisobj, nderiv=0, returnMatrix=FALSE) {
 #  Computes the basis matrix evaluated at arguments in EVALARG associated
 #    with basis.fd object BASISOBJ.  The basis matrix contains the values
 #    at argument value vector EVALARG of applying the nonhomogeneous

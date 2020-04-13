@@ -29,7 +29,7 @@
 }
 %\seealso{\code{\link{eval.penalty}}}
 \examples{
-    plot(gait[,1, 1], gait[, 1, 2], type="b")
+plot(gait[,1, 1], gait[, 1, 2], type="b")
 }
 % docclass is function
 \keyword{datasets}
