@@ -7,7 +7,7 @@ Author: J. O. Ramsay <ramsay@psych.mcgill.ca> [aut,cre],
  Giles Hooker <gjh27@cornell.edu>  [ctb]
 Maintainer: J. O. Ramsay <ramsay@psych.mcgill.ca>
 Depends: R (>= 3.5), Matrix
-Suggests: deSolve, lattice
+Suggests: deSolve, R.matlab, lattice
 Description: These functions were developed to support functional data
  analysis as described in Ramsay, J. O. and Silverman, B. W.
  (2005) Functional Data Analysis. New York: Springer and in 
