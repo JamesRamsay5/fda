@@ -1,25 +1,23 @@
-fRegress.character <- function(y, xfdlist=NULL, betalist=NULL,
+fRegress.character <- function(y, data=NULL, betalist=NULL,
                              wt=NULL, y2cMap=NULL, SigmaE=NULL,
                              method=c('fRegress', 'model'),
-                             sep='.', ...) {
-  fRegress.formula(y=y, xfdlist=xfdlist, betalist=betalist,
+                             sep='.', ...){
+  fRegress.formula(y=y, data=data, betalist=betalist,
                              wt=wt, y2cMap=y2cMap, SigmaE=SigmaE,
                              method=method, sep=sep, ...)
 }
 
-fRegress.formula <- function(y, xfdlist=NULL, betalist=NULL,
+fRegress.formula <- function(y, data=NULL, betalist=NULL,
                              wt=NULL, y2cMap=NULL, SigmaE=NULL,
                              method=c('fRegress', 'model'),
-                             sep='.', ...) {
-data = xfdlist
-
+                             sep='.', ...){
 ##
 ## 1.  get y = left hand side of the formula
 ##
   Formula <- y
   yName <- Formula[[2]]
   yNm <- as.character(yName)
-  if((class(yName) != 'name') || (length(yNm) > 1))
+  if(!inherits(yName, 'name') || (length(yNm) > 1))
     stop('The left hand side of formula must be a simple object; ',
          ' instead, LHS = ', as.character(Formula)[2],
          ', which has class = ', class(yName))
@@ -29,7 +27,7 @@ data = xfdlist
     if(yNm %in% dataNames)data[[yNm]]
     else get(yNm)
   }
-  if (inherits(y, 'fd')) y <- fdPar(y, ...)
+  if(inherits(y, 'fd'))y <- fdPar(y, ...)
 #
   trng <- NULL
   {
@@ -95,7 +93,7 @@ data = xfdlist
     {
       if(class(xi) %in% c('fd', 'fdPar')){
         xj <- {
-          if(class(xi) == 'fd') xi
+          if(inherits(xi, 'fd')) xi
           else xi$fd
         }
         xrng <- xj$basis$rangeval
@@ -348,16 +346,21 @@ data = xfdlist
   fRegressList <- list(y=y, xfdlist=xfdList, betalist=betalist,
                        wt=wt, xfdlist0=xfdList0, type=type,
                        nbasis=nbasis, xVars=nVars)
-  if(inherits(y, 'fd')) y <- fdPar(y)
-  
+##
+## 7.  class(y) == 'fd' or 'fdPar'
+##
+  if(inherits(y, 'fd'))y <- fdPar(y)
+#
   method <- match.arg(method)
-  
   if(method=='model')
     return(fRegressList)
-  else
-    fRegressList <- fRegress(y, xfdList, betalist, wt) 
-    
-  return(fRegressList)
-    
+  {
+    if(inherits(y, 'fdPar'))
+      do.call('fRegress.fdPar', fRegressList)
+    else
+##
+## 8.  class(y) == 'numeric'
+##
+      do.call('fRegress.numeric', fRegressList)
+  }
 }
-

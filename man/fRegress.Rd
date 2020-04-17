@@ -42,64 +42,75 @@
   argument list as functional parameter objects.
 }
 \usage{
-fRegress(y, xfdlist, betalist, wt=NULL, y2cMap=NULL, SigmaE=NULL,
-         method, sep='.', ...)
+fRegress(y, ...)
+\method{fRegress}{formula}(y, data=NULL, betalist=NULL, wt=NULL,
+                 y2cMap=NULL, SigmaE=NULL,
+                 method=c('fRegress', 'model'), sep='.', ...)
+\method{fRegress}{character}(y, data=NULL, betalist=NULL, wt=NULL,
+                 y2cMap=NULL, SigmaE=NULL,
+                 method=c('fRegress', 'model'), sep='.', ...)
 \method{fRegress}{fd}(y, xfdlist, betalist, wt=NULL,
-                  y2cMap=NULL, SigmaE=NULL, method, sep='.', ...)
+                     y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
 \method{fRegress}{fdPar}(y, xfdlist, betalist, wt=NULL,
-                  y2cMap=NULL, SigmaE=NULL, method, sep='.', ...)
+                     y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
 \method{fRegress}{numeric}(y, xfdlist, betalist, wt=NULL,
-                  y2cMap=NULL, SigmaE=NULL, method, sep='.', ...)
-\method{fRegress}{formula}(y, xfdlist=NULL, betalist=NULL, wt=NULL,
-                  y2cMap=NULL, SigmaE=NULL, method=c('fRegress', 'model'), 
-                  sep='.', ...)
-\method{fRegress}{character}(y, xfdlist=NULL, betalist=NULL, wt=NULL,
-                  y2cMap=NULL, SigmaE=NULL, method=c('fRegress', 'model'), 
-                  sep='.', ...)
+                     y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
 }
 \arguments{
-  \item{y}{the dependent variable object.  It may be an object of five
-  possible classes:
+  \item{y}{
+    the dependent variable object.  It may be an object of five
+    possible classes:
+
     \itemize{
       \item{character or formula}{
-	    a \code{formula} object or a \code{character} object that can be
-	    coerced into a \code{formula} providing a symbolic description
-	    of the model to be fitted satisfying the following rules:
+	a \code{formula} object or a \code{character} object that can be
+	coerced into a \code{formula} providing a symbolic description
+	of the model to be fitted satisfying the following rules:
 
-	    The left hand side, \code{formula} \code{y}, must be either a
-	    numeric vector or a univariate object of class \code{fd} or
-	    \code{fdPar}.  If the former, it is replaced by 
-	    \code{fdPar(y, ...)}.
+	The left hand side, \code{formula} \code{y}, must be either a
+	numeric vector or a univariate object of class \code{fd} or
+	\code{fdPar}.  If the former, it is replaced by \code{fdPar(y,
+	...)}.
 
-	    All objects named on the right hand side must be either
-	    \code{numeric} or \code{fd} (functional data) or \code{fdPar}.
-	    The number of replications of \code{fd} or \code{fdPar}
-	    object(s) must match each other and the number of observations
-	    of \code{numeric} objects named, as well as the number of
-	    replications of the dependent variable object.  The right hand
-	    side of this \code{formula} is translated into \code{xfdlist},
-	    then passed to another method for fitting (unless \code{method}
-	    = 'model'). Multivariate independent variables are allowed in a
-	    \code{formula} and are split into univariate independent
-	    variables in the resulting \code{xfdlist}.  Similarly,
-	    categorical independent variables with \code{k} levels are
-	    translated into \code{k-1} contrasts in \code{xfdlist}.  Any
-	    smoothing information is passed to the corresponding component
-	    of \code{betalist}.
+	All objects named on the right hand side must be either
+	\code{numeric} or \code{fd} (functional data) or \code{fdPar}.
+	The number of replications of \code{fd} or \code{fdPar}
+	object(s) must match each other and the number of observations
+	of \code{numeric} objects named, as well as the number of
+	replications of the dependent variable object.  The right hand
+	side of this \code{formula} is translated into \code{xfdlist},
+	then passed to another method for fitting (unless \code{method}
+	= 'model'). Multivariate independent variables are allowed in a
+	\code{formula} and are split into univariate independent
+	variables in the resulting \code{xfdlist}.  Similarly,
+	categorical independent variables with \code{k} levels are
+	translated into \code{k-1} contrasts in \code{xfdlist}.  Any
+	smoothing information is passed to the corresponding component
+	of \code{betalist}.
+
       }
       \item{scalar}{
-	    a vector if the dependent variable is scalar.
+	a vector if the dependent variable is scalar.
+
       }
       \item{fd}{
-	    a functional data object if the dependent variable is
-	    functional.  
+	a functional data object if the dependent variable is
+	functional.  A \code{y} of this class is replaced by
+	\code{fdPar(y, ...)} and passed to \code{fRegress.fdPar}.
+
       }
       \item{fdPar}{
-	    a functional parameter object if the dependent variable is
-	    functional, and if it is desired to smooth the prediction
-	    of the dependent variable.
+	a functional parameter object if the dependent variable is
+	functional, and if it is desired to smooth the prediction
+	of the dependent variable.
+
       }
     }
+  }
+  \item{data}{
+    an optional \code{list} or \code{data.frame} containing names of
+    objects identified in the \code{formula} or \code{character}
+    \code{y}.
   }
   \item{xfdlist}{
     a list of length equal to the number of independent
@@ -109,10 +120,12 @@ fRegress(y, xfdlist, betalist, wt=NULL, y2cMap=NULL, SigmaE=NULL,
 
     \itemize{
       \item{scalar}{
-	    a numeric vector if the independent variable is scalar.
+	a numeric vector if the independent variable is scalar.
+
       }
       \item{fd}{
-	    a (univariate) functional data object.
+	a (univariate) functional data object.
+
       }
     }
     In either case, the object must have the same number of replications
@@ -168,10 +181,15 @@ fRegress(y, xfdlist, betalist, wt=NULL, y2cMap=NULL, SigmaE=NULL,
     for functional regression estimation without running it.
   }
   \item{sep}{
-    separator for creating names for multiple variables created from single
+    separator for creating names for multiple variables for
+    \code{fRegress.fdPar} or \code{fRegress.numeric} created from single
     variables on the right hand side of the \code{formula} \code{y}.
     This happens with multidimensional \code{fd} objects as well as with
     categorical variables.
+  }
+  \item{returnMatrix}{
+    logical:  If TRUE,  a two-dimensional is returned using a
+    special class from the Matrix package.
   }
   \item{\dots}{ optional arguments }
 }
@@ -181,12 +199,20 @@ fRegress(y, xfdlist, betalist, wt=NULL, y2cMap=NULL, SigmaE=NULL,
 
   \tabular{lcccc}{
     \tab \tab explanatory \tab variable \tab \cr
-    response \tab | \tab scalar \tab  | \tab function \cr
+    response \tab | \tab scalar \tab | \tab function \cr
     \tab | \tab \tab | \tab \cr
-    scalar   \tab | \tab lm     \tab   | \tab fRegress \cr
+    scalar \tab | \tab lm \tab | \tab fRegress.numeric \cr
     \tab | \tab \tab | \tab \cr
-    function \tab | \tab fRegress \tab | \tab fRegress or linmod \cr
+    function \tab | \tab fRegress.fd or \tab | \tab fRegress.fd
+    or \cr
+    \tab | \tab fRegress.fdPar \tab | \tab fRegress.fdPar or linmod \cr
   }
+
+  For \code{fRegress.numeric}, the numeric response is assumed to be the
+  sum of integrals of xfd * beta for all functional xfd terms.
+
+  \code{fRegress.fd or .fdPar} produces a concurrent regression with
+  each \code{beta} being also a (univariate) function.
 
   \code{linmod} predicts a functional response from a convolution
   integral, estimating a bivariate regression function.
@@ -243,7 +269,7 @@ fRegress(y, xfdlist, betalist, wt=NULL, y2cMap=NULL, SigmaE=NULL,
 	a matrix containing the inverse of the coefficient matrix for
 	the  linear equations that define the solution to the regression
 	problem.  This matrix is required for function
-	\code{\link{fRegressStderr}} that estimates confidence regions
+	\code{\link{fRegress.stderr}} that estimates confidence regions
 	for the regression coefficient function estimates.
 
       }
@@ -294,7 +320,7 @@ fRegress(y, xfdlist, betalist, wt=NULL, y2cMap=NULL, SigmaE=NULL,
   \item{model specification}{
     The \code{fRegress.formula} and \code{fRegress.character}
     functions translate the \code{formula} into the argument list
-    required by \code{fRegress}.
+    required by \code{fRegress.fdPar} or \code{fRegress.numeric}.
     With the default value 'fRegress' for the argument \code{method},
     this list is then used to call the appropriate other
     \code{fRegress} function.
@@ -345,85 +371,147 @@ fRegress(y, xfdlist, betalist, wt=NULL, y2cMap=NULL, SigmaE=NULL,
     Data Analysis, 2nd ed.}, Springer, New York.
 }
 \seealso{
-  \code{\link{fRegressStderr}},
-  \code{\link{fRegressCV}},
+  \code{\link{fRegress.formula}},
+  \code{\link{fRegress.stderr}},
+  \code{\link{fRegress.CV}},
   \code{\link{linmod}}
 }
 \examples{
-##
-## set up the regression of log annual precipitation on temperature functions
-##
+###
+###
+### scalar response and explanatory variable
+###   ... to compare fRegress and lm
+###
+###
+# example from help('lm')
+     ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+     trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+     group <- gl(2,10,20, labels=c("Ctl","Trt"))
+     weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
 
-# compute annual precipitations for 35 weather stations
-annualprec <- apply(CanadianWeather$dailyAv[,,"Precipitation.mm"], 2,sum)
-# log precipitation
-logannualprec <- log10(annualprec)
-# We use a small basis because there are only 35 stations
-tempbasis  <- create.fourier.basis(c(0, 365), 7)
-#  smooth the temperature data with this basis
+fRegress.D9 <- fRegress(weight ~ group)
+
+(lm.D9.coef <- coef(lm.D9))
+
+(fRegress.D9.coef <- sapply(fRegress.D9$betaestlist, coef))
+
+\dontshow{stopifnot(}
+all.equal(as.numeric(lm.D9.coef), as.numeric(fRegress.D9.coef))
+\dontshow{)}
+
+###
+###
+### vector response with functional explanatory variable
+###
+###
+
+##
+## set up
+##
+annualprec <- log10(apply(CanadianWeather$dailyAv[,,"Precipitation.mm"],
+                          2,sum))
+# The simplest 'fRegress' call is singular with more bases
+# than observations, so we use a small basis for this example
+smallbasis  <- create.fourier.basis(c(0, 365), 25)
+# There are other ways to handle this,
+# but we will not discuss them here
 tempfd <- smooth.basis(day.5,
-          CanadianWeather$dailyAv[,,"Temperature.C"], tempbasis)$fd
+          CanadianWeather$dailyAv[,,"Temperature.C"], smallbasis)$fd
 
 ##
-## Manual construction of arguments xfdlist and betalist
+## formula interface
 ##
 
-#  single functional covariate, tempfd
+precip.Temp.f <- fRegress(annualprec ~ tempfd)
+
+##
+## Get the default setup and modify it
+##
+
+precip.Temp.mdl <- fRegress(annualprec ~ tempfd, method='m')
+# First confirm we get the same answer as above:
+precip.Temp.m <- do.call('fRegress', precip.Temp.mdl)
+\dontshow{stopifnot(}
+all.equal(precip.Temp.m, precip.Temp.f)
+\dontshow{)}
+
+#  set up a smaller basis than for temperature
+nbetabasis  <- 21
+betabasis2.  <- create.fourier.basis(c(0, 365), nbetabasis)
+betafd2.     <- fd(rep(0, nbetabasis), betabasis2.)
+# add smoothing
+betafdPar2.  <- fdPar(betafd2., lambda=10)
+
+precip.Temp.mdl2 <- precip.Temp.mdl
+precip.Temp.mdl2[['betalist']][['tempfd']] <- betafdPar2.
+
+# Now do it.
+precip.Temp.m2 <- do.call('fRegress', precip.Temp.mdl2)
+
+# Compare the two fits
+precip.Temp.f[['df']] # 26
+precip.Temp.m2[['df']]# 22 = saved 4 degrees of freedom
+
+(var.e.f <- mean(with(precip.Temp.f, (yhatfdobj-yfdPar)^2)))
+(var.e.m2 <- mean(with(precip.Temp.m2, (yhatfdobj-yfdPar)^2)))
+# with a modest increase in lack of fit.
+
+##
+## Manual construction of xfdlist and betalist
+##
 
 xfdlist <- list(const=rep(1, 35), tempfd=tempfd)
 
 # The intercept must be constant for a scalar response
-
 betabasis1 <- create.constant.basis(c(0, 365))
 betafd1    <- fd(0, betabasis1)
 betafdPar1 <- fdPar(betafd1)
-
-# the temperature regression coefficient
 
 betafd2     <- with(tempfd, fd(basisobj=basis, fdnames=fdnames))
 # convert to an fdPar object
 betafdPar2  <- fdPar(betafd2)
 
-#  store the constant and temperature functions in a list
-
 betalist <- list(const=betafdPar1, tempfd=betafdPar2)
 
-#  execute the functional regression to get the list of results
+precip.Temp <- fRegress(annualprec, xfdlist, betalist)
+\dontshow{stopifnot(}
+all.equal(precip.Temp, precip.Temp.f)
+\dontshow{)}
 
-precip.temp <- fRegress(logannualprec, xfdlist, betalist)
-
-names(precip.temp)
-
-#  plot the two regression functions
-
-par(ask=TRUE)
-plotbeta(precip.temp$betaestlist) 
-
-#  plot log annual precipitation and its fit
-
-par(ask=FALSE)
-plot(precip.temp$yhat, precip.temp$yhat, type="l", 
-     xlab="log annual precipitation fit",
-     ylab="log annual precipitation")
-points(precip.temp$yhat, logannualprec, pch="o")
-
-##
-## use the simpler setup using the formula interface
-##
-
-precip.temp <- fRegress(logannualprec ~ tempfd)
-
+###
 ###
 ### functional response with vector explanatory variables
 ###
+###
 
-#  set up prediction of temperature from climate region
-
-region <- CanadianWeather$region
+##
+## simplest:  formula interface
+##
 daybasis65 <- create.fourier.basis(rangeval=c(0, 365), nbasis=65,
                   axes=list('axesIntervals'))
 Temp.fd <- with(CanadianWeather, smooth.basisPar(day.5,
-                 dailyAv[,,'Temperature.C'], daybasis65)$fd)
+                dailyAv[,,'Temperature.C'], daybasis65)$fd)
+TempRgn.f <- fRegress(Temp.fd ~ region, CanadianWeather)
+
+##
+## Get the default setup and possibly modify it
+##
+TempRgn.mdl <- fRegress(Temp.fd ~ region, CanadianWeather, method='m')
+%names(TempRgn.mdl)
+# make desired modifications here
+# then run
+TempRgn.m <- do.call('fRegress', TempRgn.mdl)
+
+# no change, so match the first run
+\dontshow{stopifnot(}
+all.equal(TempRgn.m, TempRgn.f)
+\dontshow{)}
+
+##
+## More detailed set up
+##
+%str(TempRgn.mdl$xfdlist)
 region.contrasts <- model.matrix(~factor(CanadianWeather$region))
 rgnContr3 <- region.contrasts
 dim(rgnContr3) <- c(1, 35, 4)
@@ -431,13 +519,15 @@ dimnames(rgnContr3) <- list('', CanadianWeather$place, c('const',
    paste('region', c('Atlantic', 'Continental', 'Pacific'), sep='.')) )
 
 const365 <- create.constant.basis(c(0, 365))
-region.fd.Atlantic    <- fd(matrix(rgnContr3[,,2], 1), const365)
+region.fd.Atlantic <- fd(matrix(rgnContr3[,,2], 1), const365)
+%str(region.fd.Atlantic)
 region.fd.Continental <- fd(matrix(rgnContr3[,,3], 1), const365)
-region.fd.Pacific     <- fd(matrix(rgnContr3[,,4], 1), const365)
+region.fd.Pacific <- fd(matrix(rgnContr3[,,4], 1), const365)
 region.fdlist <- list(const=rep(1, 35),
      region.Atlantic=region.fd.Atlantic,
      region.Continental=region.fd.Continental,
      region.Pacific=region.fd.Pacific)
+%str(TempRgn.mdl$betalist)
 
 beta1 <- with(Temp.fd, fd(basisobj=basis, fdnames=fdnames))
 beta0 <- fdPar(beta1)
@@ -446,33 +536,24 @@ betalist <- list(const=beta0, region.Atlantic=beta0,
 
 TempRgn <- fRegress(Temp.fd, region.fdlist, betalist)
 
-#  plot regression functions for baseline, Atlantic, Continental and Pacific
+\dontshow{stopifnot(}
+all.equal(TempRgn, TempRgn.f)
+\dontshow{)}
 
-par(ask=TRUE)
-plotbeta(TempRgn$betaestlist)
-
-#  plot estimated fits for these regions
-
-par(ask=FALSE)
-plot(TempRgn$yhatfdobj)
-
-##
-## simpler:  formula interface
-##
-
-TempRgn.f <- fRegress(Temp.fd ~ region)
-
-par(ask=FALSE)
-plot(TempRgn.f$yhatfdobj)
-
+###
 ###
 ### functional response with
 ###            (concurrent) functional explanatory variable
 ###
+###
 
-#  predict knee angle from hip angle;  
+##
+##  predict knee angle from hip angle;  from demo('gait', package='fda')
 
-gaittime  <- (0:19) + 0.5
+##
+## formula interface
+##
+gaittime  <- as.matrix((1:20)/21)
 gaitrange <- c(0,20)
 gaitbasis <- create.fourier.basis(gaitrange, nbasis=21)
 harmaccelLfd <- vec2Lfd(c(0, (2*pi/20)^2, 0), rangeval=gaitrange)
@@ -481,21 +562,25 @@ gaitfd <- smooth.basisPar(gaittime, gait,
 hipfd  <- gaitfd[,1]
 kneefd <- gaitfd[,2]
 
-# manual set-up
+knee.hip.f <- fRegress(kneefd ~ hipfd)
 
+##
+## manual set-up
+##
+#  set up the list of covariate objects
 const  <- rep(1, dim(kneefd$coef)[2])
 xfdlist  <- list(const=const, hipfd=hipfd)
 
 beta0 <- with(kneefd, fd(basisobj=basis, fdnames=fdnames))
-beta1 <- with(hipfd,  fd(basisobj=basis, fdnames=fdnames))
+beta1 <- with(hipfd, fd(basisobj=basis, fdnames=fdnames))
 
 betalist  <- list(const=fdPar(beta0), hipfd=fdPar(beta1))
 
 fRegressout <- fRegress(kneefd, xfdlist, betalist)
 
-# formula interface
-
-knee.hip.f <- fRegress(kneefd ~ hipfd)
+#\dontshow{stopifnot(}
+all.equal(fRegressout, knee.hip.f)
+#\dontshow{)}
 
 #See also the following demos:
 
@@ -505,4 +590,5 @@ knee.hip.f <- fRegress(kneefd ~ hipfd)
 #demo('weatherANOVA', package='fda')
 #demo('weatherlm', package='fda')
 }
+% docclass is function
 \keyword{smooth}

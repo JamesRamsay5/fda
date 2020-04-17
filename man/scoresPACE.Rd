@@ -1,6 +1,6 @@
 \name{scoresPACE}
 \alias{scoresPACE}
-\title{Estimates the functional Principal Component scores through PACE}
+\title{Estimates of functional Principal Component scores through PACE}
 \description{
   Function \code{scoresPACE} estimates the functional Principal Component 
   scores through Conditional Expectation (PACE)

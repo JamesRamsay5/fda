@@ -13,7 +13,7 @@ phaseplanePlot(evalarg, fdobj, Lfdobj1=1, Lfdobj2=2,
       labels=list(evalarg=seq(evalarg[1], max(evalarg), length=13),
              labels=fda::monthLetters),
       abline=list(h=0, v=0, lty=2), xlab="Velocity",
-      ylab="Acceleration", ...)
+      ylab="Acceleration", returnMatrix=FALSE, ...)
 }
 \arguments{
   \item{evalarg}{
@@ -63,6 +63,10 @@ phaseplanePlot(evalarg, fdobj, Lfdobj1=1, Lfdobj2=2,
   }
   \item{ylab}{
     y axis label
+  }
+  \item{returnMatrix}{
+    logical:  If TRUE,  a two-dimensional is returned using a
+    special class from the Matrix package.
   }
   \item{...}{
     optional arguments passed to plot.

@@ -1,4 +1,5 @@
-intensity.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20, dbglev=1) {
+intensity.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20, dbglev=1, 
+                            returnMatrix=FALSE) {
 # INTENSITYFD estimates the intensity function \lambda(x) of a
 #  nonhomogeneous Poisson process from a sample of event times.
 
@@ -19,8 +20,11 @@ intensity.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20, dbglev=1) {
 #               FSTR$norm  final norm of gradient
 #  ITERNUM   Number of iterations
 #  ITERHIST  History of iterations
+#  RETURNMATRIX ... If False, a matrix in sparse storage model can be returned
+#               from a call to function BsplineS.  See this function for
+#               enabling this option.
 
-#  last modified 6 January 2020 by Jim Ramsay
+#  last modified 10 May 2012 by Jim Ramsay
 
 	#  check WfdParobj
 	
@@ -75,7 +79,7 @@ intensity.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20, dbglev=1) {
 	#  evaluate log likelihood
 	#    and its derivatives with respect to these coefficients
 
-	result <- loglfninten(x, basisobj, cvec0)
+	result <- loglfninten(x, basisobj, cvec0, returnMatrix)
 	logl   <- result[[1]]
 	Dlogl  <- result[[2]]
 
@@ -91,7 +95,7 @@ intensity.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20, dbglev=1) {
 
 	#  compute the initial expected Hessian
 
-	hmat0 <- Varfninten(basisobj, cvec0)
+	hmat0 <- Varfninten(basisobj, cvec0, returnMatrix)
 	if (lambda > 0) hmat0 <- hmat0 + 2*Kmat
 
 	#  evaluate the initial update vector for correcting the initial bmat
@@ -197,7 +201,7 @@ intensity.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20, dbglev=1) {
         	}
         	cvecnew <- cvec + linemat[1,5]*deltac
         	#  compute new function value and gradient
-			    result  <- loglfninten(x, basisobj, cvecnew)
+			    result  <- loglfninten(x, basisobj, cvecnew, returnMatrix)
 			    logl    <- result[[1]]
 			    Dlogl   <- result[[2]]
         	Flist$f <- -logl
@@ -251,7 +255,7 @@ intensity.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20, dbglev=1) {
      	}
      	if (Flist$f >= Foldstr$f) break
      	#  compute the Hessian
-     	hmat <- Varfninten(basisobj, cvec)
+     	hmat <- Varfninten(basisobj, cvec, returnMatrix)
      	if (lambda > 0) hmat <- hmat + 2*Kmat
      	#  evaluate the update vector
      	deltac <- -solve(hmat,gvec)
@@ -271,29 +275,29 @@ intensity.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20, dbglev=1) {
 
 #  ---------------------------------------------------------------
 
-loglfninten <- function(x, basisobj, cvec=FALSE) {
+loglfninten <- function(x, basisobj, cvec, returnMatrix=FALSE) {
 	#  Computes the log likelihood and its derivative with
 	#    respect to the coefficients in CVEC
    	nobs    <- length(x)
-   	cval    <- normint.phi(basisobj, cvec)
-   	phimat  <- getbasismatrix(x, basisobj, 0)
+   	cval    <- normint.phi(basisobj, cvec, returnMatrix=returnMatrix)
+   	phimat  <- getbasismatrix(x, basisobj, 0, returnMatrix)
    	logl    <- sum(phimat %*% cvec) - cval
-	  EDW     <- expect.phi(basisobj, cvec)
+	  EDW     <- expect.phi(basisobj, cvec, returnMatrix=returnMatrix)
    	Dlogl   <- apply(phimat,2,sum) - EDW
 	return( list(logl, Dlogl) )
 }
 
 #  ---------------------------------------------------------------
 
-Varfninten <- function(basisobj, cvec=FALSE) {
+Varfninten <- function(basisobj, cvec, returnMatrix=FALSE) {
 	#  Computes the expected Hessian
-   	Varphi  <- expect.phiphit(basisobj, cvec)
+   	Varphi  <- expect.phiphit(basisobj, cvec, returnMatrix=returnMatrix)
 	return(Varphi)
 }
 	
 #  ---------------------------------------------------------------
 
-normint.phi <- function(basisobj, cvec, JMAX=15, EPS=1e-7) 
+normint.phi <- function(basisobj, cvec, JMAX=15, EPS=1e-7, returnMatrix=FALSE) 
 {
 
 #  Computes integrals of
@@ -321,7 +325,7 @@ normint.phi <- function(basisobj, cvec, JMAX=15, EPS=1e-7)
   	x  <- rng
   	nx <- length(x)
   	ox <- matrix(1,nx,1)
-  	fx <- getbasismatrix(x, basisobj, 0)
+  	fx <- getbasismatrix(x, basisobj, 0, returnMatrix)
   	wx <- fx %*% cvec
   	wx[wx < -50] <- -50
   	px <- exp(wx)
@@ -338,7 +342,7 @@ normint.phi <- function(basisobj, cvec, JMAX=15, EPS=1e-7)
     	} else {
       		x <- seq(rng[1]+del/2, rng[2], del)
     	}
-    	fx <- getbasismatrix(x, basisobj, 0)
+    	fx <- getbasismatrix(x, basisobj, 0, returnMatrix)
     	wx <- fx %*% cvec
     	wx[wx < -50] <- -50
     	px <- exp(wx)
@@ -362,7 +366,8 @@ normint.phi <- function(basisobj, cvec, JMAX=15, EPS=1e-7)
 
 #  ---------------------------------------------------------------
 
-expect.phi <- function(basisobj, cvec, nderiv=0, JMAX=15, EPS=1e-7) {
+expect.phi <- function(basisobj, cvec, nderiv=0, JMAX=15, EPS=1e-7, 
+                       returnMatrix=FALSE) {
 #  Computes expectations of basis functions with respect to intensity
 #      p(x) <- exp t(c)*phi(x)
 #  by numerical integration using Romberg integration
@@ -389,14 +394,14 @@ expect.phi <- function(basisobj, cvec, nderiv=0, JMAX=15, EPS=1e-7) {
   	x  <- rng
   	nx <- length(x)
   	ox <- matrix(1,nx,nx)
-  	fx <- as.matrix(getbasismatrix(x, basisobj, 0))
+  	fx <- as.matrix(getbasismatrix(x, basisobj, 0, returnMatrix))
   	wx <- fx %*% cvec
   	wx[wx < -50] <- -50
   	px <- exp(wx)
   	if (nderiv == 0) {
     	  Dfx <- fx
   	} else {
-    	  Dfx <- as.matrix(getbasismatrix(x, basisobj, 1))
+    	  Dfx <- as.matrix(getbasismatrix(x, basisobj, 1, returnMatrix))
   	}
   	sumj <- t(Dfx) %*% px
   	smat[1,]  <- width*sumj/2
@@ -414,14 +419,14 @@ expect.phi <- function(basisobj, cvec, nderiv=0, JMAX=15, EPS=1e-7) {
         x <- seq(rng[1]+del/2, rng[2], del)
     	}
     	nx <- length(x)
-    	fx <- as.matrix(getbasismatrix(x, basisobj, 0))
+    	fx <- as.matrix(getbasismatrix(x, basisobj, 0, returnMatrix))
     	wx <- fx %*% cvec
     	wx[wx < -50] <- -50
     	px <- exp(wx)
     	if (nderiv == 0) {
         Dfx <- fx
     	} else {
-        Dfx <- as.matrix(getbasismatrix(x, basisobj, 1))
+        Dfx <- as.matrix(getbasismatrix(x, basisobj, 1, returnMatrix))
     	}
     	sumj <- t(Dfx) %*% px
     	smat[j,] <- (smat[j-1,] + width*sumj/tnm)/2
@@ -446,7 +451,7 @@ expect.phi <- function(basisobj, cvec, nderiv=0, JMAX=15, EPS=1e-7) {
 #  ---------------------------------------------------------------
 
 expect.phiphit <- function(basisobj, cvec, nderiv1=0, nderiv2=0,
-                           JMAX=15, EPS=1e-7) {
+                           JMAX=15, EPS=1e-7, returnMatrix=FALSE) {
 
 #  Computes expectations of cross product of basis functions with
 #  respect to intensity
@@ -473,19 +478,19 @@ expect.phiphit <- function(basisobj, cvec, nderiv1=0, nderiv2=0,
   	#  the first iteration uses just the }points
   	x  <- rng
   	nx <- length(x)
-  	fx <- as.matrix(getbasismatrix(x, basisobj, 0))
+  	fx <- as.matrix(getbasismatrix(x, basisobj, 0, returnMatrix))
   	wx <- fx %*% cvec
   	wx[wx < -50] <- -50
   	px <- exp(wx)
   	if (nderiv1 == 0) {
     	  Dfx1 <- fx
   	} else {
-    	  Dfx1 <- as.matrix(getbasismatrix(x, basisobj, 1))
+    	  Dfx1 <- as.matrix(getbasismatrix(x, basisobj, 1, returnMatrix))
   	}
   	if (nderiv2 == 0) {
     	  Dfx2 <- fx
   	} else {
-    	  Dfx2 <- as.matrix(getbasismatrix(x, basisobj, 1))
+    	  Dfx2 <- as.matrix(getbasismatrix(x, basisobj, 1, returnMatrix))
   	}
   	oneb <- matrix(1,1,nbasis)
   	sumj <- t(Dfx1) %*% ((px %*% oneb) * Dfx2)
@@ -503,19 +508,19 @@ expect.phiphit <- function(basisobj, cvec, nderiv1=0, nderiv2=0,
         x <- seq(rng[1]+del/2, rng[2], del)
     	}
     	nx <- length(x)
-    	fx <- as.matrix(getbasismatrix(x, basisobj, 0))
+    	fx <- as.matrix(getbasismatrix(x, basisobj, 0, returnMatrix))
     	wx <- fx %*% cvec
     	wx[wx < -50] <- -50
     	px <- exp(wx)
     	if (nderiv1 == 0) {
         Dfx1 <- fx
     	} else {
-        Dfx1 <- as.matrix(getbasismatrix(x, basisobj, 1))
+        Dfx1 <- as.matrix(getbasismatrix(x, basisobj, 1, returnMatrix))
     	}
     	if (nderiv2 == 0) {
         Dfx2 <- fx
     	} else {
-        Dfx2 <- as.matrix(getbasismatrix(x, basisobj, 2))
+        Dfx2 <- as.matrix(getbasismatrix(x, basisobj, 2, returnMatrix))
     	}
     	sumj <- t(Dfx1) %*% ((px %*% oneb) * Dfx2)
     	smat[j,,] <- (smat[j-1,,] + width*sumj/tnm)/2

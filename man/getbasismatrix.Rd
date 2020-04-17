@@ -8,7 +8,7 @@
   a set of argument values.
 }
 \usage{
-getbasismatrix(evalarg, basisobj, nderiv=0)
+getbasismatrix(evalarg, basisobj, nderiv=0, returnMatrix=FALSE)
 }
 \arguments{
   \item{evalarg}{
@@ -19,6 +19,10 @@ getbasismatrix(evalarg, basisobj, nderiv=0)
   }
   \item{nderiv}{
     a nonnegative integer specifying the derivative to be evaluated.
+  }
+  \item{returnMatrix}{
+    logical:  If TRUE,  a two-dimensional is returned using a
+    special class from the Matrix package.
   }
 }
 \value{

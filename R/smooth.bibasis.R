@@ -1,4 +1,5 @@
-smooth.bibasis <- function (sarg, targ, y, fdPars, fdPart, fdnames=NULL)
+smooth.bibasis <- function (sarg, targ, y, fdPars, fdPart, fdnames=NULL,
+                            returnMatrix=FALSE)
 {
 #  SMOOTH_BIBASIS  Smooths discrete surface values over a rectangular
 #  lattice to estimate a smoothing function f(s,t)
@@ -19,6 +20,9 @@ smooth.bibasis <- function (sarg, targ, y, fdPars, fdPart, fdnames=NULL)
 #               1. argument s
 #               2. argument t
 #               3. the function f(s,t).
+#  RETURNMATRIX ... If False, a matrix in sparse storage model can be returned
+#               from a call to function BsplineS.  See this function for
+#               enabling this option.
 
 # Returns a list containing:
 #   FDOBJ ...  an object of class fd containing coefficients.
@@ -36,7 +40,7 @@ smooth.bibasis <- function (sarg, targ, y, fdPars, fdPart, fdnames=NULL)
 #   PENMAT...  the penalty matrix.
 #   Y2CMAP...  the matrix mapping the data to the coefficients.
 
-# last modified 6 January 2020 by Jim Ramsay
+# last modified 13 April 2020 by Jim Ramsay
 
 #  ---------------------------------------------------------------------
 #                      Check argments
@@ -44,142 +48,134 @@ smooth.bibasis <- function (sarg, targ, y, fdPars, fdPart, fdnames=NULL)
 
 #  check argument values
 
-  if (!is.numeric(sarg)) stop("SARG is not numeric.")
-  argvals <- as.vector(sarg)
-  if (length(sarg) < 2) stop("SARG does not contain at least two values.")
-  
-  if (!is.numeric(targ)) stop("TARG is not numeric.")
-  argvals <- as.vector(targ)
-  if (length(targ) < 2) stop("TARG does not contain at least two values.")
-  
-ns   <- length(sarg)
-nt   <- length(targ)
+sarg = argcheck(sarg)
+targ = argcheck(targ)
+ns   = length(sarg)
+nt   = length(targ)
 
 #  check Y
 
 if(!inherits(y, "matrix") && !inherits(y, "array"))
     stop("'y' is not of class matrix or class array.")
 
-ydim <- dim(y)
+ydim = dim(y)
 
 if (ydim[1] != ns) stop(
     "Number of rows of Y is not the same length as SARG.")
 if (ydim[2] != nt) stop(
     "Number of columns of Y is not the same length as TARG.")
 if (length(ydim) == 2) {
-    nsurf <- 1
-    ymat <- matrix(y, ns*nt, 1)
+    nsurf = 1
+    ymat = matrix(y, ns*nt, 1)
 } else {
-    nsurf <- ydim(3)
-    ymat <- matrix(0, ns*nt, nsurf)
+    nsurf = ydim(3)
+    ymat = matrix(0, ns*nt, nsurf)
     for (isurf in 1:nsurf)
-        ymat[,isurf] <- matrix(y[,,isurf], ns*nt, 1)
+        ymat[,isurf] = matrix(y[,,isurf], ns*nt, 1)
 }
 
   #  check FDPARS, FDPART and BASES, LBFDOBJ"S and LAMBDA"S
 
-fdPars  <- fdParcheck(fdPars)
-fdobjs  <- fdPars$fd
-sbasis  <- fdobjs$basis
-snbasis <- sbasis$nbasis - length(sbasis$dropind)
-lambdas <- fdPars$lambda
-Lfds    <- fdPars$Lfd
+fdPars  = fdParcheck(fdPars)
+fdobjs  = fdPars$fd
+sbasis  = fdobjs$basis
+snbasis = sbasis$nbasis - length(sbasis$dropind)
+lambdas = fdPars$lambda
+Lfds    = fdPars$Lfd
 
-fdPart  <- fdParcheck(fdPart)
-fdobjt  <- fdPart$fd
-tbasis  <- fdobjt$basis
-tnbasis <- tbasis$nbasis - length(tbasis$dropind)
-lambdat <- fdPart$lambda
-Lfdt    <- fdPart$Lfd
+fdPart  = fdParcheck(fdPart)
+fdobjt  = fdPart$fd
+tbasis  = fdobjt$basis
+tnbasis = tbasis$nbasis - length(tbasis$dropind)
+lambdat = fdPart$lambda
+Lfdt    = fdPart$Lfd
 
 #  check LAMBDA
 
 if (lambdas < 0) {
     warning ("Value of lambdas was negative, 0 used instead.")
-    lambdas <- 0
+    lambdas = 0
 }
 if (lambdat < 0) {
     warning ("Value of lambdat was negative, 0 used instead.")
-    lambdat <- 0
+    lambdat = 0
 }
 
 #  set default argument values
 
 if (is.null(fdnames)) {
-    fdnames      <- vector("list", 3)
-    fdnames[[1]] <- "argument s"
-    fdnames[[2]] <- "argument s"
-    fdnames[[3]] <- "function"
+    fdnames      = vector("list", 3)
+    fdnames[[1]] = "argument s"
+    fdnames[[2]] = "argument s"
+    fdnames[[3]] = "function"
 }
 
 #  ----------------------------------------------------------------
 #                set up the linear equations for smoothing
 #  ----------------------------------------------------------------
 
-sbasismat <- eval.basis(sarg, sbasis, 0)
-tbasismat <- eval.basis(targ, tbasis, 0)
-basismat  <- kronecker(tbasismat,sbasismat)
+sbasismat = eval.basis(sarg, sbasis, 0, returnMatrix)
+tbasismat = eval.basis(targ, tbasis, 0, returnMatrix)
+basismat  = kronecker(tbasismat,sbasismat)
 
 if (ns*nt > snbasis*tnbasis || lambdas > 0 || lambdat > 0) {
 
     #  The following code is for the coefficients completely determined
 
-    Bmat  <- crossprod(basismat,basismat)
-    Bmat0 <- Bmat
+    Bmat  = crossprod(basismat,basismat)
 
     #  set up right side of equations
 
-
-    Dmat <- crossprod(basismat,ymat)
+    Dmat = crossprod(basismat,ymat)
 
     #  set up regularized cross-product matrix BMAT
 
     if (lambdas > 0) {
-      penmats  <- eval.penalty(sbasis, Lfds)
-      Bnorm   <- sqrt(sum(c(Bmat0)^2))
-      pennorm <- sqrt(sum(c(penmats)^2))
-      condno  <- pennorm/Bnorm
+      penmats  = eval.penalty(sbasis, Lfds)
+      Bnorm   = sqrt(sum(c(Bmat)^2))
+      pennorm = sqrt(sum(c(penmats)^2))
+      condno  = pennorm/Bnorm
       if (lambdas*condno > 1e12) {
-        lambdas <- 1e12/condno
+        lambdas = 1e12/condno
         warning(paste("lambdas reduced to",lambdas,
                       "to prevent overflow"))
       }
-      Imat <- diag(rep(nt,1))
-      Bmat <- Bmat0 + lambdas*kronecker(Imat,penmats)
+      Imat = diag(rep(nt,1))
+      Bmat = Bmat + lambdas*kronecker(Imat,penmats)
     }
 
     if (lambdat > 0) {
-      penmatt  <- eval.penalty(tbasis, Lfdt)
-      Bnorm   <- sqrt(sum(c(Bmat0)^2))
-      pennorm <- sqrt(sum(c(penmatt)^2))
-      condno  <- pennorm/Bnorm
+      penmatt  = eval.penalty(tbasis, Lfdt)
+      Bnorm   = sqrt(sum(c(Bmat)^2))
+      pennorm = sqrt(sum(c(penmatt)^2))
+      condno  = pennorm/Bnorm
       if (lambdat*condno > 1e12) {
-        lambdat <- 1e12/condno
+        lambdat = 1e12/condno
         warning(paste("lambdat reduced to",lambdat,
                       "to prevent overflow"))
       }
-      Imat <- diag(rep(ns,1))
-      Bmat <- Bmat0 + lambdat*kronecker(penmatt,Imat)
+      Imat = diag(rep(ns,1))
+      Bmat = Bmat + lambdat*kronecker(penmatt,Imat)
     }
 
     #  compute inverse of Bmat
 
-    Bmat <- (Bmat+t(Bmat))/2
-    Lmat <- chol(Bmat)
-    # Lmat <- try(chol(Bmat), silent=TRUE) {
+    Bmat = (Bmat+t(Bmat))/2
+    Lmat = chol(Bmat)
+    # Lmat = try(chol(Bmat), silent=TRUE) {
     #   if (class(Lmat)=="try-error") {
-    #     Beig <- eigen(Bmat, symmetric=TRUE)
-    #     BgoodEig <- (Beig$values>0)
-    #     Brank <- sum(BgoodEig)
+    #     Beig = eigen(Bmat, symmetric=TRUE)
+    #     BgoodEig = (Beig$values>0)
+    #     Brank = sum(BgoodEig)
     #     if (Brank < dim(Bmat)[1])
     #       warning("Matrix of basis function values has rank ",
-    #               Brank, " < dim(fdobj$basis)[2] <- ",
+    #               Brank, " < dim(fdobj$basis)[2] = ",
     #               length(BgoodEig), "  ignoring null space")
-    #     goodVec <- Beig$vectors[, BgoodEig]
-    #     Bmatinv <- (goodVec %*% (Beig$values[BgoodEig] * t(goodVec)))
+    #     goodVec = Beig$vectors[, BgoodEig]
+    #     Bmatinv = (goodVec %*% (Beig$values[BgoodEig] * t(goodVec)))
     #   } else {
-        Lmatinv <- solve(Lmat)
-        Bmatinv <- Lmatinv %*% t(Lmatinv)
+        Lmatinv = solve(Lmat)
+        Bmatinv = Lmatinv %*% t(Lmatinv)
     #   }
     # }
 
@@ -190,23 +186,23 @@ if (ns*nt > snbasis*tnbasis || lambdas > 0 || lambdat > 0) {
 
     #  compute map from y to c
 
-    y2cMap <- Bmatinv %*% t(basismat)
+    y2cMap = Bmatinv %*% t(basismat)
 
     #  compute degrees of freedom of smooth
 
-    BiB0 <- Bmatinv %*% Bmat0
+    BiB0 = Bmatinv %*% Bmat
 
-    df <- sum(diag(BiB0))
+    df = sum(diag(BiB0))
 
     #  solve normal equations for each observation
 
-    coef <- solve(Bmat, Dmat)
+    coef = solve(Bmat, Dmat)
     if (nsurf == 1) {
-        coefmat <- matrix(coef, snbasis, tnbasis)
+        coefmat = matrix(coef, snbasis, tnbasis)
     } else {
-        coefmat <- array(0, c(snbasis, tnbasis, nsurf))
+        coefmat = array(0, c(snbasis, tnbasis, nsurf))
         for (isurf in 1:nsurf)
-            coefmat[,,isurf] <- matrix(coef[,isurf], snbasis, tnbasis)
+            coefmat[,,isurf] = matrix(coef[,isurf], snbasis, tnbasis)
     }
 
 } else {
@@ -221,30 +217,30 @@ if (ns*nt > snbasis*tnbasis || lambdas > 0 || lambdat > 0) {
 
 #  compute error sum of squares
 
-yhat <- basismat %*% coef
-SSE  <- sum((ymat - yhat)^2)
+yhat = basismat %*% coef
+SSE  = sum((ymat - yhat)^2)
 
 #  compute  GCV index
 
-N <- ns*nt*nsurf
+N = ns*nt*nsurf
 if (df < N) {
-    gcv <- (SSE/N)/((N - df)/N)^2
+    gcv = (SSE/N)/((N - df)/N)^2
 } else {
-    gcv <- NA
+    gcv = NA
 }
 
 #  ------------------------------------------------------------------
 #          Set up the functional data objects for the smooths
 #  ------------------------------------------------------------------
 
-bifdobj <- bifd(coefmat, sbasis, tbasis, fdnames)
+bifdobj = bifd(coefmat, sbasis, tbasis, fdnames)
 
-smoothlist <- list(bifdobj=bifdobj,  df=df,           gcv=gcv,
-                  SSE=SSE,          penmats=penmats, penmatt=penmatt,
+smoothlist = list(bifdobj=bifdobj,  df=df,           gcv=gcv,
+                  SSE=SSE,          penmats=penmats, penmatt = penmatt,
                   y2cMap=y2cMap,    sarg=sarg,       targ=targ,
-                  y=y,              coef=coefmat)
+                  y=y,              coef = coefmat)
 
-#  class(smoothlist) <- "bifdSmooth"
+#  class(smoothlist) = "bifdSmooth"
 return(smoothlist)
 
 }

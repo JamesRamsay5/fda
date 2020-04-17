@@ -8,7 +8,7 @@ Evaluates a set of B-spline basis functions, or a derivative of these
 functions, at a set of arguments.
 }
 \usage{
-bsplineS(x, breaks, norder=4, nderiv=0)
+bsplineS(x, breaks, norder=4, nderiv=0, returnMatrix=FALSE)
 }
 \arguments{
   \item{x}{
@@ -30,6 +30,10 @@ bsplineS(x, breaks, norder=4, nderiv=0)
     evaluated.  The derivative must not exceed the order.  The default
     derivative is 0, meaning that the basis functions themselves are
     evaluated.
+  }
+  \item{returnMatrix}{
+    logical:  If TRUE,  a two-dimensional is returned using a
+    special class from the Matrix package.
   }
 }
 \value{
@@ -58,6 +62,17 @@ norder <- 4
 #  compute the 11 by 8 matrix of basis function values
 basismat <- bsplineS(x, breaks, norder)
 
+# use sparse Matrix representation to save memory
+Basismat <- bsplineS(x, breaks, norder, returnMatrix=TRUE)
+
+# check
+\dontshow{stopifnot(}
+class(Basismat)=='dgCMatrix'
+\dontshow{)}
+
+\dontshow{stopifnot(}
+all.equal(basismat, as.matrix(Basismat))
+\dontshow{)}
 
 }
 \keyword{smooth}

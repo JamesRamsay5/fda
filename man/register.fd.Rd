@@ -163,14 +163,14 @@ growfdPar2.3 <- fdPar(Wfd0.growth, Lfdobj.growth, lambda.gr2.3)
 hgtmfd.all   <- with(growth, smooth.basis(age, hgtm, growfdPar2.3)$fd)
 # Register the growth velocity rather than the
 # growth curves directly
-smBv <- deriv(hgtmfd.all, 1)
+smBv <- deriv.fd(hgtmfd.all, 1)
 
 ##
 ## 2.  Register the first 2 Berkeley boys using the default basis
 ##     for the warping function
 ##
-# register.fd takes time, so use only 2 curves as an illustration
-# to minimize compute time in these examples
+# register.fd takes time, so we use only 2 curves as an illustration
+# to minimize computing time in these examples
 nBoys <- 2
 #  Define the target function as the mean of the first nBoys records
 smBv0 = mean.fd(smBv[1:nBoys])
@@ -189,6 +189,7 @@ plotreg.fd(smB.reg.0)
 #  Notice that all the warping functions all have simple shapes
 #  due to the use of the simplest possible basis
 
+if (!CRAN()) {
 ##
 ## 3.  Define a more flexible basis for the warping functions
 ##
@@ -203,7 +204,6 @@ smB.reg.1 <- register.fd(smBv0, smBv[1:nBoys], WfdParobj)
 plotreg.fd(smB.reg.1)
 #  Notice that now the warping functions can have more complex shapes
 
-\dontrun{
 ##
 ## 4.  Change the target to the mean of the registered functions ...
 ##     this should provide a better target for registration
@@ -247,7 +247,7 @@ gaitfdPar    <- fdPar(gaitbasis, harmaccelLfd, 1e-2)
 #  smooth the data
 gaitfd <- smooth.basis(gaittime, gait, gaitfdPar)$fd
 #  compute the angular acceleration functional data object
-D2gaitfd      <- deriv.fd(gaitfd,2)
+D2gaitfd    <- deriv.fd(gaitfd,2)
 names(D2gaitfd$fdnames)[[3]] <- "Angular acceleration"
 D2gaitfd$fdnames[[3]] <- c("Hip", "Knee")
 #  compute the mean angular acceleration functional data object

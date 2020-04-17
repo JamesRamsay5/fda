@@ -14,13 +14,15 @@
   operator to the functional object.
 }
 \usage{
-eval.fd(evalarg, fdobj, Lfdobj=0)
-\method{predict}{fd}(object, newdata=NULL, Lfdobj=0,
+eval.fd(evalarg, fdobj, Lfdobj=0, returnMatrix=FALSE)
+\method{predict}{fd}(object, newdata=NULL, Lfdobj=0, returnMatrix=FALSE,
                      ...)
-\method{predict}{fdPar}(object, newdata=NULL, Lfdobj=0, ...)
-\method{predict}{fdSmooth}(object, newdata=NULL, Lfdobj=0, ...)
-\method{fitted}{fdSmooth}(object, ...)
-\method{residuals}{fdSmooth}(object, ...)
+\method{predict}{fdPar}(object, newdata=NULL, Lfdobj=0,
+                     returnMatrix=FALSE, ...)
+\method{predict}{fdSmooth}(object, newdata=NULL, Lfdobj=0,
+                     returnMatrix=FALSE, ...)
+\method{fitted}{fdSmooth}(object, returnMatrix=FALSE, ...)
+\method{residuals}{fdSmooth}(object, returnMatrix=FALSE, ...)
 }
 \arguments{
   \item{evalarg, newdata}{
@@ -39,6 +41,10 @@ eval.fd(evalarg, fdobj, Lfdobj=0)
   }
   \item{object}{
     an object of class \code{fd}
+  }
+  \item{returnMatrix}{
+    logical:  Should a 2-dimensional array to be returned using a
+    special class from the Matrix package if appropriate?
   }
   \item{\dots}{
     optional arguments for \code{predict}, not currently used
@@ -151,21 +157,20 @@ plot(lipSm9)
 July4.1776 <- as.Date('1776-07-04')
 Apr30.1789 <- as.Date('1789-04-30')
 AmRev <- c(July4.1776, Apr30.1789)
-AmRevYears  <- seq(July4.1776, Apr30.1789, length.out=14)
-AmRevLinear <- as.numeric(AmRevYears-July4.1776)
-AmRevYears  <- as.numeric(AmRevYears)
-BspRev      <- create.bspline.basis(AmRev)
-fitLin      <- smooth.basis(AmRevYears, AmRevLinear, BspRev)$fd
-AmPred      <- predict(fitLin, AmRevYears)
+BspRevolution <- create.bspline.basis(AmRev)
+
+AmRevYears <- seq(July4.1776, Apr30.1789, length.out=14)
+(AmRevLinear <- as.numeric(AmRevYears-July4.1776))
+fitLin <- smooth.basis(AmRevYears, AmRevLinear, BspRevolution)
+AmPred <- predict(fitLin, AmRevYears)
 
 # POSIXct
-AmRev.ct    <- as.POSIXct1970(c('1776-07-04', '1789-04-30'))
+AmRev.ct <- as.POSIXct1970(c('1776-07-04', '1789-04-30'))
+BspRev.ct <- create.bspline.basis(AmRev.ct)
 AmRevYrs.ct <- seq(AmRev.ct[1], AmRev.ct[2], length.out=14)
-AmRevLin.ct <- as.numeric(AmRevYrs.ct-AmRev.ct[2])
-AmRevYrs.ct <- as.numeric(AmRevYrs.ct)
-BspRev.ct   <- create.bspline.basis(AmRev.ct)
-fitLin.ct   <- smooth.basis(AmRevYrs.ct, AmRevLin.ct, BspRev.ct)$fd
-AmPred.ct   <- predict(fitLin.ct, AmRevYrs.ct)
+(AmRevLin.ct <- as.numeric(AmRevYrs.ct-AmRev.ct[2]))
+fitLin.ct <- smooth.basis(AmRevYrs.ct, AmRevLin.ct, BspRev.ct)
+AmPred.ct <- predict(fitLin.ct, AmRevYrs.ct)
 
 }
 % docclass is function

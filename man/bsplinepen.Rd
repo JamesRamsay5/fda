@@ -8,7 +8,7 @@
   expressed in terms of a B-spline basis.
 }
 \usage{
-  bsplinepen(basisobj, Lfdobj=2, rng=basisobj$rangeval)
+  bsplinepen(basisobj, Lfdobj=2, rng=basisobj$rangeval, returnMatrix=FALSE)
 }
 \arguments{
   \item{basisobj}{
@@ -20,6 +20,10 @@
   \item{rng}{
   a vector of length 2 defining range over which the basis penalty is to
   be computed.
+  }
+  \item{returnMatrix}{
+    logical:  If TRUE,  a two-dimensional is returned using a
+    special class from the Matrix package.
   }
 }
 \value{
@@ -61,13 +65,14 @@ penmat <- bsplinepen(basisobj)
 invasion1 <- as.Date('1775-09-04')
 invasion2 <- as.Date('1812-07-12')
 earlyUS.Canada <- c(invasion1, invasion2)
-BspInvade1 <- create.bspline.basis(as.numeric(earlyUS.Canada))
-Binvadmat  <- bsplinepen(BspInvade1)
+BspInvade1 <- create.bspline.basis(earlyUS.Canada)
+Binvadmat <- bsplinepen(BspInvade1)
 
 # POSIXct
-AmRev.ct   <- as.POSIXct1970(c('1776-07-04', '1789-04-30'))
-BspRev1.ct <- create.bspline.basis(as.numeric(AmRev.ct))
-Brevmat    <- bsplinepen(BspRev1.ct)
+AmRev.ct <- as.POSIXct1970(c('1776-07-04', '1789-04-30'))
+BspRev1.ct <- create.bspline.basis(AmRev.ct)
+Brevmat <- bsplinepen(BspRev1.ct)
 
 }
+% docclass is function
 \keyword{smooth}

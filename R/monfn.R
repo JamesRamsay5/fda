@@ -1,6 +1,7 @@
 #  --------------------------------------------------------------
 
-monfn <- function(argvals, Wfdobj, basislist=vector("list",JMAX)) {
+monfn <- function(argvals, Wfdobj, basislist=vector("list",JMAX), 
+                  returnMatrix=FALSE) {
 #  evaluates a monotone function of the form
 #            h(x) = [D^{-1} exp Wfdobj](x)
 #  where  D^{-1} means taking the indefinite integral.
@@ -12,8 +13,11 @@ monfn <- function(argvals, Wfdobj, basislist=vector("list",JMAX)) {
 #  BASISLIST ... a list containing values of basis functions
 #  Returns:
 #  HVAL   ... matrix or array containing values of h.
+#  RETURNMATRIX ... If False, a matrix in sparse storage model can be returned
+#               from a call to function BsplineS.  See this function for
+#               enabling this option.
 
-#  Last modified 6 January 2020
+#  Last modified 8 May 2012
 
   #  check Wfdobj
   
@@ -48,7 +52,7 @@ monfn <- function(argvals, Wfdobj, basislist=vector("list",JMAX)) {
   tval <- rangeval
   j   <- 1
   if (is.null(basislist[[j]])) {
-      bmat <- getbasismatrix(tval, basisobj, 0)
+      bmat <- getbasismatrix(tval, basisobj, 0, returnMatrix)
       basislist[[j]] <- bmat
   } else {
       bmat <- basislist[[j]]
@@ -64,7 +68,7 @@ monfn <- function(argvals, Wfdobj, basislist=vector("list",JMAX)) {
     tj   <- seq(rangeval[1]+del/2, rangeval[2]-del/2, by=flag*abs(del))
     tval <- c(tval, tj)
     if (is.null(basislist[[j]])) {
-        bmat <- getbasismatrix(tj, basisobj, 0)
+        bmat <- getbasismatrix(tj, basisobj, 0, returnMatrix)
         basislist[[j]] <- bmat
     } else {
         bmat <- basislist[[j]]

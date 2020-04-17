@@ -95,13 +95,13 @@ Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
       \item{integer}{
       	an integer giving the order of 
       	a B-spline basis, 
-      	create.bspline.basis(argvals, 
-      	norder=basisobj)
+      	\code{create.bspline.basis(argvals, 
+      	norder=basisobj)}
       }
       \item{numeric vector}{
       	specifying the knots for a 
       	B-spline basis, 
-      	create.bspline.basis(basisobj)
+      	\code{create.bspline.basis(basisobj)}
       }
       \item{NULL}{
       	Defaults to 
@@ -114,9 +114,9 @@ Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
     integer order for the derivative
     whose square is integrated and 
     weighted by \code{lambda} to smooth.
-    By default, if basisobj[['type']] == 
-    'bspline', the smoothing operator is 
-    int2Lfd(max(0, norder-2)).
+    By default, \code{if basisobj[['type']] == 
+    'bspline'}, the smoothing operator is 
+    \code{int2Lfd(max(0, norder-2)).}
 
     A general linear differential 
     operator can also be supplied.
@@ -227,7 +227,7 @@ Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
 }
 \value{
   an object of the \code{fd} class containing:
-
+  \itemize{
   \item{coefs}{
     the coefficient array
   }
@@ -238,6 +238,7 @@ Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
     a list containing names for the 
     arguments, function values and 
     variables
+  }
   }
 }
 \references{
@@ -401,6 +402,4 @@ AmRevYrs.ct <- as.numeric(AmRevYrs.ct)/rescale
 AmRevLin.ct <- as.numeric(AmRevLin.ct)/rescale
 fitLin.ct   <- Data2fd(AmRevYrs.ct, AmRevLin.ct, BspRev.ct)
 }
-
-% docclass is function
 \keyword{smooth}
