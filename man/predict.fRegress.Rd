@@ -20,18 +20,26 @@
 
     If(is.null(newdata)) predictions <- object\$yhatfdobj
 
-    If newdata is a list, predictions = the sum of either newdata[i] *
-    betaestfdlist[i] if object\$yfdobj has class \code{fd} or inprod(
-    newdata[i], betaestfdlist[i]) if class(object\$yfdobj) =
+    If newdata is a list, predictions = the sum of either 
+    
+    newdata[i] * betaestfdlist[i] if object\$yfdobj has class \code{fd} 
+    
+    or 
+    
+    inprod(newdata[i], betaestfdlist[i]) if class(object\$yfdobj) =
     \code{numeric}.
   }
   \item{se.fit}{
     a switch indicating if standard errors of predictions are required
+    
+    NOTE:  se.fit = TRUE is NOT IMPLEMENTED YET.  
   }
   \item{interval}{
     type of prediction (response or model term)
+    
+    NOTE:  Only "intervale = 'none'" has been implemented so far.  
   }
-  \item{level}{ Tolerance/confidence level }
+  \item{level}{Tolerance/confidence level}
   \item{\dots}{
     additional arguments for other methods
   }
@@ -75,7 +83,7 @@
 \examples{
 ###
 ###
-### vector response with functional explanatory variable
+### vector response with vector explanatory variable
 ###
 ###
 ##
@@ -106,6 +114,14 @@ tempfd <- smooth.basis(day.5,
    CanadianWeather$dailyAv[,,"Temperature.C"], smallbasis)$fd
 precip.Temp.f <- fRegress(annualprec ~ tempfd)
 
+precip.Temp.p <- predict(precip.Temp.f)
+
+# plot response vs. fitted 
+plot(annualprec, precip.Temp.p)
+
+
+
+\dontshow{
 \dontrun{
 # The following does not yet work, because  
 # the confidence interval option has not yet been coded.  
@@ -149,6 +165,7 @@ knee.hip.f <- fRegress(kneefd ~ hipfd)
 
 knee.hip.pred <- predict(knee.hip.f)
 plot(knee.hip.pred)
+}
 }
 }
 \keyword{ models}
