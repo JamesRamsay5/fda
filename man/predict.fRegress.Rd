@@ -12,10 +12,10 @@
      level = 0.95, ...)
 }
 \arguments{
-  \item{ object }{
-    Object of class inheriting from \code{lmWinsor}
+  \item{object}{
+    Object of class inheriting from \code{fRegresss}
   }
-  \item{ newdata }{
+  \item{newdata}{
     Either NULL or a list matching object\$xfdlist.
 
     If(is.null(newdata)) predictions <- object\$yhatfdobj
@@ -25,13 +25,13 @@
     newdata[i], betaestfdlist[i]) if class(object\$yfdobj) =
     \code{numeric}.
   }
-  \item{ se.fit}{
+  \item{se.fit}{
     a switch indicating if standard errors of predictions are required
   }
   \item{interval}{
     type of prediction (response or model term)
   }
-  \item{ level }{ Tolerance/confidence level }
+  \item{level}{ Tolerance/confidence level }
   \item{\dots}{
     additional arguments for other methods
   }
