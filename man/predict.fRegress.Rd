@@ -119,8 +119,6 @@ precip.Temp.p <- predict(precip.Temp.f)
 # plot response vs. fitted 
 plot(annualprec, precip.Temp.p)
 
-
-
 \dontshow{
 \dontrun{
 # The following does not yet work, because  
