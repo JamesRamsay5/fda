@@ -12,26 +12,34 @@
      level = 0.95, ...)
 }
 \arguments{
-  \item{ object }{
-    Object of class inheriting from \code{lmWinsor}
+  \item{object}{
+    Object of class inheriting from \code{fRegresss}
   }
-  \item{ newdata }{
+  \item{newdata}{
     Either NULL or a list matching object\$xfdlist.
 
     If(is.null(newdata)) predictions <- object\$yhatfdobj
 
-    If newdata is a list, predictions = the sum of either newdata[i] *
-    betaestfdlist[i] if object\$yfdobj has class \code{fd} or inprod(
-    newdata[i], betaestfdlist[i]) if class(object\$yfdobj) =
+    If newdata is a list, predictions = the sum of either 
+    
+    newdata[i] * betaestfdlist[i] if object\$yfdobj has class \code{fd} 
+    
+    or 
+    
+    inprod(newdata[i], betaestfdlist[i]) if class(object\$yfdobj) =
     \code{numeric}.
   }
-  \item{ se.fit}{
+  \item{se.fit}{
     a switch indicating if standard errors of predictions are required
+    
+    NOTE:  se.fit = TRUE is NOT IMPLEMENTED YET.  
   }
   \item{interval}{
     type of prediction (response or model term)
+    
+    NOTE:  Only "intervale = 'none'" has been implemented so far.  
   }
-  \item{ level }{ Tolerance/confidence level }
+  \item{level}{Tolerance/confidence level}
   \item{\dots}{
     additional arguments for other methods
   }
@@ -75,7 +83,11 @@
 \examples{
 ###
 ###
+<<<<<<< HEAD
 ### vector response with functional explanatory variable
+=======
+### vector response with vector explanatory variable
+>>>>>>> a2d8d1a606598619fff34b97d382ab6d75afb452
 ###
 ###
 ##
@@ -106,6 +118,15 @@ tempfd <- smooth.basis(day.5,
    CanadianWeather$dailyAv[,,"Temperature.C"], smallbasis)$fd
 precip.Temp.f <- fRegress(annualprec ~ tempfd)
 
+<<<<<<< HEAD
+=======
+precip.Temp.p <- predict(precip.Temp.f)
+
+# plot response vs. fitted 
+plot(annualprec, precip.Temp.p)
+
+\dontshow{
+>>>>>>> a2d8d1a606598619fff34b97d382ab6d75afb452
 \dontrun{
 # The following does not yet work, because  
 # the confidence interval option has not yet been coded.  
@@ -151,5 +172,9 @@ knee.hip.pred <- predict(knee.hip.f)
 plot(knee.hip.pred)
 }
 }
+<<<<<<< HEAD
+=======
+}
+>>>>>>> a2d8d1a606598619fff34b97d382ab6d75afb452
 \keyword{ models}
 
