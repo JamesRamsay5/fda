@@ -440,7 +440,6 @@ expectden.phi <- function(basisobj, cvec, Cval=1, nderiv=0,
     h <- matrix(1,JMAXP,1)
     h[2] <- 0.25
     #  matrix SMAT contains the history of discrete approximations to the integral
-    smat <- matrix(0,JMAXP,nbasis)
     sumj <- matrix(0,1,nbasis)
     #  the first iteration uses just the }points
     x  <- rng
@@ -485,9 +484,9 @@ expectden.phi <- function(basisobj, cvec, Cval=1, nderiv=0,
     	if (j >= 5) {
         ind <- (j-4):j
         temp <- smat[ind,]
-	  result <- polintarray(h[ind],temp,0)
-	  ss  <- result[[1]]
-	  dss <- result[[2]]
+	      result <- polintarray(h[ind],temp,0)
+	      ss  <- result[[1]]
+	      dss <- result[[2]]
         if (!any(abs(dss) > EPS*max(abs(ss)))) {
           #  successful convergence
           return(ss)

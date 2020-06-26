@@ -1,4 +1,4 @@
-fRegress.stderr <- function(y, y2cMap, SigmaE, returnMatrix=FALSE, ...) {
+fRegress.stderr <- function(fRegressList, y2cMap, SigmaE, returnMatrix=FALSE, ...) {
 
 #  FREGRESS.STDERR  computes standard error estimates for regression
 #       coefficient functions estimated by function FREGRESS.
@@ -31,11 +31,7 @@ fRegress.stderr <- function(y, y2cMap, SigmaE, returnMatrix=FALSE, ...) {
 #               from a call to function BsplineS.  See this function for
 #               enabling this option.
 
-#  Last modified 8 May 2012 by Jim Ramsay
-
-#  generic argument y is actually fRegressList
-
-fRegressList <- y
+#  Last modified 19 June 2020 by Jim Ramsay
 
 #  get number of independent variables
 

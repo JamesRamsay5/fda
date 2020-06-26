@@ -13,7 +13,7 @@
 }
 \arguments{
   \item{object}{
-    Object of class inheriting from \code{fRegresss}
+    Object of class inheriting from \code{fRegress}
   }
   \item{newdata}{
     Either NULL or a list matching object\$xfdlist.
