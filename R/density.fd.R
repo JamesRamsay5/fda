@@ -35,7 +35,7 @@ density.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20,
 #  exponentiate the resulting vector, and then divide by the normalizing
 #  constant C.
 
-# last modified 6 January 2020 by Jim Ramsay
+# last modified 3 July 2020 by Jim Ramsay
 
 #  check WfdParobj
 
@@ -381,6 +381,7 @@ normden.phi <- function(basisobj, cvec, JMAX=15, EPS=1e-7) {
   	wx <- fx %*% cvec
   	wx[wx < -50] <- -50
   	px <- exp(wx)
+  	smat <- matrix(0,JMAXP,1)
   	smat[1]  <- width*sum(px)/2
   	tnm <- 0.5
   	j   <- 1
@@ -455,6 +456,7 @@ expectden.phi <- function(basisobj, cvec, Cval=1, nderiv=0,
     	Dfx <- getbasismatrix(x, basisobj, 1)
     }
     sumj <- t(Dfx) %*% px
+    smat <- matrix(0,JMAXP,nbasis)
     smat[1,]  <- width*as.vector(sumj)/2
     tnm <- 0.5
     j   <- 1
@@ -525,7 +527,6 @@ expectden.phiphit <- function(basisobj, cvec, Cval=1, nderiv1=0, nderiv2=0,
   	h <- matrix(1,JMAXP,1)
   	h[2] <- 0.25
   	#  matrix SMAT contains history of discrete approximations to the integral
-  	smat <- array(0,c(JMAXP,nbasis,nbasis))
   	#  the first iteration uses just the }points
   	x  <- rng
   	nx <- length(x)
@@ -545,6 +546,7 @@ expectden.phiphit <- function(basisobj, cvec, Cval=1, nderiv1=0, nderiv2=0,
   	}
   	oneb <- matrix(1,1,nbasis)
   	sumj <- t(Dfx1) %*% ((px %*% oneb) * Dfx2)
+  	smat <- array(0,c(JMAXP,nbasis,nbasis))
   	smat[1,,]  <- width*as.matrix(sumj)/2
   	tnm <- 0.5
   	j   <- 1

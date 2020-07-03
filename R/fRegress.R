@@ -55,8 +55,12 @@ fRegress <- function(y, xfdlist, betalist, wt=NULL,
 #                    function FREGRESS.STDERR that computes standard errors
 #    wt          ... weights for observations
 #    df          ... degrees of freedom for fit
-
-#  Last modified 17 June 2020 by Jim Ramsay
+  #  This list object is converted to a class with the name "fRegress"
+  #  function predict.fRegress is an example of a method that can be called simply
+  #  as predict(fRegressList).  In this call fRegressList can be any object of the
+  #  "fRegress".
+  
+#  Last modified 3 July 2020 by Jim Ramsay
 
 arglist <- fRegressArgCheck(y, xfdlist, betalist, wt)
 

@@ -1,12 +1,13 @@
-fRegress.stderr <- function(fRegressList, y2cMap, SigmaE, returnMatrix=FALSE, ...) {
+fRegress.stderr <- function(y, y2cMap, SigmaE, returnMatrix=FALSE, ...) {
 
 #  FREGRESS.STDERR  computes standard error estimates for regression
 #       coefficient functions estimated by function FREGRESS.
 #
 #  Arguments:
 #
-#  FREGRESSLIST ... a list object produced by function FREGRESS.  This
-#                   is indicated by Y in the arguments since R syntax
+#  Y            ... a list object produced by function FREGRESS with class name
+#                   'fRegress".  
+#                   This is indicated by Y in the arguments since R syntax
 #                   requires all of tghe fRegress family of functions to
 #                   use this notation.
 #  Y2CMAP       ... the matrix mapping from the vector of observed values
@@ -31,14 +32,14 @@ fRegress.stderr <- function(fRegressList, y2cMap, SigmaE, returnMatrix=FALSE, ..
 #               from a call to function BsplineS.  See this function for
 #               enabling this option.
 
-#  Last modified 19 June 2020 by Jim Ramsay
+#  Last modified 3 July 2020 by Jim Ramsay
 
 #  get number of independent variables
 
-  xfdlist  <- fRegressList$xfdlist
-  yfdPar   <- fRegressList$yfdPar
-  betalist <- fRegressList$betalist
-  Cmatinv  <- fRegressList$Cmatinv
+  xfdlist  <- y$xfdlist
+  yfdPar   <- y$yfdPar
+  betalist <- y$betalist
+  Cmatinv  <- y$Cmatinv
 
   p <- length(xfdlist)
 

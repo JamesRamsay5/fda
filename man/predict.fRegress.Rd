@@ -81,15 +81,8 @@
   \code{\link[stats]{predict}}
 }
 \examples{
-###
-###
-<<<<<<< HEAD
-### vector response with functional explanatory variable
-=======
-### vector response with vector explanatory variable
->>>>>>> a2d8d1a606598619fff34b97d382ab6d75afb452
-###
-###
+##
+## vector response with vector explanatory variable
 ##
 ## example from help('lm')
 ##
@@ -118,63 +111,11 @@ tempfd <- smooth.basis(day.5,
    CanadianWeather$dailyAv[,,"Temperature.C"], smallbasis)$fd
 precip.Temp.f <- fRegress(annualprec ~ tempfd)
 
-<<<<<<< HEAD
-=======
 precip.Temp.p <- predict(precip.Temp.f)
 
 # plot response vs. fitted 
 plot(annualprec, precip.Temp.p)
 
-\dontshow{
->>>>>>> a2d8d1a606598619fff34b97d382ab6d75afb452
-\dontrun{
-# The following does not yet work, because  
-# the confidence interval option has not yet been coded.  
-precip.Temp.p <- predict(precip.Temp.f, interval='confidence')
-\dontshow{stopifnot(}
-class(precip.Temp.p) == 'matrix'
-\dontshow{)}
-
-## ***** not yet implemented *****
-
-##
-## Example using se.fit
-##
-
-precip.Temp.p <- predict(precip.Temp.f, se.fit=TRUE)
-
-\dontshow{stopifnot(}
-class(precip.Temp.p) == 'list'
-\dontshow{)}
-
-## ***** not yet implemented *****
-
-###
-###
-### functional response with
-###            (concurrent) functional explanatory variable
-###
-###
-##
-##  predict knee angle from hip angle;  from demo('gait', package='fda')
-##
-(gaittime <- as.numeric(dimnames(gait)[[1]])*20)
-gaitrange <- c(0,20)
-gaitbasis <- create.fourier.basis(gaitrange, nbasis=21)
-harmaccelLfd <- vec2Lfd(c(0, (2*pi/20)^2, 0), rangeval=gaitrange)
-gaitfd <- smooth.basisPar(gaittime, gait,
-       gaitbasis, Lfdobj=harmaccelLfd, lambda=1e-2)$fd
-hipfd  <- gaitfd[,1]
-kneefd <- gaitfd[,2]
-knee.hip.f <- fRegress(kneefd ~ hipfd)
-
-knee.hip.pred <- predict(knee.hip.f)
-plot(knee.hip.pred)
 }
-}
-<<<<<<< HEAD
-=======
-}
->>>>>>> a2d8d1a606598619fff34b97d382ab6d75afb452
 \keyword{ models}
 
