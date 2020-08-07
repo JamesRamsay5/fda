@@ -1,3 +1,9 @@
+fRegress <- function(y, ...) {
+  UseMethod("fRegress")
+}
+
+#  ---------------------------------------------------------------
+
 fRegress <- function(y, xfdlist, betalist, wt=NULL,
                      y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE)
 {
