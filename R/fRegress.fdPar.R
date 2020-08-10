@@ -1,10 +1,11 @@
-
 fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
                         y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...){
   yfdPar <- fdPar(y, ...)
   fRegress.fdPar(yfdPar, xfdlist, betalist, wt=wt,
                  y2cMap=y2cMap, SigmaE=SigmaE, returnMatrix=FALSE, ...)
 }
+
+#  ------------------------------------------------------------------------
 
 fRegress.fdPar <- function(y, xfdlist, betalist, wt=NULL,
                            y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
@@ -60,7 +61,7 @@ fRegress.fdPar <- function(y, xfdlist, betalist, wt=NULL,
 #    wt          ... weights for observations
 #    df          ... degrees of freedom for fit
 
-# Last modified 8 May 2012 by Jim Ramsay
+# Last modified 7 August 2020 by Jim Ramsay
 
 ##
 ## 1.  check YFDPAR and compute sample size N
