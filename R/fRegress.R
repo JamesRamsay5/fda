@@ -4,9 +4,10 @@ fRegress <- function(y, ...) {
 
 #  ---------------------------------------------------------------
 
-fRegress <- function(y, xfdlist, betalist, wt=NULL,
-                     y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE)
-{
+#fRegress
+fRegress <- 
+  function(y, xfdlist, betalist, wt=NULL,
+           y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE){
 
 #  FREGRESS  Fits a functional linear model using multiple
 #  functional independent variables with the dependency being
@@ -548,6 +549,7 @@ if (inherits(yfdPar, "fdPar") || inherits(yfdPar, "fd")) {
  return(fRegressList)
 
 }
+
 
 #  ------------------------------------------------------------------------
 
