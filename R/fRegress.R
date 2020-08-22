@@ -5,7 +5,7 @@ fRegress <- function(y, ...) {
 #  ---------------------------------------------------------------
 
 #fRegress
-fRegressCommentFn <- 
+fRegress <- 
   function(y, xfdlist, betalist, wt=NULL,
            y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE){
 
@@ -67,7 +67,7 @@ fRegressCommentFn <-
   #  as predict(fRegressList).  In this call fRegressList can be any object of the
   #  "fRegress".
   
-#  Last modified 7 August 2020 by Jim Ramsay
+#  Last modified 11 August 2020 by Jim Ramsay
 
 arglist <- fRegressArgCheck(y, xfdlist, betalist, wt)
 

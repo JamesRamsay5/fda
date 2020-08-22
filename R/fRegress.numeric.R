@@ -36,25 +36,25 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
   #               supplied, confidence limits are computed, otherwise not.
   #  SIGMAE   ... Estimate of the covariances among the residuals.  This
   #               can only be estimated after a preliminary analysis
-  #               with FREGRESS.
+  #               with .
   #  RETURNMATRIX ... If False, a matrix in sparse storage model can be returned
   #               from a call to function BsplineS.  See this function for
   #               enabling this option.
   #
-  #  Returns FREGRESSLIST  ... A list containing seven members with names:
-  #    yfdPar      ... first  argument of FREGRESS
-  #    xfdlist     ... second argument of FREGRESS
-  #    betalist    ... third  argument of FREGRESS
+  #  Returns LIST  ... A list containing seven members with names:
+  #    yfdPar      ... first  argument of 
+  #    xfdlist     ... second argument of 
+  #    betalist    ... third  argument of 
   #    betaestlist ... estimated regression functions
   #    yhatfdobj   ... functional data object containing fitted functions
   #    Cmatinv     ... inverse of the coefficient matrix, needed for
-  #                    function FREGRESS.STDERR that computes standard errors
+  #                    function .STDERR that computes standard errors
   #    wt          ... weights for observations
   #    df          ... degrees of freedom for fit
-  #  This list object is converted to a class with the name "fRegress"
-  #  function predict.fRegress is an example of a method that can be called simply
-  #  as predict(fRegressList).  In this call fRegressList can be any object of the
-  #  "fRegress".
+  #  This list object is converted to a class with the name ""
+  #  function predict. is an example of a method that can be called simply
+  #  as predict(List).  In this call List can be any object of the
+  #  "".
   
   # Last modified 3 July 2020 by Jim Ramsay
   
@@ -411,7 +411,7 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
     #                       Set up output list object
     #  -------------------------------------------------------------------
     
-    fRegressList <-
+    List <-
       list(yfdPar         = yfdPar,
            xfdlist        = xfdlist,
            betalist       = betalist,
@@ -617,7 +617,7 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
     #                  Set up output list object
     #  -----------------------------------------------------------------------
     
-    fRegressList <-
+    List <-
       list(yfdPar      = yfdPar,
            xfdlist     = xfdlist,
            betalist    = betalist,
@@ -630,7 +630,7 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
            gcv         = GCV)
   }
   
-  class(fRegressList) <- "fRegress"
+  class(List) <- "fRegress"
   
   return(fRegressList)
   
