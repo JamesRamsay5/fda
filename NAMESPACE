@@ -40,6 +40,7 @@ export(AmpPhaseDecomp,
        deriv.fd,
        df2lambda,
        dirs,
+       eigchk,
        Eigen,
        eigen.pda,
        eval.basis,
@@ -60,8 +61,13 @@ export(AmpPhaseDecomp,
        fourierpen,
        Fperm.fd,
        fRegress,
+       fRegress.fd,
+       fRegress.fdPar,
        fRegress.CV,
        fRegress.stderr,
+       fRegressArgCheck,
+       fRegress.formula,
+       fRegress.character,
        Fstat.fd,
        geigen,
        getbasismatrix,
@@ -156,6 +162,7 @@ import("graphics")
 import("stats")
 import("splines")
 import("Matrix")
+import("fds")
 
 importFrom("grDevices", "dev.new", "heat.colors")
 importFrom("utils", "data")
@@ -184,14 +191,12 @@ S3method(predict,      fd)
 S3method(sqrt,         fd)
 S3method(sum,          fd)
 S3method(summary,      fd)
-S3method(fRegress,     fd)
 S3method(boxplot,      fdPar)
 S3method(coef,         fdPar)
 S3method(coefficients, fdPar)
 S3method(plot,         fdPar)
 S3method(predict,      fdPar)
 S3method(summary,      fdPar)
-S3method(fRegress,     fdPar)
 S3method(as.fd,        fdSmooth)
 S3method(coef,         fdSmooth)
 S3method(boxplot,      fdSmooth)
@@ -209,12 +214,14 @@ S3method(residuals,    monfd)
 S3method(predict,      monfd)
 S3method(as.fd,        'function')
 S3method(as.fd,        smooth.spline)
+S3method(fRegress,     fd)
+S3method(fRegress,     fdPar)
 S3method(fRegress,     numeric)
+S3method(fRegress,     double)
+S3method(fRegress,     formula)
+S3method(fRegress,     character)
 S3method(fRegress,     stderr)
 S3method(fRegress,     CV)
-S3method(fRegress,     character)
-S3method(fRegress,     formula)
-S3method(matplot,      numeric)
 S3method(fitted,       posfd)
 S3method(predict,      posfd)
 S3method(residuals,    posfd)

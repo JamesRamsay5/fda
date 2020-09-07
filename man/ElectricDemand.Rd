@@ -24,6 +24,6 @@
     Functional Data Analysis}, Springer, New York. 
     
   Ramsay, James O., Hooker, Giles and Graves, Spencer (2009)  Functional
-    Data Analysis with R and Matlab}, Springer, New York.
+    Data Analysis with R and Matlab, Springer, New York.
 }
 \keyword{datasets}

@@ -1,4 +1,18 @@
 eigchk <- function(Cmat) {
+    
+  #  Last modified 25 August 2020 by Jim Ramsay
+  
+  #  Cmat for NA's
+  
+  if (any(is.na(Cmat))) stop("Cmat has NA values.")
+  
+  #  check Cmat for Cmatmetry
+  
+  if (max(abs(Cmat-t(Cmat)))/max(abs(Cmat)) > 1e-10) {
+    stop('CMAT is not symmetric.')
+  } else {
+    Cmat <- (Cmat + t(Cmat))/2
+  }
   
   #  check Cmat for singularity
   
