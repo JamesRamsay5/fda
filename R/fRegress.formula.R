@@ -94,9 +94,9 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
   ##
   
   k0       <- length(xNms)
-  xfdList0 <- vector('list', k0)
-  names(xfdList0) <- xNms
-  xNames          <- xfdList0
+  xfdlist0 <- vector('list', k0)
+  names(xfdlist0) <- xNms
+  xNames          <- xfdlist0
   nVars           <- rep(NA, k0)
   names(nVars)    <- xNms
   oops <- FALSE
@@ -163,7 +163,7 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
         type[i+1] <- xj$basis$type
         nb <- xj$basis$nbasis
         if(!is.null(nb))nbasis[i+1] <- nb
-        xfdList0[[i]] <- xi
+        xfdlist0[[i]] <- xi
       }
       else {
         if(is.numeric(xi)){
@@ -195,7 +195,7 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
               }
             }
           }
-          xfdList0[[i]] <- xi
+          xfdlist0[[i]] <- xi
         }
         else {
           if(inherits(xi, 'character'))
@@ -212,7 +212,7 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
               xNmLen <- nchar(xNm)
               xiLvls <- substring(xiNms, xNmLen+1)
               xNames[[i]] <- paste(xNm, xiLvls, sep=sep)
-              xfdList0[[i]] <- Xi
+              xfdlist0[[i]] <- Xi
             }
             else{
               oops <- TRUE
@@ -239,27 +239,27 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
   }
   
   ##
-  ## 5.  Create xfdList
+  ## 5.  Create xfdlist
   ##
   
   xL.L0   <- rep(1:k0, nVars)
   xNames. <- c('const', unlist(xNames))
   k <- 1+sum(nVars)
-  xfdList <- vector('list', k)
-  names(xfdList) <- xNames.
+  xfdlist <- vector('list', k)
+  names(xfdlist) <- xNames.
   #  create constfd for the intercept
-  #  xfdList[[1]] <- create.constant.basis(trng)
-  xfdList[[1]] <- rep(1, ny)
+  #  xfdlist[[1]] <- create.constant.basis(trng)
+  xfdlist[[1]] <- rep(1, ny)
   i1 <- 1
   for(ix in 1:k0) {
     i0  <- i1+1
     xNm <- xNms[ix]
-    xi  <- xfdList0[[ix]]
+    xi  <- xfdlist0[[ix]]
     {
       if(inherits(xi, 'fd')) {
         if(nVars[ix]<2) {
           i1            <- i0
-          xfdList[[i0]] <- xi
+          xfdlist[[i0]] <- xi
         }
         else {
           #          i1 <- (i1+nVars[ix])
@@ -267,7 +267,7 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
             i1  <- i1+1
             xii <- xi
             xii$coefs <- xi$coefs[,,i, drop=FALSE]
-            xfdList[[i1]] <- xii
+            xfdlist[[i1]] <- xii
           }
         }
       }
@@ -275,12 +275,12 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
         if(is.numeric(xi)) {
           if(nVars[ix]<2) {
             i1 <- i0
-            xfdList[[i0]] <- xi
+            xfdlist[[i0]] <- xi
           }
           else{
             for(i in 1:nVars[ix]) {
               i1 <- i1+1
-              xfdList[[i1]] <- xi[, i]
+              xfdlist[[i1]] <- xi[, i]
             }
           }
         }
@@ -310,8 +310,8 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
       betalist <- vector('list', k)
       names(betalist) <- xNames.
       for(i in 1:k) {
-        if(is.numeric(xfdList[[i]])) {
-          #  if xfdList[[i]] is numeric, basis is set up using that  of dependent variable y
+        if(is.numeric(xfdlist[[i]])) {
+          #  if xfdlist[[i]] is numeric, basis is set up using that  of dependent variable y
           if(is.numeric(y)) {
             bbasis        <- create.constant.basis(trng)
             bfd           <- fd(basisobj=bbasis)
@@ -331,8 +331,8 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
         else {
           #  use basis for the independent variable
           xfdi <- {
-            if(i>1) xfdList0[[xL.L0[i-1]]]
-            else    xfdList[[1]]
+            if(i>1) xfdlist0[[xL.L0[i-1]]]
+            else    xfdlist[[1]]
           }
           if(inherits(xfdi, 'fd')){
             bfd           <- with(xfdi, fd(basisobj=basis, fdnames=fdnames))
@@ -365,7 +365,9 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
   }
   xiEnd   <- cumsum(nVars)
   xiStart <- c(1, xiEnd[-1])
-  fRegressList <- list(y=y, xfdlist=xfdList, betalist=betalist, wt=wt)
+  print("setting up fRegressList")
+  print(class(y))
+  fRegressList <- list(y=y, xfdlist=xfdlist, betalist=betalist, wt=wt)
   
   ##
   ## 8.  either output argument list for fRegress() or invoke itcs
@@ -383,6 +385,8 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
     print(class(y))
     print(names(fRegressList))
     if(inherits(y, 'fd')) {
+      print("dispatching fRegress")
+      # fRegress(y, xfdlist, betalist, wt)
       do.call('fRegress.fd',    fRegressList)
     } else {
       print("dispatching fRegress.numeric")

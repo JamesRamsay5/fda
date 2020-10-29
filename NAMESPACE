@@ -40,7 +40,6 @@ export(AmpPhaseDecomp,
        deriv.fd,
        df2lambda,
        dirs,
-       eigchk,
        Eigen,
        eigen.pda,
        eval.basis,
@@ -62,12 +61,9 @@ export(AmpPhaseDecomp,
        Fperm.fd,
        fRegress,
        fRegress.fd,
-       fRegress.fdPar,
        fRegress.CV,
        fRegress.stderr,
-       fRegressArgCheck,
        fRegress.formula,
-       fRegress.character,
        Fstat.fd,
        geigen,
        getbasismatrix,
@@ -215,7 +211,6 @@ S3method(predict,      monfd)
 S3method(as.fd,        'function')
 S3method(as.fd,        smooth.spline)
 S3method(fRegress,     fd)
-S3method(fRegress,     fdPar)
 S3method(fRegress,     numeric)
 S3method(fRegress,     double)
 S3method(fRegress,     formula)

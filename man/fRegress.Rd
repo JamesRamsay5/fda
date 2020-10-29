@@ -1,10 +1,10 @@
 \name{fRegress}
 \alias{fRegress}
 \alias{fRegress.fd}
-\alias{fRegress.fdPar}
 \alias{fRegress.numeric}
 \alias{fRegress.double}
 \alias{fRegress.formula}
+\alias{fRegress.character}
 \title{
   Functional Regression Analysis
 }
@@ -45,13 +45,14 @@
 fRegress(y, ...)
 \method{fRegress}{fd}(y, xfdlist, betalist, wt=NULL,
                      y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
-\method{fRegress}{fdPar}(y, xfdlist, betalist, wt=NULL,
-                     y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
 \method{fRegress}{numeric}(y, xfdlist, betalist, wt=NULL,
                      y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
 \method{fRegress}{double}(y, xfdlist, betalist, wt=NULL,
                      y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
 \method{fRegress}{formula}(y, data=NULL, betalist=NULL, wt=NULL,
+                 y2cMap=NULL, SigmaE=NULL,
+                 method=c('fRegress', 'model'), sep='.', ...)
+\method{fRegress}{character}(y, data=NULL, betalist=NULL, wt=NULL,
                  y2cMap=NULL, SigmaE=NULL,
                  method=c('fRegress', 'model'), sep='.', ...)
 }
@@ -67,13 +68,11 @@ fRegress(y, ...)
 	of the model to be fitted satisfying the following rules:
 
 	The left hand side, \code{formula} \code{y}, must be either a
-	numeric vector or a univariate object of class \code{fd} or
-	\code{fdPar}.  If the former, it is replaced by \code{fdPar(y,
-	...)}.
+	numeric vector or a univariate object of class \code{fd}.  
 
 	All objects named on the right hand side must be either
-	\code{numeric} or \code{fd} (functional data) or \code{fdPar}.
-	The number of replications of \code{fd} or \code{fdPar}
+	\code{numeric} or \code{fd} (functional data).
+	The number of replications of \code{fd} 
 	object(s) must match each other and the number of observations
 	of \code{numeric} objects named, as well as the number of
 	replications of the dependent variable object.  The right hand
@@ -86,31 +85,21 @@ fRegress(y, ...)
 	translated into \code{k-1} contrasts in \code{xfdlist}.  Any
 	smoothing information is passed to the corresponding component
 	of \code{betalist}.
-
       }
       \item{numeric}{
 	a numeric vector object if the dependent variable is numeric vector.
-
       }
       \item{fd}{
 	a functional data object if the dependent variable is
-	functional.  A \code{y} of this class is replaced by
-	\code{fdPar(y, ...)} and passed to \code{fRegress.fdPar}.
-
+	functional.}
       }
-      \item{fdPar}{
-	a functional parameter object if the dependent variable is
-	functional, and if it is desired to smooth the prediction
-	of the dependent variable.
-
-      }
-    }
   }
-  \item{data}{
+    \item{data}{
     an optional \code{list} or \code{data.frame} containing names of
     objects identified in the \code{formula} or \code{character}
     \code{y}.
   }
+
   \item{xfdlist}{
     a list of length equal to the number of independent
     variables (including any intercept). Members of this list are the
@@ -433,9 +422,9 @@ precip.Temp.mdl1 <- fRegress(annualprec ~ tempfd, method="model")
 # First confirm we get the same answer as above by calling
 # function fRegress() with these arguments:
 precip.Temp.m <- do.call('fRegress', precip.Temp.mdl1)
-#\dontshow{stopifnot(}
-#all.equal(precip.Temp.m, precip.Temp1)
-#\dontshow{)}
+\dontshow{stopifnot(}
+all.equal(precip.Temp.m, precip.Temp1)
+\dontshow{)}
 
 #  set up a smaller basis for beta2 than for temperature so that we
 #  get a more parsimonious fit to the data
@@ -507,12 +496,11 @@ plot(precip.Temp3$betaestlist[[2]])
 ## Get the default setup and possibly modify it
 ##
 
-TempRgn.mdl <- fRegress(tempfd ~ region, CanadianWeather, method='f')
-
 TempRgn.mdl <- fRegress(tempfd ~ region, CanadianWeather, method='m')
 
 # make desired modifications here
 # then run
+
 TempRgn.m <- do.call('fRegress', TempRgn.mdl)
 
 # no change, so match the first run

@@ -10,3 +10,4 @@ growthsetup	     set up for growthreg and growthsmooth
 growthreg	       registration of growth curves
 growthsmooth	   smoothing growth curves
 weatherANOVA	   functional ANOVA using the Canadian Weather data
+ElectricDemand   functional regression of electricity demand on temperature

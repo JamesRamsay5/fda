@@ -3,14 +3,14 @@ fRegress <- function(y, ...) {
   UseMethod("fRegress")
 }
 
-fRegress.fdPar <- function(y, xfdlist, betalist, wt=NULL,
-                           y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...){
-  stop("inside fRegress.fdPar")
-  y = y$fd
+#fRegress.fdPar <- function(y, xfdlist, betalist, wt=NULL,
+#                           y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...){
+#  print("inside fRegress.fdPar")
+#  y = y$fd
   
-  fRegress.fd(y, xfdlist, betalist, wt=wt,
-              y2cMap=y2cMap, SigmaE=SigmaE, returnMatrix=FALSE, ...)
-}
+#  fRegress.fd(y, xfdlist, betalist, wt=wt,
+#              y2cMap=y2cMap, SigmaE=SigmaE, returnMatrix=FALSE, ...)
+#}
   
 fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
                         y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE,
@@ -27,9 +27,7 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   #  Arguments:
   #  Y        ... an object for the dependent variable,
   #               which may be:
-  #                   a functional data object,
-  #                   a functional parameter (fdPar) object, or
-  #                   a vector
+  #                   a functional data object or a numerical vector
   #  XFDLIST  ... a list object of length p with each list
   #               containing an object for an independent variable.
   #               the object may be:
@@ -57,7 +55,7 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   #               enabling this option.
   #
   #  Returns FREGRESSLIST  ... A list containing seven members with names:
-  #    yfdPar      ... first  argument of FREGRESS
+  #    yfdobj      ... first  argument of FREGRESS
   #    xfdlist     ... second argument of FREGRESS
   #    betalist    ... third  argument of FREGRESS
   #    betaestlist ... estimated regression functions
@@ -75,8 +73,11 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   #  as predict(fRegressList).  In this call fRegressList can be any object of the
   #  "fRegress".
   
-  #  Last modified 7 September 2020 by Jim Ramsay
+  #  Last modified 28 October 2020 by Jim Ramsay
   
+  if (is.fdPar(y)) y <- y$fd
+  
+  print(class(y))
   print("inside fRegress.fd")
   
   print("calling fRegressArgCheck")
@@ -113,7 +114,7 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   onesbasis <- create.constant.basis(rangeval)
   onesfd    <- fd(1,onesbasis)
   
-  if (length(ycoefdim) > 2) stop("YFDOBJ from YFDPAR is not univariate.")
+  if (length(ycoefdim) > 2) stop("YFDOBJ from YFD is not univariate.")
   
   #  --------  set up the linear equations for the solution  -----------
   
@@ -376,4 +377,43 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   
   return(fRegressList)
   
+}
+
+#  -------------------------------------------------------------------------------------
+
+eigchk <- function(Cmat) {
+  
+  #  Last modified 25 August 2020 by Jim Ramsay
+  
+  #  Cmat for NA's
+  
+  if (any(is.na(Cmat))) stop("Cmat has NA values.")
+  
+  #  check Cmat for Cmatmetry
+  
+  if (max(abs(Cmat-t(Cmat)))/max(abs(Cmat)) > 1e-10) {
+    stop('CMAT is not symmetric.')
+  } else {
+    Cmat <- (Cmat + t(Cmat))/2
+  }
+  
+  #  check Cmat for singularity
+  
+  eigval <- eigen(Cmat)$values
+  ncoef  <- length(eigval)
+  if (eigval[ncoef] < 0) {
+    neig <- min(length(eigval),10)
+    cat("\nSmallest eigenvalues:\n")
+    print(eigval[(ncoef-neig+1):ncoef])
+    cat("\nLargest  eigenvalues:\n")
+    print(eigval[1:neig])
+    stop("Negative eigenvalue of coefficient matrix.")
+  }
+  if (eigval[ncoef] == 0) stop("Zero eigenvalue of coefficient matrix.")
+  logcondition <- log10(eigval[1]) - log10(eigval[ncoef])
+  if (logcondition > 12) {
+    warning("Near singularity in coefficient matrix.")
+    cat(paste("\nLog10 Eigenvalues range from\n",
+              log10(eigval[ncoef])," to ",log10(eigval[1]),"\n"))
+  }
 }
