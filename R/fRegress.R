@@ -8,10 +8,6 @@ fRegress <- function(y, ...) {
 #  print("inside fRegress.fdPar")
 #  y = y$fd
   
-#  fRegress.fd(y, xfdlist, betalist, wt=wt,
-#              y2cMap=y2cMap, SigmaE=SigmaE, returnMatrix=FALSE, ...)
-#}
-  
 fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
                         y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE,
                         method=c('fRegress', 'model'),

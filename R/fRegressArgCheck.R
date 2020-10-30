@@ -51,17 +51,18 @@ fRegressArgCheck <- function(yfd, xfdlist, betalist, wt=NULL)
   if (inherits(yfd, "fd")) {
     rangeval <- yfd$basis$rangeval
   } else {
-    allscalar <- TRUE
-    for (j in 1:p) {
-      if (inherits(xfdlist[[j]], "fd")) {
-        rangeval <- xfdlist[[j]]$basis$rangeval            
-        allscalar <- FALSE
-        break
-      }
-    }
-    if (allscalar) stop(
-      paste("The dependent variable and all the independent",   
-            "variables are scalar."))
+    rangeval = c(0,1)
+  #   allscalar <- TRUE
+  #   for (j in 1:p) {
+  #     if (inherits(xfdlist[[j]], "fd")) {
+  #       rangeval <- xfdlist[[j]]$basis$rangeval            
+  #       allscalar <- FALSE
+  #       break
+  #     }
+  #   }
+    # if (allscalar) stop(
+    #   paste("The dependent variable and all the independent",   
+    #         "variables are scalar."))
   }
   
   #  --------------------  check contents of XFDLIST  -------------------
@@ -105,6 +106,7 @@ fRegressArgCheck <- function(yfd, xfdlist, betalist, wt=NULL)
     if (!(inherits(xfdlist[[j]], "fd") || 
           inherits(xfdlist[[j]], "numeric"))) {
       print(paste("XFDLIST[[",j,"]] is neither an FD object nor numeric."))
+      print(class(xfdlist[[j]]))
       xerror = TRUE
     }
   }

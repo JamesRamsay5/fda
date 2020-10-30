@@ -12,7 +12,7 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
                              method=c('fRegress', 'model'),
                              sep='.', ...) {
   
-  #  Last modified 7 September 2020 by Jim Ramsay
+  #  Last modified 30 October 2020 by Jim Ramsay
   
   print("inside fRegress.formula")
   
@@ -365,25 +365,16 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
   }
   xiEnd   <- cumsum(nVars)
   xiStart <- c(1, xiEnd[-1])
-  print("setting up fRegressList")
-  print(class(y))
   fRegressList <- list(y=y, xfdlist=xfdlist, betalist=betalist, wt=wt)
   
   ##
   ## 8.  either output argument list for fRegress() or invoke itcs
   ##
   
-  print("step 8")
-  print(class(y))
   method <- match.arg(method)
   if(method=='model') {
-    print("returning argument list")
-    print(method)
     return(fRegressList)
   } else {
-    print("dispatching")
-    print(class(y))
-    print(names(fRegressList))
     if(inherits(y, 'fd')) {
       print("dispatching fRegress")
       # fRegress(y, xfdlist, betalist, wt)

@@ -9,8 +9,7 @@ predict.fRegress <- function (object, newdata = NULL, se.fit = FALSE,
   yhatfd <- object$yhatfdobj
   if (is.null(newdata)) {
     pred <- yhatfd
-  }
-  else {
+  } else {
     betaestlist <- object$betaestlist
     p <- length(betaestlist)
     for (j in 1:p) {
