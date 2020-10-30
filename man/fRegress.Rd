@@ -493,6 +493,12 @@ plot(precip.Temp3$betaestlist[[2]])
 ## simplest:  formula interface
 ##
 
+daybasis65 <- create.fourier.basis(rangeval=c(0, 365), nbasis=65,
+                  axes=list('axesIntervals'))
+Temp.fd <- with(CanadianWeather, smooth.basisPar(day.5,
+                dailyAv[,,'Temperature.C'], daybasis65)$fd)
+TempRgn.f <- fRegress(Temp.fd ~ region, CanadianWeather)
+
 ##
 ## Get the default setup and possibly modify it
 ##
