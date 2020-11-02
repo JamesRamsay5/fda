@@ -51,11 +51,9 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
   #  as predict(List).  In this call List can be any object of the
   #  "".
   
-  # Last modified 25 August 2020 by Jim Ramsay
+  # Last modified 1 November 2020 by Jim Ramsay
   
   #  check Y and compute sample size N
-  
-  print("inside fRegress.numeric")
   
   if (!inherits(y, "numeric")) stop("Y is not a numeric vector.")
     
@@ -74,16 +72,12 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
   N    <- dim(ymat)[1]
   p    <- length(xfdlist)
     
-  print("preliminaries")
-  
   Zmat  <- NULL
   Rmat  <- NULL
   pjvec <- rep(0,p)
   ncoef <- 0
   for (j in 1:p) {
-    print(j)
     xfdj       <- xfdlist[[j]]
-    print(class(xfdj))
     xcoef      <- xfdj$coefs
     xbasis     <- xfdj$basis
     betafdParj <- betalist[[j]]
@@ -92,7 +86,6 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
     pjvec[j]   <- bnbasis
     Jpsithetaj <- inprod(xbasis,bbasis)
     Zmat       <- cbind(Zmat,crossprod(xcoef,Jpsithetaj))
-    print("betafdParj$estimate")
     if (betafdParj$estimate) {
       lambdaj    <- betafdParj$lambda
       if (lambdaj > 0) {
@@ -116,8 +109,6 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
   #          set up the linear equations for the solution
   #  -----------------------------------------------------------
   
-  print("Cmat and Dmat")
-  
   #  solve for coefficients defining BETA
   
   if (any(wt != 1)) {
@@ -131,20 +122,15 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
     Dmat <- t(Zmat) %*% ymat
   }
   
-  #   print("solving")
-  
   eigchk(Cmat)
   
   Cmatinv  <- solve(Cmat)
   
   betacoef <- Cmatinv %*% Dmat
   
-  
-  #  compute and print degrees of freedom measure
+  #  compute degrees of freedom measure
   
   df <- sum(diag(Zmat %*% Cmatinv %*% t(Zmat)))
-  
-  print("betaestlist")
   
   #  set up fdPar object for BETAESTFDPAR
   
@@ -166,8 +152,6 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
   }
   
   #  set up fd object for predicted values
-  
-  print("yhatmat")
   
   yhatmat <- matrix(0,N,1)
   for (j in 1:p) {
@@ -199,8 +183,6 @@ fRegress.numeric <- function(y, xfdlist, betalist, wt=NULL,
   #        Compute pointwise standard errors of regression coefficients
   #               if both y2cMap and SigmaE are supplied.
   #  -----------------------------------------------------------------------
-  
-  print("standard errors")
   
   if (!(is.null(y2cMap) || is.null(SigmaE))) {
     

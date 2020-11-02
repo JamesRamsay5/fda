@@ -12,9 +12,7 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
                              method=c('fRegress', 'model'),
                              sep='.', ...) {
   
-  #  Last modified 30 October 2020 by Jim Ramsay
-  
-  print("inside fRegress.formula")
+  #  Last modified 1 November 2020 by Jim Ramsay
   
   ##
   ## 1.  get y = left hand side of the formula
@@ -376,11 +374,8 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
     return(fRegressList)
   } else {
     if(inherits(y, 'fd')) {
-      print("dispatching fRegress")
-      # fRegress(y, xfdlist, betalist, wt)
       do.call('fRegress.fd',    fRegressList)
     } else {
-      print("dispatching fRegress.numeric")
       do.call('fRegress.double', fRegressList)
     }
   }

@@ -93,14 +93,14 @@ weight <- c(ctl, trt)
 
 fRegress.D9 <- fRegress(weight ~ group)
 
-#pred.fR.D9 <- predict(fRegress.D9)
+pred.fR.D9 <- predict(fRegress.D9)
 #  Now compare with 'lm'
-#lm.D9 <- lm(weight ~ group)
-#pred.lm.D9 <- predict(lm.D9)
+lm.D9 <- lm(weight ~ group)
+pred.lm.D9 <- predict(lm.D9)
 
-#\dontshow{stopifnot(}
-#all.equal(as.vector(pred.fR.D9), as.vector(pred.lm.D9))
-#\dontshow{)}
+\dontshow{stopifnot(}
+all.equal(as.vector(pred.fR.D9), as.vector(pred.lm.D9))
+\dontshow{)}
 
 ##
 ## vector response with functional explanatory variable

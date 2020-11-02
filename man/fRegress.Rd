@@ -503,7 +503,7 @@ TempRgn.f <- fRegress(Temp.fd ~ region, CanadianWeather)
 ## Get the default setup and possibly modify it
 ##
 
-TempRgn.mdl <- fRegress(tempfd ~ region, CanadianWeather, method='m')
+TempRgn.mdl <- fRegress(Temp.fd ~ region, CanadianWeather, method='m')
 
 # make desired modifications here
 # then run
@@ -511,9 +511,9 @@ TempRgn.mdl <- fRegress(tempfd ~ region, CanadianWeather, method='m')
 TempRgn.m <- do.call('fRegress', TempRgn.mdl)
 
 # no change, so match the first run
-# \dontshow{stopifnot(}
-# all.equal(TempRgn.m, TempRgn.f)
-# \dontshow{)}
+\dontshow{stopifnot(}
+all.equal(TempRgn.m, TempRgn.f)
+\dontshow{)}
 
 ##
 ## More detailed set up
@@ -536,16 +536,16 @@ region.fdlist <- list(const=rep(1, 35),
      region.Pacific=region.fd.Pacific)
 str(TempRgn.mdl$betalist)
 
-beta1 <- with(tempfd, fd(basisobj=basis, fdnames=fdnames))
+beta1 <- with(Temp.fd, fd(basisobj=basis, fdnames=fdnames))
 beta0 <- fdPar(beta1)
 betalist <- list(const=beta0, region.Atlantic=beta0,
              region.Continental=beta0, region.Pacific=beta0)
 
-TempRgn <- fRegress(tempfd, region.fdlist, betalist)
+TempRgn <- fRegress(Temp.fd, region.fdlist, betalist)
 
-#  \dontshow{stopifnot(}
-#  all.equal(TempRgn, TempRgn.f)
-#  \dontshow{)}
+\dontshow{stopifnot(}
+all.equal(TempRgn, TempRgn.f)
+\dontshow{)}
 
 ###
 ###
@@ -585,9 +585,9 @@ betalist  <- list(const=fdPar(beta0), hipfd=fdPar(beta1))
 
 fRegressout <- fRegress(kneefd, xfdlist, betalist)
 
-# #\dontshow{stopifnot(}
-# all.equal(fRegressout, knee.hip.f)
-# #\dontshow{)}
+\dontshow{stopifnot(}
+all.equal(fRegressout, knee.hip.f)
+\dontshow{)}
 
 #See also the following demos:
 
