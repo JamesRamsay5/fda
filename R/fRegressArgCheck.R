@@ -3,13 +3,13 @@ fRegressArgCheck <- function(yfd, xfdlist, betalist, wt=NULL)
   #  FREGRESS_ARGCHECK checks the first four arguments for the functions
   #  for function regression, including FREGRESS.
   
-  #  Last modified 4 September 2020 by Jim Ramsay
+  #  Last modified 1 November 2020 by Jim Ramsay
   
   #  --------------------  Check classes of arguments  --------------------
   
   #  check that YFD is of class either 'fd' or 'numeric' and compute sample size N
   
-  if (!(inherits(yfd, "fd") || is.numeric(yfd))) stop(
+  if (!(is.fd(yfd) || is.numeric(yfd) || is.matrix(yfd))) stop(
     "First argument is not of class 'fd' or 'numeric'.")
   
   if (inherits(yfd, "fd")) {
@@ -103,10 +103,10 @@ fRegressArgCheck <- function(yfd, xfdlist, betalist, wt=NULL)
       } 
       xfdlist[[j]] <- fd(matrix(xfdj,1,N), onebasis)
     } 
-    if (!(inherits(xfdlist[[j]], "fd") || 
-          inherits(xfdlist[[j]], "numeric"))) {
-      print(paste("XFDLIST[[",j,"]] is neither an FD object nor numeric."))
-      print(class(xfdlist[[j]]))
+    if (!(inherits(xfdlist[[j]], "fd"     ) || 
+          inherits(xfdlist[[j]], "numeric") ||
+          inherits(xfdlist[[j]], "matrix" ))) {
+      print(paste("XFDLIST[[",j,"]] is not an FD or numeric or matrix object."))
       xerror = TRUE
     }
   }
