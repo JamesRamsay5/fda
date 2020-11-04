@@ -73,14 +73,7 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   
   if (is.fdPar(y)) y <- y$fd
   
-  print(class(y))
-  print("inside fRegress.fd")
-  
-  print("calling fRegressArgCheck")
-  
   arglist <- fRegressArgCheck(y, xfdlist, betalist, wt)
-  
-  print("fRegressArgCheck called")
   
   yfdobj   <- arglist$yfd
   xfdlist  <- arglist$xfdlist
@@ -100,7 +93,6 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   #  ----------------------------------------------------------------
   
   #  extract dependent variable information
-  print("extract dependent variable information")
   ycoef     <- yfdobj$coefs
   ycoefdim  <- dim(ycoef)
   N         <- ycoefdim[2]
@@ -218,8 +210,6 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   
   eigchk(Cmat)
   
-  print("Cmat, Dmat computed")
-  
   #  solve for coefficients defining BETA
   
   Lmat    <- chol(Cmat)
@@ -228,7 +218,6 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   
   betacoef <- Cmatinv %*% Dmat
   
-  print("betacoef computed")
   #  set up fdPar objects for reg. fns. in BETAESTLIST
   
   betaestlist <- betalist
@@ -248,8 +237,6 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
     betaestlist[[j]] <- betafdParj
   }
   
-  print("betalist set up")
-
   #  set up fd objects for predicted values in YHATFDOBJ
   
   nfine   <- max(501,10*ynbasis+1)
@@ -266,8 +253,6 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   yhatfdobj <- smooth.basis(tfine, yhatmat, ybasisobj)$fd
   
   df <- NA
-  
-  print("yhatfdobj set up")
   
   #  -----------------------------------------------------------------------
   #        Compute pointwise standard errors of regression coefficients
@@ -350,8 +335,6 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   #  -------------------------------------------------------------------
   #                       Set up output list object
   #  -------------------------------------------------------------------
-  
-  print("Set up output list object")
   
   fRegressList <-
     list(yfdobj         = yfdobj,

@@ -51,11 +51,11 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   #  as predict(List).  In this call List can be any object of the
   #  "".
   
-  # Last modified 25 August 2020 by Jim Ramsay
+  # Last modified 3 November 2020 by Jim Ramsay
   
   #  check Y and compute sample size N
   
-  print("inside fRegress.numeric")
+  print("inside fRegress.double")
   
   if (!inherits(y, "numeric")) stop("Y is not a numeric vector.")
     
@@ -74,14 +74,13 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   N    <- dim(ymat)[1]
   p    <- length(xfdlist)
     
-  print("preliminaries")
+  print("computing Rmat")
   
   Zmat  <- NULL
   Rmat  <- NULL
   pjvec <- rep(0,p)
   ncoef <- 0
   for (j in 1:p) {
-    print(j)
     xfdj       <- xfdlist[[j]]
     print(class(xfdj))
     xcoef      <- xfdj$coefs
@@ -92,7 +91,6 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
     pjvec[j]   <- bnbasis
     Jpsithetaj <- inprod(xbasis,bbasis)
     Zmat       <- cbind(Zmat,crossprod(xcoef,Jpsithetaj))
-    print("betafdParj$estimate")
     if (betafdParj$estimate) {
       lambdaj    <- betafdParj$lambda
       if (lambdaj > 0) {
@@ -116,9 +114,10 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   #          set up the linear equations for the solution
   #  -----------------------------------------------------------
   
-  print("Cmat and Dmat")
-  
   #  solve for coefficients defining BETA
+  
+  print("assembling Cmat and Dmat")
+  
   
   if (any(wt != 1)) {
     rtwt   <- sqrt(wt)
@@ -131,22 +130,21 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
     Dmat <- t(Zmat) %*% ymat
   }
   
-  #   print("solving")
-  
   eigchk(Cmat)
+  
+  print("solving equation")
   
   Cmatinv  <- solve(Cmat)
   
   betacoef <- Cmatinv %*% Dmat
   
-  
   #  compute and print degrees of freedom measure
   
   df <- sum(diag(Zmat %*% Cmatinv %*% t(Zmat)))
   
-  print("betaestlist")
-  
   #  set up fdPar object for BETAESTFDPAR
+  
+  print("setting up beetaestlist")
   
   betaestlist <- betalist
   mj2 <- 0
@@ -167,7 +165,7 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   
   #  set up fd object for predicted values
   
-  print("yhatmat")
+  print("computing yhatmat")
   
   yhatmat <- matrix(0,N,1)
   for (j in 1:p) {
@@ -200,11 +198,12 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   #               if both y2cMap and SigmaE are supplied.
   #  -----------------------------------------------------------------------
   
-  print("standard errors")
   
   if (!(is.null(y2cMap) || is.null(SigmaE))) {
     
     #  check dimensions of y2cMap and SigmaE
+    
+    print("computing bvar, betastderrlist, and c2bMap")
     
     y2cdim <- dim(y2cMap)
     if (y2cdim[2] != dim(SigmaE)[1])  stop(

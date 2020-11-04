@@ -527,14 +527,14 @@ dimnames(rgnContr3) <- list('', CanadianWeather$place, c('const',
 
 const365 <- create.constant.basis(c(0, 365))
 region.fd.Atlantic <- fd(matrix(rgnContr3[,,2], 1), const365)
-str(region.fd.Atlantic)
+# str(region.fd.Atlantic)
 region.fd.Continental <- fd(matrix(rgnContr3[,,3], 1), const365)
 region.fd.Pacific <- fd(matrix(rgnContr3[,,4], 1), const365)
 region.fdlist <- list(const=rep(1, 35),
      region.Atlantic=region.fd.Atlantic,
      region.Continental=region.fd.Continental,
      region.Pacific=region.fd.Pacific)
-str(TempRgn.mdl$betalist)
+# str(TempRgn.mdl$betalist)
 
 beta1 <- with(Temp.fd, fd(basisobj=basis, fdnames=fdnames))
 beta0 <- fdPar(beta1)
@@ -588,6 +588,13 @@ fRegressout <- fRegress(kneefd, xfdlist, betalist)
 \dontshow{stopifnot(}
 all.equal(fRegressout, knee.hip.f)
 \dontshow{)}
+
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2,10,20, labels=c("Ctl","Trt"))
+weight <- c(ctl, trt)
+
+fRegress.D9 <- fRegress(weight ~ group)
 
 #See also the following demos:
 
