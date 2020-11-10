@@ -81,30 +81,11 @@
   \code{\link[stats]{predict}}
 }
 \examples{
-##
-## vector response with vector explanatory variable
-##
-## example from help('lm')
-##
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2,10,20, labels=c("Ctl","Trt"))
-weight <- c(ctl, trt)
-
-fRegress.D9 <- fRegress(weight ~ group)
-
-pred.fR.D9 <- predict(fRegress.D9)
-#  Now compare with 'lm'
-lm.D9 <- lm(weight ~ group)
-pred.lm.D9 <- predict(lm.D9)
-
-\dontshow{stopifnot(}
-all.equal(as.vector(pred.fR.D9), as.vector(pred.lm.D9))
-\dontshow{)}
 
 ##
 ## vector response with functional explanatory variable
 ##
+
 annualprec <- log10(apply(CanadianWeather$dailyAv[,,
                    "Precipitation.mm"], 2,sum))
 smallbasis  <- create.fourier.basis(c(0, 365), 25)

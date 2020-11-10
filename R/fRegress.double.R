@@ -51,11 +51,9 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   #  as predict(List).  In this call List can be any object of the
   #  "".
   
-  # Last modified 3 November 2020 by Jim Ramsay
+  # Last modified 5 November 2020 by Jim Ramsay
   
   #  check Y and compute sample size N
-  
-  print("inside fRegress.double")
   
   if (!inherits(y, "numeric")) stop("Y is not a numeric vector.")
     
@@ -74,15 +72,15 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   N    <- dim(ymat)[1]
   p    <- length(xfdlist)
     
-  print("computing Rmat")
-  
   Zmat  <- NULL
   Rmat  <- NULL
   pjvec <- rep(0,p)
   ncoef <- 0
   for (j in 1:p) {
     xfdj       <- xfdlist[[j]]
-    print(class(xfdj))
+    if (!inherits(xfdj, "fd")) {
+      stop(paste("Independent variable",j,"is not of class fd."))
+    }
     xcoef      <- xfdj$coefs
     xbasis     <- xfdj$basis
     betafdParj <- betalist[[j]]
@@ -116,9 +114,6 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   
   #  solve for coefficients defining BETA
   
-  print("assembling Cmat and Dmat")
-  
-  
   if (any(wt != 1)) {
     rtwt   <- sqrt(wt)
     Zmatwt <- Zmat*rtwt
@@ -132,19 +127,15 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   
   eigchk(Cmat)
   
-  print("solving equation")
-  
   Cmatinv  <- solve(Cmat)
   
   betacoef <- Cmatinv %*% Dmat
   
-  #  compute and print degrees of freedom measure
+  #  compute degrees of freedom measure
   
   df <- sum(diag(Zmat %*% Cmatinv %*% t(Zmat)))
   
   #  set up fdPar object for BETAESTFDPAR
-  
-  print("setting up beetaestlist")
   
   betaestlist <- betalist
   mj2 <- 0
@@ -164,8 +155,6 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   }
   
   #  set up fd object for predicted values
-  
-  print("computing yhatmat")
   
   yhatmat <- matrix(0,N,1)
   for (j in 1:p) {
@@ -202,8 +191,6 @@ fRegress.double <- function(y, xfdlist, betalist, wt=NULL,
   if (!(is.null(y2cMap) || is.null(SigmaE))) {
     
     #  check dimensions of y2cMap and SigmaE
-    
-    print("computing bvar, betastderrlist, and c2bMap")
     
     y2cdim <- dim(y2cMap)
     if (y2cdim[2] != dim(SigmaE)[1])  stop(

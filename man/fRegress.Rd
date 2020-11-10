@@ -1,7 +1,6 @@
 \name{fRegress}
 \alias{fRegress}
 \alias{fRegress.fd}
-\alias{fRegress.numeric}
 \alias{fRegress.double}
 \alias{fRegress.formula}
 \alias{fRegress.character}
@@ -46,8 +45,6 @@ fRegress(y, ...)
 \method{fRegress}{fd}(y, xfdlist, betalist, wt=NULL,
                      y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, 
                         method=c('fRegress', 'model'), sep='.', ...)
-\method{fRegress}{numeric}(y, xfdlist, betalist, wt=NULL,
-                     y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
 \method{fRegress}{double}(y, xfdlist, betalist, wt=NULL,
                      y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...)
 \method{fRegress}{formula}(y, data=NULL, betalist=NULL, wt=NULL,
@@ -589,20 +586,6 @@ fRegressout <- fRegress(kneefd, xfdlist, betalist)
 all.equal(fRegressout, knee.hip.f)
 \dontshow{)}
 
-ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
-trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
-group <- gl(2,10,20, labels=c("Ctl","Trt"))
-weight <- c(ctl, trt)
-
-fRegress.D9 <- fRegress(weight ~ group)
-
-#See also the following demos:
-
-#demo('canadian-weather', package='fda')
-#demo('gait', package='fda')
-#demo('refinery', package='fda')
-#demo('weatherANOVA', package='fda')
-#demo('weatherlm', package='fda')
 }
 % docclass is function
 \keyword{smooth}

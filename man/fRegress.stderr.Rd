@@ -45,7 +45,7 @@
   }
   \item{\dots}{
     optional arguments not used by \code{fRegress.stderr} but needed for
-    superficial compatibability with \code{fRegress} methods.
+    superficial compatibility with \code{fRegress} methods.
   }
 }
 \value{

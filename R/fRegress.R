@@ -3,11 +3,6 @@ fRegress <- function(y, ...) {
   UseMethod("fRegress")
 }
 
-#fRegress.fdPar <- function(y, xfdlist, betalist, wt=NULL,
-#                           y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE, ...){
-#  print("inside fRegress.fdPar")
-#  y = y$fd
-  
 fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
                         y2cMap=NULL, SigmaE=NULL, returnMatrix=FALSE,
                         method=c('fRegress', 'model'),
@@ -69,7 +64,7 @@ fRegress.fd <- function(y, xfdlist, betalist, wt=NULL,
   #  as predict(fRegressList).  In this call fRegressList can be any object of the
   #  "fRegress".
   
-  #  Last modified 28 October 2020 by Jim Ramsay
+  #  Last modified 5 November 2020 by Jim Ramsay
   
   if (is.fdPar(y)) y <- y$fd
   

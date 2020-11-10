@@ -140,7 +140,6 @@ export(AmpPhaseDecomp,
 	     smooth.sparse.mean,
 	     sparse.list,
 	     sparse.mat,
-       svd2,
        symsolve,
        "[.fd",
        times.fd,
@@ -211,7 +210,6 @@ S3method(predict,      monfd)
 S3method(as.fd,        'function')
 S3method(as.fd,        smooth.spline)
 S3method(fRegress,     fd)
-S3method(fRegress,     numeric)
 S3method(fRegress,     double)
 S3method(fRegress,     formula)
 S3method(fRegress,     character)

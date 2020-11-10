@@ -14,7 +14,7 @@
   
   Also illustrated is the estimation of pointwise confidence intervals for the regression coefficient functions and for the fitting functions that approximate electricity demand.  These steps involve functons \code{fRegress.stderr} and \code{predict.fRegress}.
   
-  The data are supplied through the CRAN system by package \code{fds}, and further information as well as many other datasets areto be found there.
+  The data are supplied through the CRAN system by package \code{fds}, and further information as well as many other datasets are to be found there.
 }
 \source{
   Ramsay, James O., and Silverman, Bernard W. (2005), \emph{Functional
