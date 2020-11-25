@@ -1,4 +1,4 @@
-## fda_5.1.7,  11 November 2020
+## fda_5.1.7,  25 November 2020
 This release and the last release in April of this year were prepared using maxOS Catalina version 10.15.7
 This release was spell checked with spelling::spell_check_package()
 Checking for reverse dependencies was via command devtools::install_github("r-lib/revdepcheck")
