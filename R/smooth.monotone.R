@@ -128,7 +128,15 @@ nbasis   <- basisobj$nbasis  #  number of basis functions
 #  set up initial coefficient array
 
 coef0    <- Wfdobj$coefs
-
+if(ncol(coef0) != ncol(Y)){
+	if(ncol(coef0) == 1){ 
+		coef0 = matrix(coef0,basisobj$nbasis,ncol(Y),byrow=FALSE) 
+	}else{
+		coef0 = matrix(0,basisobj$nbasis,ncol(Y),byrow=FALSE) 	
+	}
+}
+	
+	
 #  check WTVEC
 
 wtvec <- wtcheck(n, wtvec)$wtvec
