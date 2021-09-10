@@ -131,7 +131,7 @@ coef0    <- Wfdobj$coefs
 if(length(dim(coef0)) == 2 & nvar != 1){
 	coef0 = array(0,nbasis,ncurve,nvar)
 }
-if( dim(coef0) == 2 & ncol(coef0) ! = ncurve){
+if( dim(coef0) == 2 & ncol(coef0) != ncurve){
 	coef0 = matrix(0,nbasis,ncurve)	
 }
 if( dim(coef0) == 3 & !all.equal(dim(coef0)[2:3],c(ncurve,nvar)) ){
