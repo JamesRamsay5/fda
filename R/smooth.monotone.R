@@ -128,13 +128,13 @@ nbasis   <- basisobj$nbasis  #  number of basis functions
 #  set up initial coefficient array
 
 coef0    <- Wfdobj$coefs
-if(length(dim(coef0)) == 2 & nvar != 1){
+if( length(dim(coef0)) == 2 & nvar != 1 ){
 	coef0 = array(0,c(nbasis,ncurve,nvar))
 }
-if( dim(coef0) == 2 & ncol(coef0) != ncurve){
+if( length(dim(coef0)) == 2 & ncol(coef0) != ncurve ){
 	coef0 = matrix(0,nbasis,ncurve)	
 }
-if( dim(coef0) == 3 & (all.equal(dim(coef0)[2:3],c(ncurve,nvar))!=TRUE) ){
+if( length(dim(coef0)) == 3 & (all.equal(dim(coef0)[2:3],c(ncurve,nvar))!=TRUE) ){
 	coef0 = array(0,c(nbasis,ncurve,nvar))	
 }
 # Note that we could be more carefull about this and try to adapt coefficients
