@@ -6,8 +6,8 @@ Author: J. O. Ramsay <ramsay@psych.mcgill.ca> [aut,cre],
  Spencer Graves <spencer.graves@effectivedefense.org> [ctb], 
  Giles Hooker <gjh27@cornell.edu>  [ctb]
 Maintainer: J. O. Ramsay <ramsay@psych.mcgill.ca>
-Depends: R (>= 3.5), splines, Matrix, fds
-Suggests: deSolve, lattice
+Depends: R (>= 3.5), splines, Matrix, fds, desolve
+Suggests: lattice
 Description: These functions were developed to support functional data
  analysis as described in Ramsay, J. O. and Silverman, B. W.
  (2005) Functional Data Analysis. New York: Springer and in 
