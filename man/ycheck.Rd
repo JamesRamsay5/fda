@@ -8,12 +8,12 @@ Check a numeric vector, a matrix or an array of data values for consistency
 with the number of argument values.
 }
 \usage{
-ycheck(y, nargvals)
+ycheck(y, n)
 }
 \arguments{
   \item{y}{A numeric vector, matrix, or 3D array, with first dimension size 
-  \code{nargvals}.}
-  \item{nargvals}{The number of argument values for smoothing.}
+  \code{n}.}
+  \item{n}{The number of argument values for smoothing.}
 }
 \value{
 Argument \code{y} is returned if it checks out, converted to a one-column
