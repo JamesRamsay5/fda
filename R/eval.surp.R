@@ -16,7 +16,7 @@ eval.surp <- function(evalarg, Wfdobj, nderiv=0) {
   #  Returns:  An array of function values corresponding to the 
   #              argument values in EVALARG
   
-  #  Last modified 8 February 2021 by Jim Ramsay
+  #  Last modified 24 September 2021 by Jim Ramsay
   
   #  check arguments
   
