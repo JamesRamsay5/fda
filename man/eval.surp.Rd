@@ -61,5 +61,5 @@ http://testgardener.azurewebsites.net
   \code{\link{smooth.surp}}
 }
 \examples{
-#  see example for smooth.surp()
+#  see example in man/smooth.surp.Rd
 }
