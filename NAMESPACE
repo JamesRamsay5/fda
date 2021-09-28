@@ -160,7 +160,8 @@ export(AmpPhaseDecomp,
        vec2Lfd, 
        wtcheck,
        ycheck,
-       zerobasis)
+       zerobasis,
+       zerofind)
 
 import("graphics")
 import("stats")
