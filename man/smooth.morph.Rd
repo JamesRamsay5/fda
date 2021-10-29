@@ -1,7 +1,7 @@
 \name{smooth.morph}
 \alias{smooth.morph}
 \title{
-  Estimates a Smooth Warping Function
+  Estimates a Smooth Warping Function Mapping an Interval into Itself.
 }
 \description{
   This function is nearly identical to \code{smooth.monotone} but is
@@ -68,8 +68,7 @@ smooth.morph(x, y, WfdPar, wt=rep(1,nobs),
 }
 \seealso{
   \code{\link{smooth.monotone}},
+  \code{\link{smooth.morph2}},
   \code{\link{landmarkreg}},
   \code{\link{register.fd}}
 }
-% docclass is function
-\keyword{smooth}
