@@ -1,4 +1,4 @@
-smooth_morph2 <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1), 
+smooth.morph2 <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1), 
                           conv=1e-4, iterlim=20, dbglev=0) {
   #SMOOTH_MORPH smooths the relationship of Y to ARGVALS 
   #  by fitting a monotone fn.  f(argvals) <- b_0 + b_1 D^{-1} exp W(t)
