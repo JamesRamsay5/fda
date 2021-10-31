@@ -40,7 +40,7 @@ smooth_morph2 <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
   #  WFD       Functional data object for W.  It's coefficient vector
   #               contains the optimized coefficients.
   
-  #  last modified 26 October 2021
+  #  last modified 31 October 2021
   
   nobs <- length(x)        #  number of observations
   
