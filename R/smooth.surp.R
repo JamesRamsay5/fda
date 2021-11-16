@@ -60,7 +60,7 @@ smooth.surp <- function(argvals, Wbin, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
   #  FLIST objects are indexed linear with curves varying inside
   #  variables.
   
-  #  Last modified 25 June 2021 by Jim Ramsay
+  #  Last modified 16 November 2021 by Jim Ramsay
   
   #  check ARGVALS, a vector of length n
   
@@ -83,7 +83,7 @@ smooth.surp <- function(argvals, Wbin, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
   #  Check WfdPar and extract WBASIS, WNBASIS, Wlambda and WPENALTY.  
   #  Note that the coefficient matrix is not used.
   
-  WfdPar   <- fdParcheck(WfdPar)
+  WfdPar   <- fdParcheck(WfdPar,M)
   Wbasis   <- WfdPar$fd$basis
   Wnbasis  <- Wbasis$nbasis
   Wlambda  <- WfdPar$lambda
