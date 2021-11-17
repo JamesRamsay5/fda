@@ -101,7 +101,7 @@ smooth.basis1 <- function (argvals=1:n, y, fdParobj,
   
   #  check fdParobj
   
-  fdParobj <- fdParcheck(fdParobj,nrep)
+  fdParobj <- fdParcheck(fdParobj, nrep)
   
   fdobj    <- fdParobj$fd
   lambda   <- fdParobj$lambda

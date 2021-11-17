@@ -275,35 +275,3 @@ ycheck <- function(y, n) {
   return(list(y=y, ncurve=ncurve, nvar=nvar, ndim=ndim))
   
 }
-
-# ------------------------------------------------------------------
-fdParcheck <- function (fdPar) {
-  if (!inherits(fdPar, "fdPar")) {
-    if (inherits(fdPar, "fd") || inherits(fdPar, "basisfd")) {
-      fdPar <- fdPar(fdPar)
-    } else
-      stop(paste("'fdPar' is not a functional parameter object,",
-                 "not a functional data object, and",
-                 "not a basis object."))
-  }
-  
-  return(fdPar)
-  
-}
-
-# ------------------------------------------------------------------
-
-zerobasis <- function(k) {
-# ZEROBASIS constructes a K by K-1 matrix that maps an unrestricted matrix B with K - 1 rows by 
-#  the linear transformation ZEROBASIS %*% B = C into the subspace of matrices with K rows having #  column sums equal to zero.  
-#  The matrix has orthonormal columns, so that crossprod(ZEROBASIS) is the identity matrix
-#  of order K - 1.
-
-  tk <- 0:(k-1) + 0.5
-  fbasis     <- fda::create.fourier.basis(k,k)
-  fbasmat    <- fda::eval.basis(tk, fbasis)
-  fbasmat    <- fbasmat[,2:k]
-  fbasnorm   <- sqrt(apply(fbasmat^2,2,sum))
-  zerobasmat <- fbasmat/outer(rep(1,k),fbasnorm)
-  return(zerobasmat)
-}

@@ -11,10 +11,10 @@ with a \code{nbasis} by \code{ncurve} coefficient matrix of zeros,
 and then converted to a \code{fdPar} object.
 }
 \usage{
-fdParcheck(fdPar, ncurve)
+fdParcheck(fdParobj, ncurve=NULL)
 }
 \arguments{
-  \item{fdPar}{A \code{basisfd}, \code{fd} or a \code{fdPar} object.}
+  \item{fdParobj}{A \code{basisfd}, \code{fd} or a \code{fdPar} object.}
   \item{ncurve}{The number of curves or functions for which the basis
   object is to be used in their representation.  If missing, an error
   message is displayed and computation terminated.}
