@@ -97,7 +97,8 @@ export(AmpPhaseDecomp,
        monhess,
        monomial,
        monomialpen,
-       norder, norder.bspline,
+       norder, 
+       norder.bspline,
        objAndNames,
        odesolv,
        pca.fd,
@@ -127,10 +128,10 @@ export(AmpPhaseDecomp,
        predict.fdSmooth, 
        project.basis,
        quadset,
-	     reconsCurves,
+       reconsCurves,
        register.fd,
        register.newfd,
-	     scoresPACE,
+       scoresPACE,
        sd.fd, 
        std.fd, 
        stdev.fd, 
@@ -142,7 +143,6 @@ export(AmpPhaseDecomp,
        smooth.fdPar,
        smooth.monotone,
        smooth.morph,
-       smooth.morph2,
        smooth.pos,
        smooth.basis.sparse,
        smooth.sparse.mean,
@@ -170,7 +170,6 @@ export(AmpPhaseDecomp,
 import("graphics")
 import("stats")
 import("splines")
-import("Matrix")
 import("fds")
 import("deSolve")
 

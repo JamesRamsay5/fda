@@ -1,6 +1,6 @@
 landmarkreg <- function(fdobj, ximarks, x0marks=xmeanmarks,
                         WfdPar=NULL, monwrd=FALSE, ylambda=1e-10)
-{
+    {
 #  Arguments:
 #  FDOBJ   ... functional data object for curves to be registered
 #  XIMARKS ... N by NL array of times of interior landmarks for
@@ -125,8 +125,7 @@ landmarkreg <- function(fdobj, ximarks, x0marks=xmeanmarks,
     #  smooth relation between this curve"s values and target"s values
     if (monwrd) {
        #  use monotone smoother
-#       Wfd       <- smooth.morph(xval, yval, WfdPar)$Wfdobj
-       Wfds       <- smooth.morph(xval, yval, WfdPar)
+       Wfds       <- smooth.morph(xval, yval, wrange, WfdPar)
        Wfd <- Wfds$Wfdobj
        h         <- monfn(x, Wfd)
        b         <- (rangeval[2]-rangeval[1])/(h[n]-h[1])
@@ -160,7 +159,7 @@ landmarkreg <- function(fdobj, ximarks, x0marks=xmeanmarks,
        wcoef        <- Wfd$coefs
        Wfdinv       <- fd(-wcoef,wbasis)
        WfdParinv    <- fdPar(Wfdinv, wLfd, wlambda)
-       Wfdinv       <- smooth.morph(h, x, WfdParinv)$Wfdobj
+       Wfdinv       <- smooth.morph(h, x, wrange, WfdParinv)$Wfdobj
        hinv         <- monfn(x, Wfdinv)
        b            <- (rangeval[2]-rangeval[1])/(hinv[n]-hinv[1])
        a            <- rangeval[1] - b*hinv[1]

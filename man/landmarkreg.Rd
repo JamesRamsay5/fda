@@ -98,7 +98,7 @@ data(landmark.reg.expData) ## containing an simple object called sampleData
 # to reduce compute time:
 eps <- 1000*.Machine$double.eps
 from <- -1.0187
-to <- 9.4551
+to   <-  9.4551
 # Preferred:
 # nb <- 201
 # to reduce compute time:
