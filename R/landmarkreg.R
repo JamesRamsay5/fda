@@ -48,7 +48,7 @@ landmarkreg <- function(fdobj, ximarks, x0marks=xmeanmarks,
   type     <- basisobj$type
   nbasis   <- basisobj$nbasis
   rangeval <- basisobj$rangeval
-  fdobj    <- fd(matrix(0,nbasis,ncurve),basisobj)
+#  fdobj    <- fd(matrix(0,nbasis,ncurve),basisobj)
   fdParobj <- fdPar(basisobj, 2, ylambda)
 
   #  check landmarks
