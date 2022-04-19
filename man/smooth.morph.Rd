@@ -11,8 +11,7 @@
   possibly different domain.
 }
 \usage{
-smooth.morph(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
-              conv=1e-4, iterlim=20, dbglev=0)
+smooth.morph(x, y, ylim, WfdPar, conv=1e-4, iterlim=20, dbglev=0)
 }
 \arguments{
   \item{x}{
@@ -31,9 +30,6 @@ smooth.morph(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
     coefficients defining function $W(t)$, and a roughness penalty on
     this function.
   }
-  \item{wt}{
-    a vector of weights to be used in the smoothing.
-  }
   \item{conv}{
     a convergence criterion.
   }
@@ -49,32 +45,40 @@ smooth.morph(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
   }
 }
 \value{
-  A named list of length 4 containing:
-
+  A named list of length eight containing:
   \item{Wfdobj}{
     a functional data object defining function $W(x)$ that that
     optimizes the fit to the data of the monotone function that it
     defines.
   }
-  \item{Flist}{
-    a named list containing three results for the final converged
-    solution: (1) \bold{f}: the optimal function value being minimized,
-    (2) \bold{grad}: the gradient vector at the optimal solution, and
-    (3) \bold{norm}: the norm of the gradient vector at the optimal
-    solution.
+  \item{f}{
+    the optimal function value being minimized.
+  }
+  \item{grad}{
+    the gradient vector at the optimal solution
+  }
+  \item{hmat}{
+    the Hessian matrix at the optimal solution
+  }
+  \item{norm}{
+    the norm of the gradient vector at the optimal solution.
+  }
+  \item{hfine}{
+    a fine mesh of values of the estimated monotone function.
   }
   \item{iternum}{
     the number of iterations.
   }
   \item{iterhist}{
-    a \code{} by 5 matrix containing the iteration history.
+    the iteration history.
   }
 }
 \seealso{
+  \code{\link{cumfd}},
   \code{\link{smooth.monotone}},
   \code{\link{landmarkreg}},
   \code{\link{register.fd}}
 }
 \examples{
-#  see the use of smooth.morph in landmarkreg.R
+#  see the use of smooth.morph in cumfd.R and landmarkreg.R
 }

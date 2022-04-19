@@ -60,7 +60,7 @@ smooth.surp <- function(argvals, Wbin, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
   #  FLIST objects are indexed linear with curves varying inside
   #  variables.
   
-  #  Last modified 23 February 2022 by Jim Ramsay
+  #  Last modified 23 March 2022 by Jim Ramsay
   
   #  check ARGVALS, a vector of length n
   
@@ -107,7 +107,6 @@ smooth.surp <- function(argvals, Wbin, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
   #  Set up the transformation from dimension M-1 to M
   #  where M-vectors sum to zero
   
-  M <- dim(Bmat0)[2] + 1
   if (M == 2) {
     root2 <- sqrt(2)
     Zmat <- matrix(1/c(root2,-root2),2,1)
@@ -220,7 +219,6 @@ smooth.surp <- function(argvals, Wbin, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
     }
     #  test for convergence
     if (abs(Flist$f - Foldlist$f) < conv) {
-      cat("\n")
       break
     }
     #  also terminate iterations if new fit is worse than old

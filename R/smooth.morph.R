@@ -1,15 +1,15 @@
-smooth.morph <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),   
-                          conv=1e-4,iterlim=20, dbglev=0) {
-  #SMOOTH_MORPH smooths the relationship of Y to ARGVALS 
-  #  by fitting a monotone fn.  f(argvals) <- b_0 + b_1 D^{-1} exp W(t)
-  #     where  W  is a function defined over the same range as ARGVALS,
+smooth.morph <- function(x, y, ylim, WfdPar,   
+                         conv=1e-4, iterlim=20, dbglev=0) {
+  #  SMOOTH_MORPH smooths the relationship of Y to X 
+  #  by fitting a monotone fn.  f(x) <- b_0 + b_1 D^{-1} exp W(t)
+  #     where  W  is a function defined over the same range as X,
   #  W + ln b_1 <- log Df and w <- D W <- D^2f/Df.
   #  b_0 and b_1 are chosen so that values of f
   #  are within the interval [ylim[1],ylim[2]].
   #  The fitting criterion is penalized mean squared stop:
   #    PENSSE(lambda) <- \sum [y_i - f(t_i)]^2 +
   #                     \lambda * \int [L W]^2 
-  #  W(argvals) is expanded by the basis in functional data object Wfdobj.
+  #  W(x) is expanded by the basis in functional data object Wfdobj.
   #
   #  Arguments are 
   #  X         argument value array
@@ -40,9 +40,11 @@ smooth.morph <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
   #  WFD       Functional data object for W.  It's coefficient vector
   #               contains the optimized coefficients.
   
-  #  last modified 4 March 2022 by Jim Ramsay
+  #  last modified 3 April 2022 by Jim Ramsay
   
   nobs <- length(x)        #  number of observations
+  wt=matrix(1,nobs,1)
+  wt[nobs] <- 10
   
   # check consistency of x and y and convert to column matrices
   
@@ -78,11 +80,14 @@ smooth.morph <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
     }
   }
   
-  #  extract information from WfdPar
+  #  -----------------------------------------------------
+  #      extract information from WfdPar
+  #  -----------------------------------------------------
   
   Wfdobj   <- WfdPar$fd
   Wbasis   <- Wfdobj$basis      #  basis for Wfdobj
   Wnbasis  <- Wbasis$nbasis      #  no. basis functions
+  Wrange   <- Wbasis$rangeval
   Wtype    <- Wbasis$type
   xlim     <- Wbasis$rangeval
   WLfdobj  <- int2Lfd(WfdPar$Lfd)
@@ -96,10 +101,10 @@ smooth.morph <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
   bvec <- t(Zmat) %*% cvec
   cvec <- Zmat %*% bvec
   
-  #  check range of argvals
+  #  check range of x
   
   if (x[1] < xlim[1] || x[nobs] > xlim[2]) {
-    stop("Values in ARGVALS are out of bounds.")
+    stop("Values in are out of bounds.")
   }
   
   #  initialize matrix Kmat defining penalty term
@@ -110,14 +115,16 @@ smooth.morph <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
     Kmat  <- matrix(0,Wnbasis,Wnbasis)
   }
   
-  #  load data into morphList
+  #  load objects into morphList, used in fngrad_morph
   
   morphList <- list(x=x, y=y, xlim=xlim, ylim=ylim, wt=wt, Kmat=Kmat, 
                     Wlambda=Wlambda, Wbasis=Wbasis)
   
-  #  Compute initial function and gradient values
+  #  -----------------------------------------------------
+  #       Compute initial function and gradient values
+  #  -----------------------------------------------------
   
-  fnList <- fngrad_morph2(bvec, morphList, Zmat)   
+  fnList <- fngrad_morph(bvec, morphList, Zmat)   
   f    <- fnList$f
   grad <- fnList$grad 
   hmat <- fnList$hmat
@@ -125,14 +132,16 @@ smooth.morph <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
   
   #  compute initial badness of fit measures
   
-  fold <- f
+  fold    <- f
   cvecold <- cvec
   
   #  evaluate the initial update vector 
   
   pvec <- -solve(hmat,grad)
   
+  #  -----------------------------------------------------
   #  initialize iteration status arrays
+  #  -----------------------------------------------------
   
   iternum <- 0
   status <- c(iternum, fold, norm)
@@ -148,25 +157,29 @@ smooth.morph <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
   iterhist <- matrix(0,iterlim+1,length(status))
   iterhist[1,]  <- status
   
-  #  ---------------------  Begin main iterations  ---------------
+  #  -----------------------------------------------------
+  #  -------------  Begin main iterations  ---------------
+  #  -----------------------------------------------------
   
   STEPMAX <- 10
   itermax <- 20
   TOLX    <- 1e-10
   fold    <- f
   
-  #  ---------------  beginning of optimization loop  -----------
+  #  -----------------------------------------------------
+  #  --------  beginning of optimization loop  -----------
+  #  -----------------------------------------------------
   
   for (iter in 1:iterlim) {
     iternum <- iternum + 1
     #  line search
     bvecold <- t(Zmat) %*% cvecold
-    lnsrchList <- lnsrch_morph2(bvecold, fold, grad, pvec, fngrad_morph2, 
+    lnsrchList <- lnsrch_morph(bvecold, fold, grad, pvec, fngrad_morph, 
                                 morphList, Zmat, STEPMAX, itermax, TOLX, 
                                 dbglev)
     bvec   <- lnsrchList$x
     check  <- lnsrchList$check
-    fnList <- fngrad_morph2(bvec, morphList, Zmat)   
+    fnList <- fngrad_morph(bvec, morphList, Zmat)   
     f    <- fnList$f
     grad <- fnList$grad 
     hmat <- fnList$hmat
@@ -183,7 +196,6 @@ smooth.morph <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
       cat(round(status[3],4))
     }
     if (abs(f-fold) < conv) {
-      cat("\n")
       break
     }
     if (f >= fold) { 
@@ -204,28 +216,32 @@ smooth.morph <- function(x, y, ylim, WfdPar, wt=matrix(1,nobs,1),
     cvecold <- cvec
   }
   
-  #  construct output objects
+  #  -----------------------------------------------------
+  #         construct output objects
+  #  -----------------------------------------------------
   
   Wfdobj  <- fd(cvec, Wbasis)
-  ywidth  <- ylim[2] - ylim[1]
-  hraw    <- matrix(monfn(  x, Wfdobj),nobs,1)
-  hmax    <- monfn(  xlim[2], Wfdobj)
-  hmin    <- monfn(  xlim[1], Wfdobj)
-  hwidth  <- hmax - hmin
-  ysmth   <- (ylim[1] - hmin) + ywidth*hraw/hwidth
-  xfine   <- as.matrix(seq(xlim[1],xlim[2],len=101))
-  hfine   <- monfn(xfine, Wfdobj)
-  yfine   <- (ylim[1] - hmin) + ywidth*hfine/hwidth
   
-  return(list(Wfdobj=Wfdobj, f=f, grad=grad, hmat=hmat, norm=norm, ysmth=ysmth, 
-              yfine=yfine, iternum=iternum, iterhist=iterhist))
+  xfine   <- as.matrix(seq(xlim[1],xlim[2],len=101))
+  ywidth  <- ylim[2] - ylim[1]
+  hfine   <- matrix(monfn(xfine, Wfdobj), 101, 1)
+  hmax    <- monfn(xlim[2], Wfdobj)
+  hmin    <- monfn(xlim[1], Wfdobj)
+  hwidth  <- hmax - hmin
+  hfine   <- (ylim[1] - hmin) + hfine*(ywidth/hwidth)
+  
+  return(list(Wfdobj=Wfdobj, f=f, grad=grad, hmat=hmat, norm=norm, hfine=hfine, 
+              iternum=iternum, iterhist=iterhist))
   
 }
 
 #  ------------------------------------------------------------------------
 
-fngrad_morph2 <- function(bvec, morphList, Zmat) {
+fngrad_morph <- function(bvec, morphList, Zmat) {
+  #  -----------------------------------------------------
   #  extract data from morphList
+  #  -----------------------------------------------------
+  cvec     <- Zmat %*% bvec
   x        <- morphList$x
   y        <- morphList$y
   xlim     <- morphList$xlim
@@ -234,51 +250,70 @@ fngrad_morph2 <- function(bvec, morphList, Zmat) {
   Kmat     <- morphList$Kmat
   Wlambda  <- morphList$Wlambda
   Wbasis   <- morphList$Wbasis
-  cvec     <- Zmat %*% bvec
-  Wfdobj   <- fd(cvec, Wbasis)
-  nobs     <- length(x)
-  ywidth   <- ylim[2] - ylim[1]
   Wnbasis  <- Wbasis$nbasis
-  #  get unnormalized function and gradient values
+  Wfdobj   <- fd(cvec, Wbasis)
+  #  -----------------------------------------------------
+  #             compute fitting criterion f
+  #  -----------------------------------------------------
+  #  compute unnormalized monotone function values hraw
+  
+  nobs  <- length(x)
   hraw  <- matrix(monfn(  x, Wfdobj),nobs,1)
-  Dhraw <- matrix(mongrad(x, Wfdobj),nobs,Wnbasis)
   #  adjust functions and derivatives for normalization
   hmax    <- monfn(  xlim[2], Wfdobj) 
   hmin    <- monfn(  xlim[1], Wfdobj) 
+  #  width of hraw
   hwidth  <- hmax - hmin
-  h       <- (ylim[1] - hmin) + ywidth*hraw/hwidth
-  Dhmax   <- matrix(mongrad(xlim[2], Wfdobj),1,Wnbasis)
-  Dhmin   <- matrix(mongrad(xlim[1], Wfdobj),1,Wnbasis)
+  #  width of target interval
+  ywidth  <- ylim[2] - ylim[1]
+  #  normalized h varying horizontally over base interval and 
+  #  vertically over target interval
+  h   <- (ylim[1] - hmin) + hraw*(ywidth/hwidth)
+  #  compute least squares fitting criterion
+  res <- y - h
+  f   <- mean(res^2*wt)
+  #  -----------------------------------------------------
+  #             compute fitting gradient grad
+  #  -----------------------------------------------------
+  #  un-normalized partial derivative of un-normalized h Dh
+  Dhraw   <- matrix(mongrad(x, Wfdobj),nobs,Wnbasis)
+  #  range of un-normalized gradient
+  Dhmax   <- matrix(mongrad(xlim[2], Wfdobj), 1, Wnbasis)
+  Dhmin   <- matrix(mongrad(xlim[1], Wfdobj), 1, Wnbasis)
   Dhwidth <- Dhmax - Dhmin
-  Dh      <- ywidth*(Dhraw*hwidth - hraw %*% Dhwidth)/hwidth^2
-  res     <- y - h
-  f       <- mean(res^2*wt)
-  #  gradient is computed
-  temp   <- Dh*(wt %*% matrix(1,1,Wnbasis))
-  grad   <- -2*t(temp) %*% res/nobs
+  #  normalized gradient
+  Dh    <- ywidth*(Dhraw*hwidth - hraw %*% Dhwidth)/hwidth^2
+  #  gradient of fitting function is computed
+  temp  <- Dh*(wt %*% matrix(1,1,Wnbasis))
+  grad  <- -2*t(temp) %*% res/nobs
+  #  apply regularization if needed
   if (Wlambda > 0) {
     grad <- grad +           2 * Kmat  %*%  cvec
     f    <- f    + t(cvec)  %*%  Kmat  %*%  cvec
   }
+  #  map parameter space into fitting space
   grad <- t(Zmat) %*% grad
   norm <- sqrt(sum(grad^2))   #  gradient norm
-  #   hessian matrix is computed
+  #  -----------------------------------------------------
+  #        compute fitting Hessian hmat
+  #  -----------------------------------------------------
   wtroot  <- sqrt(wt)
   temp <- Dh * (wtroot %*% matrix(1,1,Wnbasis))
   hmat <- 2*t(temp) %*% temp/nobs
-  #  adjust for penalty
+  #  apply regularization if needed
   if (Wlambda > 0) { 
     hmat <- hmat + 2*Kmat 
   }
+  #  map parameter hessian into fitting hessian
   hmat <- t(Zmat) %*% hmat %*% Zmat
   
-  return(list(f=f, grad=grad, hmat=hmat, norm=norm))
+  return(list(f=f, grad=grad, hmat=hmat, norm=norm, h=h, Dh=Dh))
   
 }
 
 #  ------------------------------------------------------------------------
 
-lnsrch_morph2 <- function(xold, fold, g, p, func, dataList, 
+lnsrch_morph <- function(xold, fold, g, p, func, dataList, 
                           Zmat, stpmax, itermax=20, TOLX=1e-10, dbglev=0) {
   #  LNSRCH computes an approximately optimal parameter vector X given
   #  an initial parameter vector XOLD, an initial function value FOLD
