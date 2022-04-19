@@ -240,7 +240,7 @@ fRegress(y, ...)
       \item{Cmatinv:} {A matrix containing the inverse of the coefficient matrix for
 	the  linear equations that define the solution to the regression
 	problem.  This matrix is required for function
-	\code{\link{fRegress.stderr}} that estimates confidence regions
+	\code{fRegress.stderr} that estimates confidence regions
 	for the regression coefficient function estimates.}
       \item{wt:} {The vector of weights input or inferred.}
 
