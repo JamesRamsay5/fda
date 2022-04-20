@@ -318,7 +318,7 @@ fRegress(y, ...)
 
 ###
 ###
-###  ---------  vector response with functional explanatory variable  ---------
+###   vector response with functional explanatory variable  
 ###
 ###
 
@@ -326,18 +326,20 @@ fRegress(y, ...)
 #  print the names of the data
 print(names(CanadianWeather))
 #  set up log10 of annual precipitation for 35 weather stations
-annualprec <- log10(apply(CanadianWeather$dailyAv[,,"Precipitation.mm"], 2,sum))
+annualprec <- 
+    log10(apply(CanadianWeather$dailyAv[,,"Precipitation.mm"], 2,sum))
 # The simplest 'fRegress' call is singular with more bases
 # than observations, so we use only 25 basis functions, for this example
 smallbasis  <- create.fourier.basis(c(0, 365), 25)
 # The covariate is the temperature curve for each station.
 tempfd <- smooth.basis(day.5,
-          CanadianWeather$dailyAv[,,"Temperature.C"], smallbasis)$fd
+        CanadianWeather$dailyAv[,,"Temperature.C"], smallbasis)$fd
 
 ##
 ## formula interface:  specify the model by a formula, the method
 ## fRegress.formula automatically sets up the regression coefficient functions,
-## a constant function for the intercept, and a higher dimensional function
+## a constant function for the intercept, 
+## and a higher dimensional function
 ## for the inner product with temperature
 ##
 
@@ -434,7 +436,7 @@ plot(precip.Temp3$betaestlist[[2]])
 
 ###
 ###
-### --------  functional response with vector explanatory variables  ----------
+###  functional response with vector explanatory variables  
 ###
 ###
 
@@ -498,12 +500,13 @@ all.equal(TempRgn, TempRgn.f)
 
 ###
 ###
-### --------  functional response with functional explanatory variable  -------
+###  functional response with functional explanatory variable  
 ###
 ###
 
 ##
-##  predict knee angle from hip angle;  from demo('gait', package='fda')
+##  predict knee angle from hip angle;  
+##     from demo('gait', package='fda')
 
 ##
 ## formula interface
