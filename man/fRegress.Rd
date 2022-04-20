@@ -28,7 +28,7 @@
 
   In the concurrent functional linear model for a functional dependent
   variable, all functional   variables are all evaluated at a common
-  time or argument value $t$.  That is, the fit is defined in terms of
+  time or argument value \eqn{t}.  That is, the fit is defined in terms of
   the behavior of all variables at a fixed time, or in terms of "now"
   behavior.
 
@@ -79,8 +79,8 @@ fRegress(y, ...)
 	= 'model'). Multivariate independent variables are allowed in a
 	\code{formula} and are split into univariate independent
 	variables in the resulting \code{xfdlist}.  Similarly,
-	categorical independent variables with \code{k} levels are
-	translated into \code{k-1} contrasts in \code{xfdlist}.  Any
+	categorical independent variables with \eqn{k} levels are
+	translated into \eqn{k-1} contrasts in \code{xfdlist}.  Any
 	smoothing information is passed to the corresponding component
 	of \code{betalist}.
       }
