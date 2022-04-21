@@ -310,8 +310,6 @@ fRegress(y, ...)
     New York.
 }
 \seealso{
-  \code{\link{fRegress.formula}},
-  \code{\link{fRegress.double}},
   \code{\link{fRegress.stderr}},
   \code{\link{fRegress.CV}},
   \code{\link{linmod}}
