@@ -3,4 +3,6 @@
 .RData
 .Ruserdata
 .Rbuildignore
-
+.DS_Store
+inst/.DS_Store
+.github
