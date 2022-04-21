@@ -4,5 +4,10 @@
 .Ruserdata
 .Rbuildignore
 .DS_Store
+<<<<<<< HEAD
 
 inst/doc
+=======
+inst/.DS_Store
+.github
+>>>>>>> 6f7aa3c565bd65216a046ee8bae7ec82122c217c
