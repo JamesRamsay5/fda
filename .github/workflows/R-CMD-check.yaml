@@ -45,12 +45,6 @@ jobs:
           rtools-version: ${{ matrix.donvig.rtools-version }}
 
       - uses: r-lib/actions/setup-pandoc@v2
-      - run: tlmgr --version
-
-      - name: Install additional LaTeX packages
-        run: |
-          tlmgr install titlesec
-          tlmgr list --only-installed
 
       - name: Query dependencies
         run: |
