@@ -48,7 +48,7 @@ register.newfd(yfd, Wfd,type=c('direct','monotone','periodic'))
   Ramsay, James O., and Silverman, Bernard W. (2006), \emph{Functional
     Data Analysis, 2nd ed.}, Springer, New York.
 
-  Ramsay, James O., and Silverman, Bernard W. (2002), \emph{Applied
+  Ramsay, James, and Silverman, Bernard. (2002), \emph{Applied
     Functional Data Analysis}, Springer, New York, ch. 6 & 7.
 }
 \seealso{
@@ -72,12 +72,11 @@ lipmeanmarks <- apply(lipmarks,2,mean)
 wnbasis <- 6
 wnorder <- 4
 wbreaks <- c(0,lipmeanmarks,0.35)
-
 warpbasis <- create.bspline.basis(nbasis=wnbasis, norder=wnorder,
                                   breaks=wbreaks);
 WfdPar    <- fdPar(fd(basisobj=warpbasis), 2, 1e-4)
 
-lipreglist <- landmarkreg(lipfd, as.matrix(lipmarks), lipmeanmarks, WfdPar)
+lipreglist <- landmarkreg(lipfd, as.matrix(lipmarks), lipmeanmarks, WfdPar=WfdPar)
 
 # And warp:
 
