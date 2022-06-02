@@ -98,6 +98,8 @@ smooth.morph <- function(x, y, ylim, WfdPar,
   
   cvec <- Wfdobj$coef   #  initial coefficients
   Zmat <- fda::zerobasis(length(cvec))
+  # print(dim(Zmat))
+  # print(dim(cvec))
   bvec <- t(Zmat) %*% cvec
   cvec <- Zmat %*% bvec
   
@@ -270,6 +272,7 @@ fngrad_morph <- function(bvec, morphList, Zmat) {
   #  vertically over target interval
   h   <- (ylim[1] - hmin) + hraw*(ywidth/hwidth)
   #  compute least squares fitting criterion
+  # print(c(dim(y),dim(h)))
   res <- y - h
   f   <- mean(res^2*wt)
   #  -----------------------------------------------------
