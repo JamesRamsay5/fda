@@ -5,4 +5,7 @@
 
 # 5 platforms on GitHub Actions: 
 # Win and macOS (release) plus 
-# ubuntu (devel, release & oldrel): OK
+# ubuntu (devel, release & oldrel):
+# macOS (release) complained, "Error: ...MASS: Needs R >= 4.3". 
+# We don't know how to fix that problem. 
+# The other checks all came back clean.  
