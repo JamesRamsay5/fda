@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-.Rbuildignore
 .DS_Store
 inst/doc
 inst/.DS_Store
