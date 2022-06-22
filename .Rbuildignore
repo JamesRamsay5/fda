@@ -1,0 +1,4 @@
+fdaReleaseToCRAN.R
+revdep
+.github
+^\.github$
