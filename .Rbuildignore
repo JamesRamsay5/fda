@@ -2,3 +2,5 @@ fdaReleaseToCRAN.R
 revdep
 .github
 ^\.github$
+^.*\.Rproj$
+^\.Rproj\.user$

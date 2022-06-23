@@ -40,7 +40,7 @@ smooth.morph <- function(x, y, ylim, WfdPar,
   #  WFD       Functional data object for W.  It's coefficient vector
   #               contains the optimized coefficients.
   
-  #  last modified 3 April 2022 by Jim Ramsay
+  #  last modified 3 June 2022 by Jim Ramsay
   
   nobs <- length(x)        #  number of observations
   wt=matrix(1,nobs,1)
@@ -98,15 +98,13 @@ smooth.morph <- function(x, y, ylim, WfdPar,
   
   cvec <- Wfdobj$coef   #  initial coefficients
   Zmat <- fda::zerobasis(length(cvec))
-  # print(dim(Zmat))
-  # print(dim(cvec))
   bvec <- t(Zmat) %*% cvec
   cvec <- Zmat %*% bvec
   
   #  check range of x
   
   if (x[1] < xlim[1] || x[nobs] > xlim[2]) {
-    stop("Values in are out of bounds.")
+    stop("Values in x are out of bounds.")
   }
   
   #  initialize matrix Kmat defining penalty term
@@ -272,7 +270,6 @@ fngrad_morph <- function(bvec, morphList, Zmat) {
   #  vertically over target interval
   h   <- (ylim[1] - hmin) + hraw*(ywidth/hwidth)
   #  compute least squares fitting criterion
-  # print(c(dim(y),dim(h)))
   res <- y - h
   f   <- mean(res^2*wt)
   #  -----------------------------------------------------
