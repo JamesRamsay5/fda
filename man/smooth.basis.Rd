@@ -252,6 +252,7 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
   \code{\link{Data2fd}},
 }
 \examples{
+oldpar <- par(no.readonly=TRUE)
 ##
 ######## Simulated data example 1: a simple regression smooth  ########
 ##
@@ -867,6 +868,6 @@ gaitfd <- gaitSmooth$fd
 
 }
 #  end of if (!CRAN)
-
+par(oldpar)
 }
 \keyword{smooth}

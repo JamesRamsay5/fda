@@ -84,5 +84,4 @@ plotreg.fd(gaitreglist)
 print(round(gaitreglist$shift,1))
 }
 }
-% docclass is function
 \keyword{smooth}

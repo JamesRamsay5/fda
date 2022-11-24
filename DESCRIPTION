@@ -2,9 +2,15 @@ Package: fda
 Version: 6.0.5
 Date: 2022-07-2
 Title: Functional Data Analysis
-Author: J. O. Ramsay <ramsay@psych.mcgill.ca> [aut,cre], 
- Spencer Graves <spencer.graves@effectivedefense.org> [ctb], 
- Giles Hooker <gjh27@cornell.edu>  [ctb]
+Authors@R: c(person("James", "Ramsay", 
+          role=c("aut","cre"),
+          email="james.ramsay@mcgill.ca"), 
+          person("Giles", "Hooker",)
+          role="ctb",
+          email="gjh27@cornell.edu"),
+          person("Spencer, "Graves", 
+          role="ctb",
+          email="spencer.graves@effectivedefense.org"))
 Maintainer: J. O. Ramsay <ramsay@psych.mcgill.ca>
 Depends: R (>= 3.5), splines, fds, deSolve
 Suggests: 

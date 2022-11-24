@@ -138,6 +138,7 @@ register.fd(y0fd=NULL, yfd=NULL, WfdParobj=NULL,
   \code{\link{register.newfd}}
 }
 \examples{
+oldpar <- par(no.readonly=TRUE)
 #See the analyses of the growth data for examples.
 
 ##
@@ -269,5 +270,6 @@ gaitreglist <- register.fd(D2gaitmeanfd, D2gaitfd[1:nBoys], WarpfdPar,
 plotreg.fd(gaitreglist)
 #  display horizonal shift values
 print(round(gaitreglist$shift,1))
+par(oldpar)
 }
 \keyword{smooth}

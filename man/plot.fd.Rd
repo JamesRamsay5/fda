@@ -108,6 +108,7 @@
   \code{\link{lines.fd}}, \code{\link{plotfit.fd}}
 }
 \examples{
+oldpar <- par(no.readonly=TRUE)
 ##
 ## plot.fd
 ##
@@ -178,8 +179,7 @@ AmRevYrs.ct <- as.numeric(AmRevYrs.ct)
 BspRev.ct   <- create.bspline.basis(AmRev.ct)
 fitLin.ct   <- smooth.basis(AmRevYrs.ct, AmRevLin.ct, BspRev.ct)$fd
 plot(fitLin.ct)
-
+par(oldpar)
 }
-% docclass is function
 \keyword{smooth}
 \keyword{hplot}

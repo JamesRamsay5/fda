@@ -187,6 +187,7 @@ plotfit.fdSmooth(y, argvals, fdSm, rng = NULL, index = NULL,
   \code{\link{checkDims3}}
 }
 \examples{
+oldpar <- par(no.readonly=TRUE)
 #  set up a Fourier basis for smoothing temperature data
 daybasis65 <- create.fourier.basis(c(0, 365), 65,
                     axes=list("axesIntervals"))
@@ -263,7 +264,7 @@ plotfit.fd(gait, gaittime, gaitfd)
 #  for specific angles are not all going to be in order.
 plotfit.fd(gait, gaittime, gaitfd, residual=TRUE, sort=TRUE)
 }
+par(oldpar)
 }
-% docclass is function
 \keyword{smooth}
 \keyword{hplot}

@@ -134,6 +134,7 @@ Fperm.fd(yfdPar, xfdlist, betalist, wt=NULL, nperm=200,
   \code{\link{Fstat.fd}}
 }
 \examples{
+oldpar <- par(no.readonly=TRUE)
 ##
 ## 1.  yfdPar = vector
 ##
@@ -216,6 +217,7 @@ betalist = list(fdPar(hgtbasis,2,1e-6),fdPar(hgtbasis,2,1e-6))
 # Should use nperm = 200 or so,
 # but use 10 to save test time
 Fres = Fperm.fd(hgtfd,xfdlist,betalist,nperm=10)
+par(oldpar)
 }
 
 }

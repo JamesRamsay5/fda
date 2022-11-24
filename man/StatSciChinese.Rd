@@ -33,6 +33,7 @@
   95, 9-15.
 }
 \examples{
+oldpar <- par(no.readonly=TRUE)
 data(StatSciChinese)
 
 i <- 3
@@ -48,5 +49,6 @@ plot(StatSci1[, 1:2], type='l')
 
 mark <- seq(1, 601, 12)
 points(StatSci1[mark, 1], StatSci1[mark, 2])
+par(oldpar)
 }
 \keyword{datasets}

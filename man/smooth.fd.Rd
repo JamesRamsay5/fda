@@ -32,7 +32,7 @@ a functional data object.
 \code{\link{smooth.basis}},
 }
 \examples{
-
+oldpar <- par(no.readonly=TRUE)
 #  Shows the effects of two levels of smoothing
 #  where the size of the third derivative is penalized.
 #  The null space contains quadratic functions.
@@ -69,7 +69,6 @@ lines(yfd2, lty=3)  #  add heavily  penalized smooth
 legend(-1,3,c("0.000001","1"),lty=c(1,3))
 #  plot the data and smoothing using function plotfit.fd
 plotfit.fd(y, x, yfd1)  # plot data and smooth
-
+par(oldpar)
 }
-% docclass is function
 \keyword{smooth}

@@ -90,6 +90,7 @@ http://www.testgardener.azurewebsites.net
   \code{\link{eval.surp}}
 }
 \examples{
+oldpar <- par(no.readonly=TRUE)
 #  evaluation points
 x = seq(-2,2,len=11)
 #  evaluate a standard normal distribution function
@@ -123,5 +124,6 @@ points(x, mnormdata[,2])
 pfine = 2^-sfine
 #  check that they sum to one
 apply(pfine,1,sum)
+par(oldpar)
 }
 

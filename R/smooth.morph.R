@@ -43,7 +43,7 @@ smooth.morph <- function(x, y, ylim, WfdPar,
   #  last modified 3 June 2022 by Jim Ramsay
   
   nobs <- length(x)        #  number of observations
-  wt=matrix(1,nobs,1)
+  wt   <- matrix(1,nobs,1)
   wt[nobs] <- 10
   
   # check consistency of x and y and convert to column matrices
@@ -103,8 +103,11 @@ smooth.morph <- function(x, y, ylim, WfdPar,
   
   #  check range of x
   
-  if (x[1] < xlim[1] || x[nobs] > xlim[2]) {
-    stop("Values in x are out of bounds.")
+  if (abs(x[1] - xlim[1]) > 1e-7 || abs(x[nobs] - xlim[2]) > 1e-7) {
+    stop("Values in x are out of bounds by more than 1e-7")
+  }  else {
+    x[1   ] <- xlim[1]
+    x[nobs] <- xlim[2]
   }
   
   #  initialize matrix Kmat defining penalty term

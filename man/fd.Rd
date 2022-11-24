@@ -92,7 +92,7 @@ fd(coef=NULL, basisobj=NULL, fdnames=NULL)
 ## default
 ##
 fd()
-
+oldpar <- par(no.readonly=TRUE)
 ##
 ## The simplest b-spline basis:  order 1, degree 0, zero interior knots:
 ##       a single step function
@@ -141,7 +141,7 @@ gaitbasis3 <- create.fourier.basis(nbasis=5)
 gaittime = (1:20)/21
 gaitfd3    <- smooth.basis(gaittime, gait, gaitbasis3)$fd
 gaitfd3[1]
-
+par(oldpar)
 }
 % docclass is function
 \keyword{smooth}

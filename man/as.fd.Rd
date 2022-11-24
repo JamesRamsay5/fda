@@ -92,6 +92,7 @@ fdx. <- eval.fd(x., fd.)
 
 rfdx <- range(fdx.)
 
+oldpar <- par(no.readonly= TRUE)
 plot(range(x2), range(y2, fx., rfdx), type='n')
 points(x2, y2)
 lines(x., sin((x.-0.5)*pi), lty='dashed')
@@ -130,6 +131,7 @@ lines(cars.spl)
 sp. <- with(cars, seq(min(speed), max(speed), len=101))
 d. <- eval.fd(sp., cars.fd)
 lines(sp., d., lty=2, col='red', lwd=3)
+par(oldpar)
 }
 \keyword{smooth}
 \keyword{manip}
