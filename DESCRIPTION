@@ -8,7 +8,7 @@ Authors@R: c(person("James", "Ramsay",
           person("Giles", "Hooker",
             role="ctb",
             email="gjh27@cornell.edu"),
-          person("Spencer, "Graves", 
+          person("Spencer", "Graves", 
             role="ctb",
             email="spencer.graves@effectivedefense.org"))
 Maintainer: J. O. Ramsay <ramsay@psych.mcgill.ca>
