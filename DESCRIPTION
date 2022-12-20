@@ -3,14 +3,14 @@ Version: 6.0.6
 Date: 2022-12-20
 Title: Functional Data Analysis
 Authors@R: c(person("James", "Ramsay", 
-          role=c("aut","cre"),
-          email="james.ramsay@mcgill.ca"), 
-          person("Giles", "Hooker",)
-          role="ctb",
-          email="gjh27@cornell.edu"),
+            role=c("aut","cre"),
+            email="james.ramsay@mcgill.ca"), 
+          person("Giles", "Hooker",
+            role="ctb",
+            email="gjh27@cornell.edu"),
           person("Spencer, "Graves", 
-          role="ctb",
-          email="spencer.graves@effectivedefense.org"))
+            role="ctb",
+            email="spencer.graves@effectivedefense.org"))
 Maintainer: J. O. Ramsay <ramsay@psych.mcgill.ca>
 Depends: R (>= 3.5), splines, fds, deSolve
 Suggests: 
