@@ -129,6 +129,7 @@ fbplot(fit, x = NULL, method = "MBD", depth = NULL, plot = TRUE,
   Ying Sun \email{sunwards@stat.osu.edu}
 
   Marc G. Genton \email{marc.genton@kaust.edu.sa}
+}
 \examples{
 ##
 ## 1.  generate 50 random curves with some covariance structure
