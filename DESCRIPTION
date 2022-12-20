@@ -1,6 +1,6 @@
 Package: fda
-Version: 6.0.5
-Date: 2022-07-2
+Version: 6.0.6
+Date: 2022-12-20
 Title: Functional Data Analysis
 Authors@R: c(person("James", "Ramsay", 
           role=c("aut","cre"),
