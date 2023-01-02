@@ -81,7 +81,6 @@
   \code{\link[stats]{predict}}
 }
 \examples{
-
 ##
 ## vector response with functional explanatory variable
 ##
