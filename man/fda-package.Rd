@@ -59,8 +59,7 @@ if(!CRAN()){
   for(ch in 1:chapters){
     cat('Running', fdarm[ch], '\n')
     invisible(source(fdarm[ch]))
+    }
   }
-}
-}
 }
 \keyword{smooth}
