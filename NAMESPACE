@@ -1,8 +1,8 @@
-﻿export(AmpPhaseDecomp, 
+export(AmpPhaseDecomp,
        as.array3,
-	as.fd,
-	as.POSIXct1970,
- axisIntervals, 
+       as.fd,
+       as.POSIXct1970,
+       axisIntervals, 
        axesIntervals,
        basisfd,
        bifd,
@@ -175,7 +175,6 @@ import("splines")
 import("fds")
 import("deSolve")
 
-
 importFrom("grDevices", "dev.new", "heat.colors")
 importFrom("utils", "data")
 
@@ -243,4 +242,5 @@ S3method(norder,       default)
 S3method(plot,         cca.fd)
 S3method(plot,         pca.fd)
 S3method(plot,         pda.fd)
-S3method(summary, bifd)
+S3method(summary,      bifd)
+
