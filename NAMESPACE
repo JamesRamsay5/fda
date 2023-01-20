@@ -243,4 +243,3 @@ S3method(plot,         cca.fd)
 S3method(plot,         pca.fd)
 S3method(plot,         pda.fd)
 S3method(summary,      bifd)
-
