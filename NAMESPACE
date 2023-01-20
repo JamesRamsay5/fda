@@ -1,4 +1,4 @@
-﻿export(AmpPhaseDecomp,
+﻿export(AmpPhaseDecomp, 
        as.array3,
        as.fd,
        as.POSIXct1970,
