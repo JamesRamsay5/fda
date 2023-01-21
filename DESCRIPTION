@@ -28,5 +28,6 @@ Description: These functions were developed to support functional data
  <https://www.psych.mcgill.ca/misc/fda/downloads/FDAfuns/>.
 License: GPL (>= 2)
 URL: http://www.functionaldata.org
+LazyData: true
 NeedsCompilation: no
 VignetteBuilder: knitr
