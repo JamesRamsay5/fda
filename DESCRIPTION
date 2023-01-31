@@ -1,6 +1,11 @@
 Package: fda
+<<<<<<< HEAD
+Version: 6.1.1
+Date: 2023-01-15
+=======
 Version: 6.0.6
-Date: 2022-12-20
+Date: 2023-01-19
+>>>>>>> ef63111751e395584d9dc9163a7b87a6f6b8d7cd
 Title: Functional Data Analysis
 Authors@R: c(person("James", "Ramsay", 
             role=c("aut","cre"),
@@ -11,7 +16,7 @@ Authors@R: c(person("James", "Ramsay",
           person("Spencer", "Graves", 
             role="ctb",
             email="spencer.graves@effectivedefense.org"))
-Maintainer: J. O. Ramsay <ramsay@psych.mcgill.ca>
+Maintainer: J. O. Ramsay <james.ramsay@mcgill.ca>
 Depends: R (>= 3.5), splines, fds, deSolve
 Suggests: 
     rmarkdown,
