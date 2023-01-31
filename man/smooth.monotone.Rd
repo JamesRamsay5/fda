@@ -205,7 +205,7 @@ hgt1 = growth$hgtf[,1]
 
 # delete the test on CRAN because it takes too long
 
-\dontrun{
+if (!CRAN()) {
 result <- smooth.monotone(age, hgt1, growfdPar, wgt,
                           conv=0.1)
 #  Extract the functional data object and regression

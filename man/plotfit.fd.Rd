@@ -211,7 +211,7 @@ with(CanadianWeather, plotfit.fd(dailyAv[, , "Temperature.C"],
 
 plot(daytempfd)
 
-\dontrun{
+if (!CRAN()) {
 # plot all the weather stations, one by one after a click on the plot
 # in response to a request.
 # This example is within the "dontrun" environment to prevent the

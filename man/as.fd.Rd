@@ -111,7 +111,7 @@ fn. <- as.fd(fn)
 lines(x., fn(x.), lty='dotted', col='blue')
 lines(x., eval.fd(x., fn.), col='green', lty='dotted', lwd=3)
 
-\dontrun{
+if(!CRAN()) {
 # Will NOT translate a periodic spline
 fp <- splinefun(x, y, method='periodic')
 as.fd(fp)

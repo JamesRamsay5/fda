@@ -55,7 +55,7 @@ smooth.surp(argvals, Wbin, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
   }
 }
 \value{
-  A named list with these members:
+  A named list \code{surpFd} with these members:
 
   \item{Wfdobj}{
     a functional data object defining function $W(x)$ that that

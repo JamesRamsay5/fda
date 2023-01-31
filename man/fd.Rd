@@ -106,7 +106,7 @@ all.equal(fd.bspl1.1, fd.bspl1.1a)
 \dontshow{ ) }
 # TRUE
 
-\dontrun{
+if(!CRAN()) {
 fd.bspl1.1b <- fd(0)
 Error in fd(0) :
   Number of coefficients does not match number of basis functions.

@@ -92,6 +92,9 @@ eval.surp <- function(evalarg, Wfdobj, nderiv=0) {
     return(Smat)
   }
   
+  # Note:  derivative values computed using Pmat rather than Bmat
+  # This needs correcting
+  
   #  First derivative:
   
   if (nderiv == 1) {

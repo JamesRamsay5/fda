@@ -68,7 +68,7 @@ gete <- attr(cran, 'Sys.getenv')
 iget <- grep('^_', names(gete))
 gete[iget]
 
-\dontrun{
+if(!CRAN()) {
 if(CRAN()){
   stop('CRAN')
 } else {

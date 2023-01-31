@@ -70,7 +70,7 @@ stopifnot(norder(create.bspline.basis(norder=2, breaks=c(0,.5, 1))) == 2)
 # 21 breaks, 19 interior knots.
 stopifnot(norder(create.bspline.basis()) == 4)
 
-\dontrun{
+if (!CRAN()) {
 norder(create.fourier.basis(c(0,12) ))
 Error in norder.bspline(x) :
   object x is of type = fourier;  'norder' is only defined for type = 'bsline'

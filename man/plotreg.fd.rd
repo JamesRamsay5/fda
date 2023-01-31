@@ -45,7 +45,7 @@ plotreg.fd(reglist)
   \code{\link{register.fd}}
 }
 \examples{
-\dontrun{
+if (!CRAN()) {
 #  register and plot the angular acceleration of the gait data
 gaittime  <- seq(0.05, 0.95, 0.1)*20
 gaitrange <- c(0,20)

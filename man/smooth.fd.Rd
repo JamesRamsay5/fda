@@ -49,7 +49,7 @@ yfd  <- result$fd
 yfdPar <- fdPar(yfd, 2, 1e-6)
 yfd1 <- smooth.fd(yfd, yfdPar)
 
-\dontrun{
+if (!CRAN()) {
 # FIXME: using 3rd derivative here gave error?????
 yfdPar3 <- fdPar(yfd, 3, 1e-6)
 yfd1.3 <- smooth.fd(yfd, yfdPar3)

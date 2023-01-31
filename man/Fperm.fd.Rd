@@ -182,7 +182,7 @@ F.res2 = Fperm.fd(annualprec, xfdlist, betalist, nperm=10)
 
 # First set up a basis system to hold the smooths
 
-\dontrun{
+if (!CRAN()) {
 
 Knots  <- growth$age
 norder <- 6

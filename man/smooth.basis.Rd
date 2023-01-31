@@ -853,7 +853,7 @@ harmaccelLfd <- vec2Lfd(c(0, 0, (2*pi)^2, 0))
 gaitfdPar <- fdPar(gaitbasis, harmaccelLfd, lambda)
 gaitSmooth <- smooth.basis(gaittime, gait, gaitfdPar)
 gaitfd <- gaitSmooth$fd
-\dontrun{
+if (!CRAN()){
   # by default creates multiple plots, asking for a click between plots
  plotfit.fd(gait, gaittime, gaitfd)
 }
