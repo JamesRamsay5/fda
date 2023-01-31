@@ -48,25 +48,17 @@
 ##
 ## These figures can be found and run as follows:
 ##
-<<<<<<< HEAD
-if(!CRAN()) {
-scriptsDir <- system.file('scripts', package='fda')
-Rscripts <- dir(scriptsDir, full.names=TRUE, pattern='R$')
-fdarm <- grep('fdarm', Rscripts, value=TRUE)
-chapters <- length(fdarm)
-=======
-if(!CRAN()){
-  scriptsDir <- system.file('scripts', package='fda')
-  Rscripts <- dir(scriptsDir, full.names=TRUE, pattern='R$')
-  fdarm <- grep('fdarm', Rscripts, value=TRUE)
-  chapters <- length(fdarm)
->>>>>>> ef63111751e395584d9dc9163a7b87a6f6b8d7cd
-# NOTE:  If R fails in any of these scripts,
-# this for loop will not end normally,
-# and the abnormal termination will be displayed:
-  for(ch in 1:chapters){
-    cat('Running', fdarm[ch], '\n')
-    invisible(source(fdarm[ch]))
+  if(!CRAN()){
+    scriptsDir <- system.file('scripts', package='fda')
+    Rscripts <- dir(scriptsDir, full.names=TRUE, pattern='R$')
+    fdarm <- grep('fdarm', Rscripts, value=TRUE)
+    chapters <- length(fdarm)
+    # NOTE:  If R fails in any of these scripts,
+    # this for loop will not end normally,
+    # and the abnormal termination will be displayed:
+    for(ch in 1:chapters){
+      cat('Running', fdarm[ch], '\n')
+      invisible(source(fdarm[ch]))
     }
   }
 }

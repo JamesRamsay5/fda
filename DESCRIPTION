@@ -1,11 +1,6 @@
 Package: fda
-<<<<<<< HEAD
-Version: 6.1.1
-Date: 2023-01-15
-=======
-Version: 6.0.6
-Date: 2023-01-19
->>>>>>> ef63111751e395584d9dc9163a7b87a6f6b8d7cd
+Version: 6.1.2
+Date: 2023-01-31
 Title: Functional Data Analysis
 Authors@R: c(person("James", "Ramsay", 
             role=c("aut","cre"),
