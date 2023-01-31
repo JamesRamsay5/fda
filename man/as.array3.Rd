@@ -66,8 +66,6 @@ as.array3(array(1:6, 1:3))
 ##
 if(!CRAN()) {
 as.array3(array(1:24, 1:4)) 
-Error in as.array3(array(1:24, 1:4)) : 
-  length(dim(array(1:24, 1:4)) = 4 > 3
 }
 }
 \keyword{utilities}
