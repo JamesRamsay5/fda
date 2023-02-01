@@ -125,15 +125,15 @@ daytempfd <- with(CanadianWeather, smooth.basis(day.5,
 #  plot all the temperature functions for the monthly weather data
 plot(daytempfd, main="Temperature Functions")
 
-if (!CRAN)) {
-# To plot one at a time:
-# The following pauses to request page changes.
-\dontshow{
-# (Without 'dontrun', the package build process
-# might encounter problems with the par(ask=TRUE)
-# feature.)
-}
-plot(daytempfd, ask=TRUE)
+if (!CRAN()) {
+  # To plot one at a time:
+  # The following pauses to request page changes.
+  \dontshow{
+    # (Without 'dontrun', the package build process
+    # might encounter problems with the par(ask=TRUE)
+    # feature.)
+  }
+  plot(daytempfd, ask=TRUE)
 }
 
 ##
