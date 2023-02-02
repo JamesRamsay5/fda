@@ -10,7 +10,7 @@
   M-1 dimensional surprisal subspace that is within the space of non-negative M-dimensional vectors.
 }
 \usage{
-smooth.surp(argvals, Wbin, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
+smooth.surp(argvals, y, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
             iterlim=50, dbglev=0)
 }
 \arguments{
@@ -21,7 +21,7 @@ smooth.surp(argvals, Wbin, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
     you will need to run this function inside one or more loops,
     smoothing each curve separately.
   }
-  \item{Wbin}{
+  \item{y}{
     A \code{nbin} by \code{M_i} matrix of surprisal values to be fit.  
   }
   \item{Bmat0}{A \code{Wnbasis} by \code{M_i - 1} matrix containing starting

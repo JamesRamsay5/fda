@@ -45,28 +45,32 @@ as.array3(x)
   \code{\link{checkDims3}}
 }
 \examples{
-##
-## vector -> array 
-##
-as.array3(c(a=1, b=2)) 
+  ##
+  ## vector -> array 
+  ##
+  as.array3(c(a=1, b=2)) 
 
-##
-## matrix -> array 
-##
-as.array3(matrix(1:6, 2))
-as.array3(matrix(1:6, 2, dimnames=list(letters[1:2], LETTERS[3:5]))) 
+  ##
+  ## matrix -> array 
+  ##
+  
+  as.array3(matrix(1:6, 2))
+  as.array3(matrix(1:6, 2, dimnames=list(letters[1:2],
+      LETTERS[3:5]))) 
 
-##
-## array -> array 
-##
-as.array3(array(1:6, 1:3)) 
+  ##
+  ## array -> array 
+  ##
+  
+  as.array3(array(1:6, 1:3)) 
 
-##
-## 4-d array 
-##
-if(!CRAN()) {
-as.array3(array(1:24, 1:4)) 
-}
+  ##
+  ## 4-d array 
+  ##
+  
+  if(!CRAN()) {
+    as.array3(array(1:24, 1:4)) 
+  }
 }
 \keyword{utilities}
 
