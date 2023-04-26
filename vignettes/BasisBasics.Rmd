@@ -1,5 +1,5 @@
 ---
-title: "BasisBasics"
+title: "Introduction to the Basics of FDA"
 output: html_document
 vignette: >
   %\VignetteIndexEntry{BasisBasics}
@@ -8,10 +8,8 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+system.file(package="fda")
 ```
 
 ```{r setup}

@@ -84,6 +84,7 @@ smooth.surp <- function(argvals, y, Bmat0, WfdPar, wtvec=NULL, conv=1e-4,
   
   WfdPar   <- fdParcheck(WfdPar,M)
   Wbasis   <- WfdPar$fd$basis
+  
   Wnbasis  <- Wbasis$nbasis
   Wlambda  <- WfdPar$lambda
   Wpenalty <- eval.penalty(Wbasis, WfdPar$Lfd)
