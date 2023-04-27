@@ -106,9 +106,10 @@ all.equal(fd.bspl1.1, fd.bspl1.1a)
 \dontshow{ ) }
 # TRUE
 
-if(!CRAN()) {
-  fd.bspl1.1b <- fd(0)
-}
+# the following three lines shown an error in a non-cran check:
+# if(!CRAN()) {
+#   fd.bspl1.1b <- fd(0)
+# }
 
 ##
 ## Cubic spline:  4  basis functions

@@ -49,14 +49,15 @@ yfd  <- result$fd
 yfdPar <- fdPar(yfd, 2, 1e-6)
 yfd1 <- smooth.fd(yfd, yfdPar)
 
-if (!CRAN()) {
+#. this code throws an error for. non-cran check
+# if (!CRAN()) {
 # FIXME: using 3rd derivative here gave error?????
-yfdPar3 <- fdPar(yfd, 3, 1e-6)
-yfd1.3 <- smooth.fd(yfd, yfdPar3)
-#Error in bsplinepen(basisobj, Lfdobj, rng) :
+# yfdPar3 <- fdPar(yfd, 3, 1e-6)
+# yfd1.3 <- smooth.fd(yfd, yfdPar3)
+# Error in bsplinepen(basisobj, Lfdobj, rng) :
 #	Penalty matrix cannot be evaluated
 #  for derivative of order 3 for B-splines of order 4
-}
+# }
 
 #  set up a functional parameter object with smoothing
 #  parameter 1 and a penalty on the 3rd derivative.

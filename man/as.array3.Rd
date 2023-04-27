@@ -67,10 +67,11 @@ as.array3(x)
   ##
   ## 4-d array 
   ##
-  
-  if(!CRAN()) {
-    as.array3(array(1:24, 1:4)) 
-  }
+  # These lines throw an error because the dimensionality woud be 4
+  # and as.array3 only allows dimensions 3 or less.
+  # if(!CRAN()) {
+  #   as.array3(array(1:24, 1:4)) 
+  # }
 }
 \keyword{utilities}
 

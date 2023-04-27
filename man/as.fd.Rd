@@ -113,9 +113,9 @@ lines(x., eval.fd(x., fn.), col='green', lty='dotted', lwd=3)
 
 if(!CRAN()) {
 # Will NOT translate a periodic spline
-fp <- splinefun(x, y, method='periodic')
-as.fd(fp)
-#Error in as.fd.function(fp) :
+# fp <- splinefun(x, y, method='periodic')
+# as.fd(fp)
+# Error in as.fd.function(fp) :
 #  x (fp)  uses periodic B-splines, and as.fd is programmed
 #   to translate only B-splines with coincident boundary knots.
 }
