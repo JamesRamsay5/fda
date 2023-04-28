@@ -29,5 +29,5 @@ Description: These functions were developed to support functional data
 License: GPL (>= 2)
 URL: http://www.functionaldata.org
 LazyData: true
-NeedsCompilation: yes
+NeedsCompilation: no
 VignetteBuilder: knitr
