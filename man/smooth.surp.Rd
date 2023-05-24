@@ -121,7 +121,7 @@ matplot(xfine, sfine, type="l", lty=c(1,1), col=c(1,1))
 points(x, mnormdata[,1])
 points(x, mnormdata[,2])
 #  convert the surprisal fit values to probabilities
-pfine = 2^-sfine
+pfine = 2^(-sfine)
 #  check that they sum to one
 apply(pfine,1,sum)
 par(oldpar)

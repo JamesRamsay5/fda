@@ -70,11 +70,12 @@ norder(x, ...)
   # 21 breaks, 19 interior knots.
   stopifnot(norder(create.bspline.basis()) == 4)
 
-  if (!CRAN()) {
-    norder(create.fourier.basis(c(0,12) ))
+  # these five lines throw an error of for a nocran check 
+  # if (!CRAN()) {
+  #   norder(create.fourier.basis(c(0,12) ))
     # Error in norder.bspline(x) :
     # object x is of type = fourier;  'norder' is only defined for type = 'bspline'
-  }
+  # }
 
 }
 \keyword{smooth}

@@ -1,10 +1,10 @@
 Package: fda
-Version: 6.1.3
-Date: 2023-04-24
+Version: 6.1.4
+Date: 2023-05-23
 Title: Functional Data Analysis
 Authors@R: c(person("James", "Ramsay", 
             role=c("aut","cre"),
-            email="james.ramsay@mcgill.ca"), 
+            email="ramsay@psych.mcgill.ca"), 
           person("Giles", "Hooker",
             role="ctb",
             email="gjh27@cornell.edu"),
@@ -29,5 +29,5 @@ Description: These functions were developed to support functional data
 License: GPL (>= 2)
 URL: http://www.functionaldata.org
 LazyData: true
-NeedsCompilation: no
+NeedsCompilation: yes
 VignetteBuilder: knitr

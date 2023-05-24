@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the Basics of FDA"
+title: "BasisBasics"
 output: html_document
 vignette: >
   %\VignetteIndexEntry{BasisBasics}
