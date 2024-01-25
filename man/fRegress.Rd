@@ -59,7 +59,7 @@ fRegress(y, ...)
     the dependent variable object.  It may be an object of five
     possible classes or attributes:
 
-    \itemize{
+    \describe{
       \item{character or formula}{
 	a \code{formula} object or a \code{character} object that can be
 	coerced into a \code{formula} providing a symbolic description
@@ -105,7 +105,7 @@ fRegress(y, ...)
     independent variables.  They can be objects of either of these two
     classes:
 
-    \itemize{
+    \describe{
       \item{scalar}{
 	a numeric vector if the independent variable is scalar.
 
@@ -221,88 +221,89 @@ fRegress(y, ...)
 \value{
   These functions return either a standard \code{fRegress} fit object or
   or a model specification:
-  \describe{
-    \item{The \code{fRegress} fit object case:}{A list of class 
-      \code{fRegress} with the following components:
-      \itemize{
-        \item{y:} {The first argument in the call to \code{fRegress}. 
-          This argument is coerced to	\code{class} \code{fd} in fda version 5.1.9.  
-          Prior versions of the package converted it to an \code{fdPar}, but the 
-          extra structures in that class were not used in any of the 
-          \code{fRegress} codes.}
-        \item{xfdlist:} {The second argument in the call to \code{fRegress}.}
-        \item{betalist:} {The third argument in the call to \code{fRegress}.}
-        \item{betaestlist:} {A list of length equal to the number of independent
-          variables and with members having the same functional parameter 
-          structure as the corresponding members of \code{betalist}.  These are the
-	     estimated regression coefficient functions.}
-        \item{yhatfdobj:} {A functional parameter object (class \code{fdPar}) 
-          if the dependent variable is functional or a vector if the dependent
+  \item{The \code{fRegress} fit object case:}{A list of class 
+    \code{fRegress} with the following components:
+    \describe{
+      \item{y:}{The first argument in the call to \code{fRegress}. 
+        This argument is coerced to	\code{class} \code{fd} in fda version 5.1.9.  
+        Prior versions of the package converted it to an \code{fdPar}, but the 
+        extra structures in that class were not used in any of the 
+        \code{fRegress} codes.}
+      \item{xfdlist:}{The second argument in the call to \code{fRegress}.}
+      \item{betalist:}{The third argument in the call to \code{fRegress}.}
+      \item{betaestlist:}{A list of length equal to the number of independent
+        variables and with members having the same functional parameter 
+        structure as the corresponding members of \code{betalist}.  These are the
+	      estimated regression coefficient functions.}
+      \item{yhatfdobj:}{A functional parameter object (class \code{fdPar}) 
+         if the dependent variable is functional or a vector if the dependent
 	      variable is scalar.  This is the set of predicted by the
 	      functional regression model for the dependent variable.}
-        \item{Cmatinv:} {A matrix containing the inverse of the coefficient 
-          matrix for the  linear equations that define the solution to the 
-          regression problem.  This matrix is required for function 
-          \code{fRegress.stderr} that estimates confidence regions
+      \item{Cmatinv:}{A matrix containing the inverse of the coefficient 
+        matrix for the  linear equations that define the solution to the 
+        regression problem.  This matrix is required for function 
+        \code{fRegress.stderr} that estimates confidence regions
 	      for the regression coefficient function estimates.}
-        \item{wt:} {The vector of weights input or inferred.}
+      \item{wt:}{The vector of weights input or inferred.}
+    }
+    If \code{class(y)} is numeric, the \code{fRegress} object also includes:
+      \describe{
+        \item{df:}{The equivalent degrees of freedom for the fit.}
+        \item{OCV}{the leave-one-out cross validation score for the model.}
+        \item{gcv:}{The generalized cross validation score.}
       }
-      If \code{class(y)} is numeric, the \code{fRegress} object also includes:
-        \itemize{
-          \item{df:} {The equivalent degrees of freedom for the fit.}
-          \item{OCV} {the leave-one-out cross validation score for the model.}
-          \item{gcv:} {The generalized cross validation score.}
-        }
-        If \code{class(y)} is \code{fd} or \code{fdPar}, the
-        \code{fRegress} object returned also includes 5 other components:
-        \itemize{
-          \item{y2cMap:} {An input \code{y2cMap}.}
-          \item{SigmaE:} {An input \code{SigmaE}.}
-          \item{betastderrlist:} {An \code{fd} object estimating the standard 
-            errors of \code{betaestlist}.}
-          \item{bvar:} {A covariance matrix for regression coefficient estimates.}
-          \item{c2bMap:} {A mapping matrix that maps variation in Cmat to variation 
+    If \code{class(y)} is \code{fd} or \code{fdPar}, the \code{fRegress} 
+    object returned also includes 5 other components:
+      \describe{
+        \item{y2cMap:}{An input \code{y2cMap}.}
+        \item{SigmaE:}{An input \code{SigmaE}.}
+        \item{betastderrlist:}{An \code{fd} object estimating the standard 
+          errors of \code{betaestlist}.}
+        \item{bvar:}{A covariance matrix for regression coefficient estimates.}
+        \item{c2bMap:}{A mapping matrix that maps variation in Cmat to variation 
             in regression coefficients.}
-        }
-    }    
+      }
+    }
     \item{The model specification object case:}{The 
       \code{fRegress.formula} and \code{fRegress.character} functions translate 
       the \code{formula} into the argument list required by \code{fRegress.fdPar} 
       or \code{fRegress.numeric}.  With the default value 'fRegress' for the 
       argument \code{method}, this list is then used to call the appropriate 
-      other \code{fRegress} function.}
-  }
-  Alternatively, to see how the \code{formula} is translated, use
-  the alternative 'model' value for the argument \code{method}.  In
-  that case, the function returns a list with the arguments
-  otherwise passed to these other functions plus the following
-  additional components:
-  \itemize{
-    \item{xfdlist0:} {A list of the objects named on the right hand side of
-	  \code{formula}.  This will differ from \code{xfdlist} for
-	  any categorical or multivariate right hand side object.}
-    \item{type:} {the \code{type} component of any \code{fd} object on the 
-      right hand side of \code{formula}.}
-    \item{nbasis:} {A vector containing the \code{nbasis} components of 
-      variables named in \code{formula} having such components.}
-    \item{xVars:} {An integer vector with all the variable names on the right
-	  hand side of \code{formula} containing the corresponding
-	  number of variables in \code{xfdlist}.  This can exceed 1 for
-	  any multivariate object on the right hand side of class either
-	  \code{numeric} or \code{fd} as well as any categorical variable.}
+      other \code{fRegress} function.
+      Alternatively, to see how the \code{formula} is translated, use
+      the alternative 'model' value for the argument \code{method}.  In
+      that case, the function returns a list with the arguments
+      otherwise passed to these other functions plus the following
+      additional components:
+      \describe{
+        \item{xfdlist0:}{A list of the objects named on the right hand side of
+	        \code{formula}.  This will differ from \code{xfdlist} for
+	        any categorical or multivariate right hand side object.}
+        \item{type:}{the \code{type} component of any \code{fd} object on the 
+          right hand side of \code{formula}.}
+        \item{nbasis:}{A vector containing the \code{nbasis} components of 
+          variables named in \code{formula} having such components.}
+        \item{xVars:}{An integer vector with all the variable names on the right
+	        hand side of \code{formula} containing the corresponding
+	        number of variables in \code{xfdlist}.  This can exceed 1 for
+	        any multivariate object on the right hand side of class either
+	        \code{numeric} or \code{fd} as well as any categorical variable.}
+      }
   }
 }
+
 \author{
   J. O. Ramsay, Giles Hooker, and Spencer Graves
 }
 \references{
-  Ramsay, James O., Hooker, Giles, and Graves, Spencer (2009)
-    \emph{Functional Data Analysis in R and Matlab}, Springer, 
-    New York.
-
+  Ramsay, James O., Hooker, Giles, and Graves, Spencer (2009),
+    \emph{Functional data analysis with R and Matlab}, Springer, New York.
+  
   Ramsay, James O., and Silverman, Bernard W. (2005), 
-    \emph{Functional Data Analysis, 2nd ed.}, Springer, 
-    New York.
+    \emph{Functional Data Analysis, 2nd ed.}, Springer, New York.
+  
+  Ramsay, James O., and Silverman, Bernard W. (2002), 
+    \emph{Applied Functional Data Analysis}, Springer, New York.
 }
 \seealso{
   \code{\link{fRegress.stderr}},
@@ -310,6 +311,8 @@ fRegress(y, ...)
   \code{\link{linmod}}
 }
 \examples{
+\dontrun{
+
 oldpar <- par(no.readonly=TRUE)
 ###
 ###
@@ -327,8 +330,9 @@ annualprec <-
 # than observations, so we use only 25 basis functions, for this example
 smallbasis  <- create.fourier.basis(c(0, 365), 25)
 # The covariate is the temperature curve for each station.
-tempfd <- smooth.basis(day.5,
-        CanadianWeather$dailyAv[,,"Temperature.C"], smallbasis)$fd
+tempfd <- 
+  smooth.basis(day.5, CanadianWeather$dailyAv[,,"Temperature.C"], 
+               smallbasis)$fd
 
 ##
 ## formula interface:  specify the model by a formula, the method
@@ -531,11 +535,11 @@ beta1 <- with(hipfd, fd(basisobj=basis, fdnames=fdnames))
 betalist  <- list(const=fdPar(beta0), hipfd=fdPar(beta1))
 
 fRegressout <- fRegress(kneefd, xfdlist, betalist)
-
 \dontshow{stopifnot(}
 all.equal(fRegressout, knee.hip.f)
 \dontshow{)}
 par(oldpar)
+}
 }
 % docclass is function
 \keyword{smooth}

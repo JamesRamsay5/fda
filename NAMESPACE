@@ -114,7 +114,6 @@ export(AmpPhaseDecomp,
        plotbeta,
        plotfit.fd, 
        plotfit.fdSmooth,
-       plotreg.fd,
        plotscores,
        plus.fd, 
        polyg,
@@ -195,14 +194,13 @@ S3method(density,      fd)
 S3method(deriv,        fd)
 S3method(lines,        fd)
 S3method(mean,         fd)
-S3method(matrix,       matplot)
-S3method(numeric,      matplot)
 S3method(norder,       fd)
 S3method(plot,         fd)
 S3method(predict,      fd)
 S3method(sqrt,         fd)
 S3method(sum,          fd)
 S3method(summary,      fd)
+S3method(fRegress,     fd)
 S3method(boxplot,      fdPar)
 S3method(coef,         fdPar)
 S3method(coefficients, fdPar)
@@ -226,7 +224,6 @@ S3method(residuals,    monfd)
 S3method(predict,      monfd)
 S3method(as.fd,        'function')
 S3method(as.fd,        smooth.spline)
-S3method(fRegress,     fd)
 S3method(fRegress,     double)
 S3method(fRegress,     formula)
 S3method(fRegress,     character)
@@ -244,4 +241,6 @@ S3method(plot,         cca.fd)
 S3method(plot,         pca.fd)
 S3method(plot,         pda.fd)
 S3method(summary,      bifd)
+S3method(matplot,      matrix)
+S3method(matplot,      numeric)
 

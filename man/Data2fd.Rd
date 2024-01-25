@@ -30,8 +30,7 @@
 \usage{
 Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
         lambda=3e-8/diff(as.numeric(range(argvals))),
-        fdnames=NULL, covariates=NULL, method="chol",
-        dfscale=1)
+        fdnames=NULL, covariates=NULL, method="chol")
 }
 \arguments{
   \item{argvals}{
@@ -75,7 +74,7 @@ Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
   \item{basisobj}{
     One of the following:
 
-    \itemize{
+    \describe{
       \item{basisfd}{
       	a functional basis object 
       	(class \code{basisfd}).
@@ -131,7 +130,7 @@ Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
     either case, the three elements 
     correspond to the following:
 
-    \itemize{
+    \describe{
       \item{argname}{
 	      name of the argument, e.g. 
 	      "time" or "age".
@@ -195,22 +194,6 @@ Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
     decomposition of a symmetric 
     positive definite matrix.
   }
-  \item{dfscale}{
-    the generalized cross-validation 
-    or "gcv" criterion that is often 
-    used to determine the size of the 
-    smoothing parameter involves the
-    subtraction of an measure of 
-    degrees of freedom from \code{n}.  
-    Chong Gu has argued that 
-    multiplying this degrees of 
-    freedom measure by a constant 
-    slightly greater than 1, such as 
-    1.2, can produce better decisions 
-    about the level of smoothing to 
-    be used.  The default value is, 
-    however, 1.0.
-  }
 }
 \details{
   This function tends to be used in 
@@ -227,7 +210,7 @@ Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
 }
 \value{
   an object of the \code{fd} class containing:
-  \itemize{
+  \describe{
   \item{coefs}{
     the coefficient array
   }
@@ -242,13 +225,14 @@ Data2fd(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
   }
 }
 \references{
-  Ramsay, James O., and Silverman, 
-  Bernard W. (2005), \emph{Functional
-    Data Analysis, 2nd ed.}, Springer, New York.
-
-  Ramsay, James O., and Silverman, 
-  Bernard W. (2002), \emph{Applied
-    Functional Data Analysis}, Springer, New York.
+  Ramsay, James O., Hooker, Giles, and Graves, Spencer (2009),
+    \emph{Functional data analysis with R and Matlab}, Springer, New York.
+  
+  Ramsay, James O., and Silverman, Bernard W. (2005), 
+    \emph{Functional Data Analysis, 2nd ed.}, Springer, New York.
+  
+  Ramsay, James O., and Silverman, Bernard W. (2002), 
+    \emph{Applied Functional Data Analysis}, Springer, New York.
 }
 \seealso{
   \code{\link{smooth.basisPar}},
@@ -273,11 +257,11 @@ oldpar <- par(no.readonly=TRUE)
 plot(fd1.1)
 # now repeat the analysis with some smoothing, which moves the
 # toward 0.
-fd1.1.5 <- Data2fd(y12, basisobj=b1.1, lambda=0.5)
+fd1.5 <- Data2fd(y12, basisobj=b1.1, lambda=0.5)
 #  values of the smooth:
-# fd1.1.5 = sum(y12)/(n+lambda*integral(over arg=0 to 1 of 1))
+# fd1.1 = sum(y12)/(n+lambda*integral(over arg=0 to 1 of 1))
 #         = 3 / (2+0.5) = 1.2
-eval.fd(seq(0, 1, .2), fd1.1.5)
+eval.fd(seq(0, 1, .2), fd1.5)
 ##
 ## step function smoothing
 ##
@@ -296,11 +280,11 @@ par(op)
 # 3 step basis functions: order 1 = degree 0 = step functions
 b1.3 <- create.bspline.basis(nbasis=3, norder=1)
 #  smooth the data with smoothing
-fd1.3.5 <- Data2fd(y12, basisobj=b1.3, lambda=0.5)
+fd1.3 <- Data2fd(y12, basisobj=b1.3, lambda=0.5)
 #  plot the fit along with the points
 plot(0:1, c(0, 2), type='n')
 points(0:1, y12)
-lines(fd1.3.5)
+lines(fd1.3)
 # Fit = penalized least squares with penalty =
 #          = lambda * integral(0:1 of basis^2),
 #            which shrinks the points towards 0.
