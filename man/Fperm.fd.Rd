@@ -168,14 +168,15 @@ nbetabasis  <- 35
 betabasis2  <- create.fourier.basis(c(0, 365), nbetabasis)
 betafd2     <- fd(matrix(0,nbetabasis,1), betabasis2)
 
-lambda        <- 10^12.5
+lambda          <- 10^12.5
 harmaccelLfd365 <- vec2Lfd(c(0,(2*pi/365)^2,0), c(0, 365))
-betafdPar2    <- fdPar(betafd2, harmaccelLfd365, lambda)
-betalist[[2]] <- betafdPar2
+betafdPar2      <- fdPar(betafd2, harmaccelLfd365, lambda)
+betalist[[2]]   <- betafdPar2
 
 # Should use the default nperm = 200
 # but use 10 to save test time for illustration
-F.res2 = Fperm.fd(annualprec, xfdlist, betalist, nperm=10)
+
+F.res2 = Fperm.fd(annualprec, xfdlist, betalist, nperm=100)
 
 ##
 ## 2.  yfdpar = Functional data object (class fd)
@@ -195,8 +196,8 @@ hgtbasis <- create.bspline.basis(range(Knots), nbasis, norder, Knots)
 # Now smooth with a fourth-derivative penalty and a very small smoothing
 # parameter
 
-Lfdobj <- 4
-lambda <- 1e-2
+Lfdobj    <- 4
+lambda    <- 1e-2
 growfd    <- fd(matrix(0,nbasis,1),hgtbasis)
 growfdPar <- fdPar(growfd, Lfdobj, lambda)
 
@@ -220,7 +221,9 @@ betalist = list(fdPar(hgtfd,2,1e-6),fdPar(hgtfd,2,1e-6))
 
 # Should use nperm = 200 or so,
 # but use 10 to save test time
-Fres = Fperm.fd(hgtfd,xfdlist,betalist,nperm=10)
+
+Fres = Fperm.fd(hgtfd,xfdlist,betalist,nperm=100)
+
 par(oldpar)
 }
 
