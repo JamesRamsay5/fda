@@ -206,39 +206,22 @@ smooth.basis(argvals=1:n, y, fdParobj, wtvec=NULL, fdnames=NULL,
 \value{
   an object of class \code{fdSmooth}, which is a named list of length 8
   with the following components:
-
-  \item{fd}{
-    a functional data object containing a smooth of the data.
-  }
-  \item{df}{
-    a degrees of freedom measure of the smooth
-  }
-  \item{gcv}{
-    the value of the generalized cross-validation or GCV criterion.  If
-    there are multiple curves, this is a vector of values, one per
+  \item{fd}{a functional data object containing a smooth of the data.}
+  \item{df}{a degrees of freedom measure of the smooth}
+  \item{gcv}{the value of the generalized cross-validation or GCV criterion.  
+    Ifthere are multiple curves, this is a vector of values, one per
     curve.  If the smooth is multivariate, the result is a matrix of gcv
     values, with columns corresponding to variables.
-
-    \deqn{gcv <- n*SSE/((n-df)^2)}
-  }
-  \item{beta}{
-    the regression coefficients associated with covariate variables.
+    \deqn{gcv <- n*SSE/((n-df)^2)}}
+  \item{beta}{the regression coefficients associated with covariate variables.
     These are vector, matrix or array objects depending on whether
     there is a single curve, multiple curves or multiple curves and
-    variables, respectively.
-  }
-  \item{SSE}{
-    the error sums of squares.  SSE is a vector or a matrix of the same
-    size as GCV.
-  }
-  \item{penmat}{
-    the penalty matrix.
-  }
-  \item{y2cMap}{
-    the matrix mapping the data to the coefficients.
-  }
-  \item{argvals, y}{input arguments}
-}
+    variables, respectively.}
+  \item{SSE}{the error sums of squares.  SSE is a vector or a matrix of the 
+    same size as GCV.}
+  \item{penmat}{the penalty matrix.}
+  \item{y2cMap}{the matrix mapping the data to the coefficients.}
+  \item{argvals, y}{input arguments}}
 \references{
   Ramsay, James O., Hooker, Giles, and Graves, Spencer (2009),
     \emph{Functional data analysis with R and Matlab}, Springer, New York.

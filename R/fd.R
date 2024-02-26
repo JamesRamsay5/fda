@@ -1,7 +1,3 @@
-fd <- function(y, ...) {
-  UseMethod("fd")
-}
-
 #  setClass for "fd"
 
 # setClass("fd",    representation(coef     = "array",
@@ -10,7 +6,7 @@ fd <- function(y, ...) {
 
 #  Generator function of class fd
 
-fd <- function (y, basisobj=NULL, fdnames=NULL)
+fd <- function (coef=NULL, basisobj=NULL, fdnames=NULL)
 {
 # This function creates a functional data object.
 #    A functional data object consists of a basis for expanding a functional
@@ -19,7 +15,7 @@ fd <- function (y, basisobj=NULL, fdnames=NULL)
 #    of the "basisfd" class.
 
 #  Arguments
-#  y ... An array containing coefficient values for the expansion of each
+#  COEF ... An array containing coefficient values for the expansion of each
 #             set of function values in terms of a set of basis functions.
 #           If COEF is a three-way array, then the first dimension
 #             corresponds to basis functions, the second to replications,
@@ -42,17 +38,15 @@ fd <- function (y, basisobj=NULL, fdnames=NULL)
 #  Returns:
 #  FD ... a functional data object
 
-#  Last modified 13 September 2023 by Jim Ramsay
+#  Last modified 2 February 2024 by Jim Ramsay
 
 ##
 ## 1.  check coef and get its dimensions
 ##
 
-  coef <- y
-  
   if(is.null(coef) && is.null(basisobj)) basisobj <- basisfd()
 
-  if(is.null(coef)) coef <- rep(0, basisobj[['nbasis']])
+  if(is.null(coef))coef <- rep(0, basisobj[['nbasis']])
 
   type <- basisobj$type
 

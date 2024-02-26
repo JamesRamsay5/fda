@@ -15,11 +15,11 @@
   \code{fd}.
 }
 \usage{
-fd(y, basisobj=NULL, fdnames=NULL)
+fd(coef=NULL, basisobj=NULL, fdnames=NULL)
 }
 \arguments{
-  \item{y}{coef in code, 
-    a vector, matrix, or three-dimensional array of coefficient values.
+  \item{coef}{
+    a vector, matrix, or three-dimensional array of coefficients.
 
     The first dimension (or elements of a vector) corresponds to basis
     functions.
@@ -73,10 +73,7 @@ fd(y, basisobj=NULL, fdnames=NULL)
   functions will actually need to use this function.
 }
 \source{
-  Ramsay, James O., Hooker, Giles, and Graves, Spencer (2009), 
-    Functional data analysis with R and Matlab, Springer, New York.
-
-  Ramsay, James O., and Silverman, Bernard W. (2005), \emph{Functional
+  Ramsay, James O., and Silverman, Bernard W. (2006), \emph{Functional
     Data Analysis, 2nd ed.}, Springer, New York.
 
   Ramsay, James O., and Silverman, Bernard W. (2002), \emph{Applied
@@ -94,18 +91,19 @@ fd(y, basisobj=NULL, fdnames=NULL)
 ##
 ## default
 ##
+fd()
 oldpar <- par(no.readonly=TRUE)
 ##
 ## The simplest b-spline basis:  order 1, degree 0, zero interior knots:
 ##       a single step function
 ##
 bspl1.1    <- create.bspline.basis(norder=1, breaks=0:1)
-fd.bspl1.1 <- fd(0, bspl1.1)
+fd.bspl1.1 <- fd(0, basisobj=bspl1.1)
 
-#\dontshow{ stopifnot( }
-#fd.bspl1.1a <- fd(0,bspl1.1)
-#all.equal(fd.bspl1.1, fd.bspl1.1a)
-#\dontshow{ ) }
+fd.bspl1.1a <- fd(basisobj=bspl1.1)
+\dontshow{ stopifnot( }
+all.equal(fd.bspl1.1, fd.bspl1.1a)
+\dontshow{ ) }
 # TRUE
 
 # the following three lines shown an error in a non-cran check:
