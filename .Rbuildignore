@@ -6,3 +6,4 @@ revdep
 ^\.Rproj\.user$
 fda_release_to_CRAN.R
 ^CRAN-SUBMISSION$
+^README\.Rmd$
