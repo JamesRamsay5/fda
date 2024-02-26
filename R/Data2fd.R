@@ -214,15 +214,23 @@ argvalsySwap = function(argvals=NULL, y=NULL, basisobj=NULL) {
   
   # set up a safety zone for argvals out of range by a tiny amount
   delta <- 1e-7*(rangeval[2]-rangeval[1]) # the tiny amount
-  arng  <- range(argvals)
-  if ((rangeval[1]-arng[1]) <  delta) all(argvals < rangeval[1]) <- rangeval[1]
-  if ((rangeval[2]-arng[2]) < -delta) all(argvals > rangeval[2]) <- rangeval[2]
-  # test for argvals being out of range by more than delta
-  if((rangeval[1] <= arng[1]) && (arng[2] <= rangeval[2])) {
-    return(list(argvals=argvals, y=y, basisobj=basisobj))
-  } else {
+  errwrd <- FALSE
+  for (i in 1:length(argvals)) {
+    argi <- argvals[i]
+    if (argi < rangeval[1] && argi >= rangeval[1]-delta) {
+      argi <- rangeval[1]
+    } else {
+      errwrd <- TRUE
+    }
+    if (argi > rangeval[2] && argi <= rangeval[2]+delta) {
+      argi <- rangeval[2]
+    } else {
+      errwrd <- TRUE
+    }
+  }
+  if (errwrd) {
     #  error message 
-    stop("There are argvals not contained within basisobj$rangeval")
+    stop("There are argvals not contained within interval basisobj$rangeval")
   }
   
 }

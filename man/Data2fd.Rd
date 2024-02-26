@@ -113,6 +113,11 @@
   The roughness is essentially controlled by how many basis functions are used.  
   In more sophisticated applications, it would be better to use the function   
   \code{\link{smooth.basisPar}}.
+  
+  It may happen that a value in argvals is outside the basis object interval 
+  due to rounding error and other causes of small violations.  The code tests
+  for this and pulls these near values into the interval if they are within
+  1e-7 times the interval width.
 }
 
 \value{
