@@ -1,9 +1,8 @@
-fdaReleaseToCRAN.R
+release_to_CRAN.R
 revdep
 .github
 ^\.github$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-fda_release_to_CRAN.R
 ^CRAN-SUBMISSION$
 ^README\.Rmd$
