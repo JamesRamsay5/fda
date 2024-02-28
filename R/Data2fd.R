@@ -17,14 +17,16 @@ Data2fd <- function(argvals=NULL, y=NULL, basisobj=NULL, nderiv=NULL,
   
   # another rest with messages
   
+  argChk <- argvalsySwap(argvals, y, basisobj)
+  
   if(!is.numeric(AV <- argChk$argvals)){
-    # terminal message
-    if(is.null(AV)) stop('is.null(argChk$argvals); should be numeric')
-    #. otherwise alert message
+    print(AV)
+    if(is.null(AV))
+      stop('is.null(argChk$argvals); should be numeric')
     cat('argChk$argvals is not numeric.\n')
     cat('class(argChk$argvals) = ', class(AV), '\n')
     print(AV)
-  }  
+  }
   
   #. Success and smoothing ... S3 object of class fdSmooth is returned
   
@@ -46,7 +48,7 @@ argvalsySwap = function(argvals=NULL, y=NULL, basisobj=NULL) {
   if (inherits(basisobj, 'basisfd')) rangeval <- basisobj$rangeval
   
   ##. --------------------------------------------------------------------------
-  ## 1.  if(is.null(y)) use argvals
+  ## 1.  if(is.null(y)) use argvals for y
   ##. --------------------------------------------------------------------------
   
   if(is.null(y)){
@@ -58,44 +60,49 @@ argvalsySwap = function(argvals=NULL, y=NULL, basisobj=NULL) {
   }
   
   ##. --------------------------------------------------------------------------
-  ## 2.  if(is.null(argvals)). argvals <- seq(basisobj$rangeval, dim(y)[1])
+  ## 2.  test for missing argvals, if so construct a sequence
   ##. --------------------------------------------------------------------------
 
   dimy <- dim(as.array(y))
-  if(is.null(argvals)){
-    {
+  if(is.null(argvals)) {
+    # the following code block is run if TRUE
+    {  # beginning of code block
       if(is.null(basisobj)){
         basisobj <- create.bspline.basis(basisobj)
       } else {
         if(is.numeric(basisobj)) {
           if(length(basisobj)>1){
             basisobj <- create.bspline.basis(basisobj)
-          } else 
+          } else
             basisobj <- create.bspline.basis(norder=basisobj)
         }
         else {
           if(inherits(basisobj, 'fd')){
             basisobj <- basisobj$basis
-          } else 
+          } else
             if(inherits(basisobj, 'fdPar'))
               basisobj <- basisobj$fd$basis
         }
       }
-    }
-    if(is.null(rangeval))
-      stop('basisobj does not have a required ',
-           'rangeval component.')
-    #    
+    }  #. end of code block
+    # This is executed whether or not the previous was
+    #. locate the range from basisobj
+    a01 <- basisobj$rangeval
+    #  if range is null, error message and stop
+    if(is.null(a01))
+      stop('basisobj does not have a required rangeval component.')
     n <- dimy[1]
-    #. alert message
-    cat(paste("'argvals' is missing;  using seq(", rangeval[1],
-              ", ", rangeval[2], ", length=", n, ")\n"))       
-    argvals <- seq(rangeval[1], rangeval[2], length=n)
+    #  construct the argval sequence
+    argvals <- seq(a01[1], a01[2], length=n)
+    #  warning message about the swap
+    cat(paste("'argvals' is missing;  using seq(", a01[1],
+              ", ", a01[2], ", length=", n, ")\n"))
+    #. return
     return(list(argvals=argvals, y=y, basisobj=basisobj))
   }
   
   ##. --------------------------------------------------------------------------
-  ## 3.  if(length(dim(argvals)) == length(dim(y))) ... 
+  ## 3.  swapping y and argvals 
   ##. --------------------------------------------------------------------------
 
   dima <- dim(as.array(argvals))
@@ -214,24 +221,21 @@ argvalsySwap = function(argvals=NULL, y=NULL, basisobj=NULL) {
   
   # set up a safety zone for argvals out of range by a tiny amount
   delta <- 1e-7*(rangeval[2]-rangeval[1]) # the tiny amount
-  errwrd <- FALSE
   for (i in 1:length(argvals)) {
     argi <- argvals[i]
+    # print(argi)
     if (argi < rangeval[1] && argi >= rangeval[1]-delta) {
       argi <- rangeval[1]
-    } else {
-      errwrd <- TRUE
     }
     if (argi > rangeval[2] && argi <= rangeval[2]+delta) {
       argi <- rangeval[2]
-    } else {
-      errwrd <- TRUE
     }
   }
-  if (errwrd) {
+  if (any(argvals < rangeval[1])  || any(argvals > rangeval[2])) {
     #  error message 
     stop("There are argvals not contained within interval basisobj$rangeval")
   }
+  return(list(argvals=argvals, y=y, basisobj=basisobj))
   
 }
 

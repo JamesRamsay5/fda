@@ -1,6 +1,6 @@
 Package: fda
 Version: 6.1.7
-Date: 2024-02-26
+Date: 2024-02-27
 Title: Functional Data Analysis
 Authors@R: c(person("James", "Ramsay", role=c("aut","cre"),
              email="ramsay@psych.mcgill.ca"), 

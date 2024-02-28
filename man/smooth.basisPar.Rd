@@ -194,10 +194,6 @@ smooth.basisPar(argvals, y, fdobj=NULL, Lfdobj=NULL,
     curve.  If the smooth is multivariate, the result is a matrix of gcv
     values, with columns corresponding to variables.
   }
-%  \item{coef}{
-%    the coefficient matrix or array for the basis function expansion of
-%    the smoothing function
-%  }
   \item{SSE}{
     the error sums of squares.  SSE is a vector or a matrix of the same
     size as 'gcv'.
