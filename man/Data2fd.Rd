@@ -180,7 +180,7 @@ fd1.5 <- Data2fd(y12, basisobj=b1.1, lambda=0.5)
 #         is an fd smooth object.  Calls to functions expecting 
 #         an fd object require attaching $fd to the fdsmooth object
 #         this is required in lines 268, 311 and 337
-eval.fd(seq(0, 1, .2), fd1.5$fd)
+eval.fd(seq(0, 1, .2), fd1.5)
 ##
 ## step function smoothing
 ##
@@ -223,7 +223,7 @@ b2.3 <- create.bspline.basis(norder=2, breaks=c(0, .5, 1))
 # interpolate the values 0, 2, 1
 fd2.3 <- Data2fd(c(0,2,1), basisobj=b2.3, lambda=0)
 #  display the coefficients
-round(fd2.3$fd$coefs, 4)
+round(fd2.3$coefs, 4)
 # plot the results
 op <- par(mfrow=c(2,1))
 plot(b2.3, main='bases')
@@ -249,7 +249,7 @@ all.equal(
 b3.4 <- create.bspline.basis(norder=3, breaks=c(0, .5, 1))
 # fit values c(0,4,2,3) without interpolation
 fd3.4 <- Data2fd(c(0,4,2,3), basisobj=b3.4, lambda=0)
-round(fd3.4$fd$coefs, 4)
+round(fd3.4$coefs, 4)
 op <- par(mfrow=c(2,1))
 plot(b3.4)
 plot(fd3.4)
@@ -257,7 +257,7 @@ points(c(0,1/3,2/3,1), c(0,4,2,3))
 par(op)
 #  try smoothing
 fd3.4. <- Data2fd(c(0,4,2,3), basisobj=b3.4, lambda=1)
-round(fd3.4.$fd$coef, 4)
+round(fd3.4.$coef, 4)
 op <- par(mfrow=c(2,1))
 plot(b3.4)
 plot(fd3.4., ylim=c(0,4))
