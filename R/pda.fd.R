@@ -358,15 +358,11 @@ pda.fd  <-  function(xfdlist, bwtlist=NULL, awtlist=NULL, ufdlist=NULL,
       }
     }
     
-	print(dim(barray))
-	print(length(tx))
-	print(difeorder)
+
     for (j1 in 1:difeorder) {
-	print(j1)
       if (!is.null(bwtlist[[j1]])) {
         bfdParj     <- bwtlist[[j1]]
         bvecj       <- eval.fd(tx, bfdParj$fd)
-		print(dim(bvecj))
         barray[,j1] <- bvecj
       }
     }
