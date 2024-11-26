@@ -5,7 +5,7 @@ Title: Functional Data Analysis
 Authors@R: c(person("James", "Ramsay", role=c("aut","cre"),
              email="ramsay@psych.mcgill.ca"), 
              person("Giles", "Hooker", role="ctb",
-             email="gjh27@cornell.edu"),
+             email="ghooker@wharton.upenn.edu"),
              person("Spencer", "Graves", role="ctb",
              email="spencer.graves@effectivedefense.org"))
 Maintainer: James Ramsay <ramsay@psych.mcgill.ca>
