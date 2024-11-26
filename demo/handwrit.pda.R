@@ -102,13 +102,13 @@ bwtfd12    = bwtlistout[[1]][[2]][[2]]$fd
 bwtfd22    = bwtlistout[[2]][[2]][[2]]$fd
 par(mfrow=c(2,2))
 plot(bwtfd11)
-title("Weight for variable X in equation 1")
+title("Weight for variable DX in equation 1")
 plot(bwtfd21)
-title("Weight for variable Y in equation 1")
+title("Weight for variable DY in equation 1")
 plot(bwtfd12)
-title("Weight for variable X in equation 2")
+title("Weight for variable DX in equation 2")
 plot(bwtfd22)
-title("Weight for variable Y in equation 2")
+title("Weight for variable DY in equation 2")
 
 #  display residual functions
 

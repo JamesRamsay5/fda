@@ -125,7 +125,7 @@ fRegressArgCheck <- function(yfd, xfdlist, betalist, wt=NULL) {
         print(paste("Matrix in XFDLIST[[",j,"]] has more than one column."))
         xerror = TRUE 
       } 
-      xfdlist[[j]] <- fd(matrix(xfdj,1,N), betalist[[j]]$fd$basis)
+      xfdlist[[j]] <- fd(matrix(xfdj,1,N), create.constant.basis(betalist[[j]]$fd$basis$rangeval))
     } 
     if (!(inherits(xfdlist[[j]], "fd"     ) || 
           inherits(xfdlist[[j]], "numeric") ||
