@@ -70,14 +70,33 @@ fRegressArgCheck <- function(yfd, xfdlist, betalist, wt=NULL) {
     #         "variables are scalar."))
   }
   
-  #  --------------------  check contents of XFDLIST  -------------------
+ 
+  
+  #  --------------------  check contents of BETALIST  -------------------
+  
+  berror <- FALSE
+  for (j in 1:p) {
+    betafdParj <- betalist[[j]]
+    if (inherits(betafdParj, "fd") || inherits(betafdParj, "basisfd")) {
+      betafdParj    <- fdPar(betafdParj)
+      betalist[[j]] <- betafdParj
+    }
+    if (!inherits(betafdParj, "fdPar")) {
+      print(paste("BETALIST[[",j,"]] is not a FDPAR object."))
+      berror <- TRUE
+    }
+  }
+  
+  
+  
+  
+ #  --------------------  check contents of XFDLIST  -------------------
   
   #  If the object is a vector of length N,
   #  it is converted to a functional data object with a
   #  constant basis
   
-  onebasis <- create.constant.basis(rangeval)
-  onesfd   <- fd(1,onebasis)
+ 
   
   xerror <- FALSE
   for (j in 1:p) {
@@ -106,7 +125,7 @@ fRegressArgCheck <- function(yfd, xfdlist, betalist, wt=NULL) {
         print(paste("Matrix in XFDLIST[[",j,"]] has more than one column."))
         xerror = TRUE 
       } 
-      xfdlist[[j]] <- fd(matrix(xfdj,1,N), onebasis)
+      xfdlist[[j]] <- fd(matrix(xfdj,1,N), betalist[[j]]$fd$basis)
     } 
     if (!(inherits(xfdlist[[j]], "fd"     ) || 
           inherits(xfdlist[[j]], "numeric") ||
@@ -114,22 +133,14 @@ fRegressArgCheck <- function(yfd, xfdlist, betalist, wt=NULL) {
       print(paste("XFDLIST[[",j,"]] is not an FD or numeric or matrix object."))
       xerror = TRUE
     }
-  }
+  }  
   
-  #  --------------------  check contents of BETALIST  -------------------
   
-  berror <- FALSE
-  for (j in 1:p) {
-    betafdParj <- betalist[[j]]
-    if (inherits(betafdParj, "fd") || inherits(betafdParj, "basisfd")) {
-      betafdParj    <- fdPar(betafdParj)
-      betalist[[j]] <- betafdParj
-    }
-    if (!inherits(betafdParj, "fdPar")) {
-      print(paste("BETALIST[[",j,"]] is not a FDPAR object."))
-      berror <- TRUE
-    }
-  }
+  
+  
+  
+  
+  
   
   if (xerror || berror) stop(
     "An error has been found in either XFDLIST or BETALIST.")
