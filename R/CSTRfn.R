@@ -154,7 +154,7 @@ CSTRfn <- function(parvec, datstruct, fitstruct,
 ## 3.  Gauss-Newton optimization loop:
 ##     optimize fit with respect to coef
 ##
-  while(( gradnorm1 > tolval) | (fundif > tolval)){
+  while(( gradnorm1 > tolval) || (fundif > tolval)){
 #
     iter <- iter + 1
     if( iter > itermax) break
@@ -162,7 +162,7 @@ CSTRfn <- function(parvec, datstruct, fitstruct,
 #    Dcoef = Dres\res0
     nNA.res0 <- sum(is.na(res0))
     nNA.Dres0 <- sum(is.na(Dres0))
-    if(nNA.res0 | nNA.Dres0) {
+    if(nNA.res0 || nNA.Dres0) {
       dump("parvec", "parvecError.R")
       cat("Error: ", nNA.res0, "and", nNA.Dres0,
           "NAs found in res0 and Dres0 with parvec =",

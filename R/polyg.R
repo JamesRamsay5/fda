@@ -26,7 +26,7 @@ polyg <- function(x, argvals, nderiv=0)
   if (min(diff(argvals)) <= 0 ) stop(
      'Break-points are not strictly increasing')
 
-  if (!(nderiv == 0 | nderiv == 1)) stop(
+  if (!(nderiv == 0 || nderiv == 1)) stop(
      'NDERIV is neither 0 nor 1.')
   derivs    <- rep(nderiv,n)
   nbasis <- length(argvals)

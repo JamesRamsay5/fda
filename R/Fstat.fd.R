@@ -4,7 +4,7 @@ Fstat.fd <- function(y,yhat,argvals=NULL) {
   
   if( is.numeric(yhat) ) yhat <- as.vector(yhat) 
   
-  if( (is.vector(y) & !is.vector(yhat)) | (is.fd(y) &!is.fd(yhat)) ) {
+  if( (is.vector(y) && !is.vector(yhat)) || (is.fd(y) && !is.fd(yhat)) ) {
     stop("y and yhat must both be either scalars or functional data objects.")
   }
   

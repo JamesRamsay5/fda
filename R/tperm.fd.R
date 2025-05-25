@@ -1,6 +1,6 @@
 tperm.fd <- function(x1fd,x2fd,nperm=200,q=0.05,argvals=NULL,plotres=TRUE,...) # first and second 
 {                                                                          # groups of data,
-    if( !is.fd(x1fd) | !is.fd(x2fd) ){                                     # number permuts
+    if( !is.fd(x1fd) || !is.fd(x2fd) ){                                     # number permuts
         stop("x1fd and x2fd must both be functional data objects")         # quantile
     }                                                                      # where to evaluate
                                                                            # do I plot
@@ -60,7 +60,7 @@ tperm.fd <- function(x1fd,x2fd,nperm=200,q=0.05,argvals=NULL,plotres=TRUE,...) #
 
     if(plotres){
 
-	  if( is.null(names(x1fd$fdnames)) | is.null(names(x2fd$fdnames)) ){
+	  if( is.null(names(x1fd$fdnames)) || is.null(names(x2fd$fdnames)) ){
 		xlab='argvals'
 	  }	
 	  else if( prod(names(x1fd$fdnames)[1] == names(x2fd$fdnames)[1]) ){

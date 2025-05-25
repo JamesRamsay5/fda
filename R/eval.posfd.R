@@ -40,7 +40,7 @@ eval.posfd <- function(evalarg, Wfdobj, Lfdobj=int2Lfd(0))
 #  Exchange the first two arguments if the first is an FD object
 #    and the second numeric
 
-if (is.numeric(Wfdobj) & inherits(class(evalarg), "fd")) {
+if (is.numeric(Wfdobj) && inherits(class(evalarg), "fd")) {
     temp    <- Wfdobj
     Wfdobj  <- evalarg
     evalarg <- temp

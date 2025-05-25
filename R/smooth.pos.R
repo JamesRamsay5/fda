@@ -297,7 +297,7 @@ smooth.pos <- function(argvals, y, WfdParobj, wtvec=rep(1,n), conv=1e-4,
             dblwrd  <- result[[4]]
             trial   <- linemat[1,5]
             #  ind == 0 implies convergence
-            if (ind == 0 | ind == 5) break
+            if (ind == 0 || ind == 5) break
             #  end of line search loop
           }
           cveci <- cvecnew

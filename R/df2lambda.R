@@ -183,7 +183,7 @@ while (crit > 0) {
       s <- e
       e <- d
       #  is parabola acceptable?
-      if (abs(p) < abs(0.5*q*s) & p > q*(a - x) & p < q*(b - x)) {
+      if (abs(p) < abs(0.5*q*s) && p > q*(a - x) && p < q*(b - x)) {
          #  a parabolic interpolation step
          d <- p/q
          u <- x + d

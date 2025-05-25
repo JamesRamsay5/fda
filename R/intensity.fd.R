@@ -228,7 +228,7 @@ intensity.fd <- function(x, WfdParobj, conv=0.0001, iterlim=20, dbglev=1,
 			dblwrd  <- result[[4]]
         	trial   <- linemat[1,5]
         	#  ind == 0 implies convergence
-        	if (ind == 0 | ind == 5) break
+        	if (ind == 0 || ind == 5) break
         	#  end of line search loop
      	}
 
