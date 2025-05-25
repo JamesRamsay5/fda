@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/JamesRamsay5/fda/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/JamesRamsay5/fda/actions/workflows/R-CMD-check.yaml)
+[![CRAN status](https://www.r-pkg.org/badges/version/fda)](https://CRAN.R-project.org/package=fda)
 <!-- badges: end -->
 
 The goal of fda is to ...
@@ -25,7 +26,7 @@ The goal of fda is to ...
 
 You can install the development version of fda from [GitHub](https://github.com/) with:
 
-``` r
+```{r, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("JamesRamsay5/fda")
 ```
