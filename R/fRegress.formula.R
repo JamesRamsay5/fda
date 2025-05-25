@@ -134,7 +134,7 @@ fRegress.formula <- function(y, data=NULL, betalist=NULL,
       if(xNm %in% dataNames) data[[xNm]] else get(xNm)
     }
     {
-      if(class(xi) %in% c('fd', 'fdPar')) {
+      if(inherits(xi, c('fd', 'fdPar'))) {
         xj <- {
           if(inherits(xi, 'fd')) xi
           else xi$fd
