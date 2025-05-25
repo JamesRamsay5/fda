@@ -17,7 +17,7 @@ if (n < 1)         stop("n is less than 1.")
 
 if (!is.null(wtvec)) {
     dimw = dim(as.matrix(wtvec))
-    if (any(is.na(as.vector(wtvec)))) stop("WTVEC has NA values.")
+    if (anyNA(as.vector(wtvec))) stop("WTVEC has NA values.")
     if (all(dimw == n)) {
         #  WTVEC is a matrix of order n
         onewt = FALSE

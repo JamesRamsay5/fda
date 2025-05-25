@@ -365,7 +365,7 @@ eigchk <- function(Cmat) {
   
   #  Cmat for NA's
   
-  if (any(is.na(Cmat))) stop("Cmat has NA values.")
+  if (anyNA(Cmat)) stop("Cmat has NA values.")
   
   #  check Cmat for Cmatmetry
   

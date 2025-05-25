@@ -197,7 +197,7 @@ CSTRfn <- function(parvec, datstruct, fitstruct,
 
 #%     %  smaller steps as required, halving alpha each time
 #%     while F1 >= F0*(1+2*eps)
-    while(is.na(F1) || F1>= (eps1*F0) || any(is.na(Dres1))){
+    while(is.na(F1) || F1>= (eps1*F0) || anyNA(Dres1)){
       alpha <- alpha/2
       if(is.na(F1)){
         n.na <- sum(is.na(res1))
