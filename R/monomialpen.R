@@ -62,7 +62,7 @@ monomialpen <- function(basisobj, Lfdobj=int2Lfd(2),
         jfac <- jdeg
         if (nderiv > 1) for (k in 2:nderiv) jfac <- jfac*(jdeg - k + 1)
       }
-      if ((ideg >= nderiv) & (jdeg >= nderiv)) {
+      if ((ideg >= nderiv) && (jdeg >= nderiv)) {
         ipow <- ideg+jdeg-2*nderiv+1
         penaltymat[ibasis,jbasis] <-
           (rng[2]^ipow - rng[1]^ipow)*ifac*jfac/ipow

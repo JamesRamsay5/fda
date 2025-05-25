@@ -621,14 +621,14 @@ times.fd <- function(e1, e2, basisobj=NULL)
 
 # Check if at least one argument is a functional data object
 
-  if ((!(inherits(e1, "fd") | inherits(e2, "fd"))))
+  if ((!(inherits(e1, "fd") || inherits(e2, "fd"))))
     stop("Neither argument for * is a functional data object.")
 
 #  Determine which of two cases hold:
 #   1.  both variables are functional
 #   2.  only one of them is functional
 
-  if ( inherits(e1, "fd") & inherits(e2, "fd") ) {
+  if ( inherits(e1, "fd") && inherits(e2, "fd") ) {
 
     #  --------------------------------------------------------
     #       both arguments are functional data objects

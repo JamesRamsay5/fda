@@ -96,7 +96,7 @@ if (inherits(bwtlist, "fd")) bwtlist <- fd2list(bwtlist)
 
 nbwt <- length(bwtlist)
 
-if (nbwt != nderiv & nbwt != nderiv + 1)
+if (nbwt != nderiv && nbwt != nderiv + 1)
     stop("The size of bwtlist inconsistent with NDERIV.")
 
 #  check individual list entries for class

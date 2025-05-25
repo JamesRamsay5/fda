@@ -21,7 +21,7 @@ Wrange = Wfd$basis$range
 ybasis = yfd$basis
 yrange = ybasis$range
 
-if( type=='periodic' & any(Wrange != yrange) )
+if( type=='periodic' && any(Wrange != yrange) )
   stop('Registration functions and functions to be registered must have the same range')
 
 
@@ -57,7 +57,7 @@ ydim = dim(yfine)
 # are y replicates
 
 if( xdim[2] != ydim[2] ) stop('There must be as many warping function replicates as y replicates')
-if( length(ydim) == 3 & length(xdim)==2 ) xfine = array(xfine,ydim)
+if( length(ydim) == 3 && length(xdim)==2 ) xfine = array(xfine,ydim)
 
 
 # Now do the registration

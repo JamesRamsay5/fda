@@ -19,7 +19,7 @@ stepchk <- function(oldstep, cvec, deltac, limwrd, ind,
   stepi   <- oldstep*deltac
   stepmin <- min(stepi)
   index   <- stepi[active] == stepmin
-  if (any(stepi[index] < bot[index]-cvec[index]) &
+  if (any(stepi[index] < bot[index]-cvec[index]) &&
       any(deltac[index] != 0) )  {
     stepnew <- min((bot[index]-cvec[index])/deltac[index])
     if (dbgwrd) {
@@ -41,7 +41,7 @@ stepchk <- function(oldstep, cvec, deltac, limwrd, ind,
   stepi   <- oldstep*deltac
   stepmax <- max(stepi)
   index   <- stepi[active] == stepmax
-  if (any(stepi[index] > top[index]-cvec[index]) &
+  if (any(stepi[index] > top[index]-cvec[index]) &&
       any(deltac[index] != 0) ) {
     stepnew <- min((top[index]-cvec[index])/deltac[index])
     if (dbgwrd) {

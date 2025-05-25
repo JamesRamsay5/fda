@@ -6,7 +6,7 @@ derivchk <- function (x, y, Dy) {
 
   n <- length(x)
   if (n < 3) stop("X does not have enough elements")
-  if (n != length(y) | n != length(Dy)) stop(
+  if (n != length(y) || n != length(Dy)) stop(
         "Lengh of Y or DY not consistent with length of X")
   indup <- 3:n
   inddn <- 1:(n-2)

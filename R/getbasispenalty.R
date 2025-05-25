@@ -24,7 +24,7 @@ if        (type == "fourier") {
 } else if (type == "expon")   {
     if (is.null(Lfdobj)) Lfdobj <- 2
     penaltymat <- exponpen(basisobj, Lfdobj)
-} else if (type == "polyg" | type == "polygonal")   {
+} else if (type == "polyg" || type == "polygonal")   {
     if (is.null(Lfdobj)) Lfdobj <- 1
     penaltymat <- polygpen(basisobj, Lfdobj)
 } else if (type == "power")   {

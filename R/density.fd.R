@@ -70,7 +70,7 @@ m    <- xdim[2]
 if (m > 2 && N > 2)
     	stop("Argument X must have either one or two columns.")
 
-if ((N == 1 | N == 2) & m > 1) {
+if ((N == 1 || N == 2) && m > 1) {
     x <- t(x)
     n <- N
     N <- m
@@ -267,7 +267,7 @@ for (iter in 1:iterlim) {
 	      dblwrd  <- result$dblwrd
         trial   <- linemat[1,5]
         #  ind == 0 implies convergence
-        if (ind == 0 | ind == 5) break
+        if (ind == 0 || ind == 5) break
         #  end of line search loop
      	}
 

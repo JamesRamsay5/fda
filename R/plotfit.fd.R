@@ -170,7 +170,7 @@ plotfit.fd <- function(y, argvals, fdobj, rng = NULL,
   # How many plots on a page?
   nOnOne <- 1   #  only one plot is default
   # types of plots
-  if (ask & ((nvar*nrepi/nOnOne) > 1))
+  if (ask && ((nvar*nrepi/nOnOne) > 1))
     cat('Multiple plots:  Click in the plot to advance to the next plot\n')
   col <- rep(col, length=nOnOne)
   lty <- rep(lty, length=nOnOne)

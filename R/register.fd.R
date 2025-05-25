@@ -809,7 +809,7 @@ basis  <- yfd$basis
 rangex <- basis$rangeval
 ydim <- dim(yfine)
 #if (length(ydim) == 3) yfine <- yfine[,1,]
-if (periodic & shift != 0) yfine <- shifty(xfine, yfine, shift)
+if (periodic && shift != 0) yfine <- shifty(xfine, yfine, shift)
 #  make FD object out of Y
 ycoef  <- project.basis(yfine, hinv, basis, 1)
 yregfd <- fd(ycoef, basis)

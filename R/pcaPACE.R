@@ -111,7 +111,7 @@ pcaPACE <- function(covestimate, nharm = 2, harmfdPar=NULL, cross = TRUE)
   
   #  eigenalysis
   
-  if (nvar == 1 | cross){
+  if (nvar == 1 || cross){
     Cmat    <- (Cmat + t(Cmat))/2
     result  <- eigen(Cmat)
     eigvalc <- result$values[1:nharm]

@@ -120,7 +120,7 @@ pda.fd  <-  function(xfdlist, bwtlist=NULL, awtlist=NULL, ufdlist=NULL,
     #  check the dimensions of UFDLIST and AWTLIST and get number of forcing
     #    functions NFORCE
     
-    if (is.null(ufdlist) | is.null(awtlist)) {
+    if (is.null(ufdlist) || is.null(awtlist)) {
       nforce  <- 0
     } else {
       if (inherits(ufdlist[[1]], "list")) {

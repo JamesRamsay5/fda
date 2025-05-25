@@ -28,7 +28,7 @@ JMAX   <- 15
 coef  <- Wfd$coefs
 coefd <- dim(coef)
 ndim  <- length(coefd)
-if (ndim > 1 & coefd[2] != 1) stop("WFD is not a single function")
+if (ndim > 1 && coefd[2] != 1) stop("WFD is not a single function")
 
 #  get the basis
 

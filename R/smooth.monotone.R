@@ -128,13 +128,13 @@ nbasis   <- basisobj$nbasis  #  number of basis functions
 #  set up initial coefficient array
 
 coef0    <- Wfdobj$coefs
-if( length(dim(coef0)) == 2 & nvar != 1 ){
+if( length(dim(coef0)) == 2 && nvar != 1 ){
 	coef0 = array(0,c(nbasis,ncurve,nvar))
 }
-if( length(dim(coef0)) == 2 & ncol(coef0) != ncurve ){
+if( length(dim(coef0)) == 2 && ncol(coef0) != ncurve ){
 	coef0 = matrix(0,nbasis,ncurve)	
 }
-if( length(dim(coef0)) == 3 & (all.equal(dim(coef0)[2:3],c(ncurve,nvar))!=TRUE) ){
+if( length(dim(coef0)) == 3 && (all.equal(dim(coef0)[2:3],c(ncurve,nvar))!=TRUE) ){
 	coef0 = array(0,c(nbasis,ncurve,nvar))	
 }
 # Note that we could be more carefull about this and try to adapt coefficients
@@ -367,7 +367,7 @@ for (ivar in 1:nvar) {
         dblwrd  <- result[[4]]
         trial   <- linemat[1,5]
         #  ind == 0  mean convergence
-        if (ind == 0 | ind == 5) break
+        if (ind == 0 || ind == 5) break
         #  end of line search loop
      }
      cveci  <- cvecnew
