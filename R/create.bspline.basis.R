@@ -133,7 +133,7 @@ create.bspline.basis <- function (rangeval=NULL, nbasis=NULL,
   	}
     if(is.numeric(breaks)){
       if(length(breaks)<1)breaks <- NULL
-      if(any(is.na(breaks)))
+      if(anyNA(breaks))
         stop('breaks contains NAs;  not allowed.')
       if(any(is.infinite(breaks)))
         stop('breaks contains Infs;  not allowed.')
